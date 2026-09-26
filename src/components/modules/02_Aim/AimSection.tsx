@@ -38,7 +38,7 @@ export const AimSection: React.FC<AimSectionProps> = ({
   ];
 
   return (
-    <section className="py-12 bg-[#090d16]/80 border-y border-slate-800/80">
+    <section className="py-12 bg-[#0f0e0c]/80 border-y border-slate-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-10">
         {/* Academic Aim Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -60,7 +60,7 @@ export const AimSection: React.FC<AimSectionProps> = ({
               playSound('success');
               onProceedToTheory();
             }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0 active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono rounded-xl transition-all shadow-[0_0_15px_rgba(255,95,31,0.3)] shrink-0 active:scale-95 cursor-pointer"
           >
             <span>Proceed to Theory</span>
             <ArrowRight className="w-4 h-4" />
@@ -68,9 +68,9 @@ export const AimSection: React.FC<AimSectionProps> = ({
         </div>
 
         {/* Primary Aim Academic Callout Box */}
-        <div className="bg-[#0e1626] border-l-4 border-emerald-500 rounded-r-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div className="bg-[#171614] border-l-4 border-emerald-500 rounded-r-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_15px_rgba(255,95,31,0.15)]">
               <GraduationCap className="w-6 h-6" />
             </div>
             <div className="space-y-3">
@@ -110,7 +110,7 @@ export const AimSection: React.FC<AimSectionProps> = ({
             {objectives.map((obj, idx) => (
               <div 
                 key={idx}
-                className="p-4 rounded-2xl bg-[#0d1322] border border-slate-800/80 hover:border-emerald-500/40 transition-all flex items-start gap-3 group shadow-sm hover:shadow-[0_0_15px_rgba(59,130,246,0.1)]"
+                className="p-4 rounded-2xl bg-[#151412] border border-slate-800/80 hover:border-emerald-500/40 transition-all flex items-start gap-3 group shadow-sm hover:shadow-[0_0_15px_rgba(255,95,31,0.1)]"
               >
                 <div className="w-7 h-7 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono text-xs font-bold shrink-0 mt-0.5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors">
                   {idx + 1}
@@ -134,7 +134,7 @@ export const AimSection: React.FC<AimSectionProps> = ({
         </div>
 
         {/* Experiments 1-7 Mapping Bar */}
-        <div className="p-6 rounded-3xl bg-[#0c1220] border border-slate-800 shadow-xl">
+        <div className="p-6 rounded-3xl bg-[#141311] border border-slate-800 shadow-xl">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
             <div>
               <div className="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">

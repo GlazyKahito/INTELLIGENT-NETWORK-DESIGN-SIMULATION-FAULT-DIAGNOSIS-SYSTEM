@@ -36,8 +36,8 @@ export const BootScreen: React.FC<BootScreenProps> = ({ onComplete }) => {
   }, [step]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#06090f] flex flex-col items-center justify-center p-4 font-mono select-none">
-      <div className="max-w-xl w-full bg-[#0d1322] border border-emerald-500/30 rounded-lg p-6 shadow-2xl relative overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-[#0b0a08] flex flex-col items-center justify-center p-4 font-mono select-none">
+      <div className="max-w-xl w-full bg-[#151412] border border-emerald-500/30 rounded-lg p-6 shadow-2xl relative overflow-hidden">
         {/* Glow corner accents */}
         <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-emerald-400" />
         <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-emerald-400" />

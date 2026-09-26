@@ -100,7 +100,7 @@ export function MinigameHub({ onProceedToConclusion }: { onProceedToConclusion: 
               onClick={enter}
               className="group relative inline-flex h-12 items-center gap-3 rounded-md bg-emerald-500 px-6 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400"
             >
-              <span className="absolute -left-1.5 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-emerald-300 bg-[#070a12]" aria-hidden />
+              <span className="absolute -left-1.5 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-emerald-300 bg-[#0c0b09]" aria-hidden />
               Enter the network
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </button>
@@ -108,7 +108,7 @@ export function MinigameHub({ onProceedToConclusion }: { onProceedToConclusion: 
           </div>
         </div>
 
-        <div className="rounded-lg border border-slate-800 bg-[#0a0f1a]/80 p-5 sm:p-6">
+        <div className="rounded-lg border border-slate-800 bg-[#11100e]/80 p-5 sm:p-6">
           <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
             <span>Live incident</span>
             <span className="flex items-center gap-1.5 text-amber-300">
@@ -132,7 +132,7 @@ export function MinigameHub({ onProceedToConclusion }: { onProceedToConclusion: 
       </div>
 
       {/* Quick drill */}
-      <div className="mt-14 rounded-lg border border-slate-800 bg-[#0a0f1a]/60">
+      <div className="mt-14 rounded-lg border border-slate-800 bg-[#11100e]/60">
         <button
           type="button"
           onClick={() => setDrill(d => !d)}
@@ -171,7 +171,7 @@ export function MinigameHub({ onProceedToConclusion }: { onProceedToConclusion: 
         {mode !== 'idle' && (
           <motion.div
             key="world"
-            className="fixed inset-0 z-[65] bg-[#05070d]"
+            className="fixed inset-0 z-[65] bg-[#090806]"
             initial={{ clipPath: reduce ? opened : closed }}
             animate={{ clipPath: mode === 'exiting' ? `circle(0px at ${W / 2}px ${Hh / 2}px)` : opened }}
             transition={{ duration: mode === 'exiting' ? 0.7 : 0.85, ease: [0.65, 0, 0.35, 1] }}
@@ -204,7 +204,7 @@ export function MinigameHub({ onProceedToConclusion }: { onProceedToConclusion: 
                       key={i}
                       x1={cx}
                       y1={cy}
-                      stroke="rgb(96 165 250 / 0.6)"
+                      stroke="rgb(255 122 56 / 0.6)"
                       strokeWidth={1.2}
                       initial={{ x2: cx, y2: cy }}
                       animate={{ x2: cx + Math.cos(a) * far, y2: cy + Math.sin(a) * far }}
@@ -216,7 +216,7 @@ export function MinigameHub({ onProceedToConclusion }: { onProceedToConclusion: 
                   cx={mode === 'entering' ? origin.x : W / 2}
                   cy={mode === 'entering' ? origin.y : Hh / 2}
                   fill="none"
-                  stroke="rgb(96 165 250)"
+                  stroke="rgb(255 122 56)"
                   strokeWidth={2}
                   initial={{ r: 6 }}
                   animate={{ r: 90 }}

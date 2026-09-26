@@ -23,13 +23,13 @@ export interface Room extends Rect {
 }
 
 export const ROOMS: Room[] = [
-  { id: 'lab', name: 'Computer Lab', x: 40, y: 40, w: 600, h: 360, floor: '#0d1422', doors: [{ side: 'bottom', at: 270 }, { side: 'right', at: 150 }] },
-  { id: 'monitor', name: 'Monitoring Room', x: 720, y: 40, w: 420, h: 300, floor: '#0e1320', doors: [{ side: 'left', at: 150 }, { side: 'bottom', at: 190 }, { side: 'right', at: 120 }] },
-  { id: 'packet', name: 'Packet Analysis Lab', x: 1220, y: 40, w: 340, h: 440, floor: '#0f1321', doors: [{ side: 'left', at: 120 }, { side: 'bottom', at: 140 }] },
-  { id: 'switch', name: 'Switch Room', x: 40, y: 480, w: 480, h: 280, floor: '#0c1420', doors: [{ side: 'top', at: 270 }, { side: 'right', at: 110 }, { side: 'bottom', at: 200 }] },
-  { id: 'control', name: 'Network Control Room', x: 600, y: 420, w: 540, h: 340, floor: '#0e1524', doors: [{ side: 'top', at: 310 }, { side: 'left', at: 170 }, { side: 'right', at: 150 }, { side: 'bottom', at: 240 }] },
-  { id: 'router', name: 'Router Room', x: 40, y: 840, w: 480, h: 220, floor: '#0d1320', doors: [{ side: 'top', at: 200 }, { side: 'right', at: 90 }] },
-  { id: 'server', name: 'Server Room', x: 600, y: 840, w: 960, h: 220, floor: '#0c131f', doors: [{ side: 'left', at: 90 }, { side: 'top', at: 240 }, { side: 'top', at: 760 }] },
+  { id: 'lab', name: 'Computer Lab', x: 40, y: 40, w: 600, h: 360, floor: '#161513', doors: [{ side: 'bottom', at: 270 }, { side: 'right', at: 150 }] },
+  { id: 'monitor', name: 'Monitoring Room', x: 720, y: 40, w: 420, h: 300, floor: '#151412', doors: [{ side: 'left', at: 150 }, { side: 'bottom', at: 190 }, { side: 'right', at: 120 }] },
+  { id: 'packet', name: 'Packet Analysis Lab', x: 1220, y: 40, w: 340, h: 440, floor: '#151412', doors: [{ side: 'left', at: 120 }, { side: 'bottom', at: 140 }] },
+  { id: 'switch', name: 'Switch Room', x: 40, y: 480, w: 480, h: 280, floor: '#151412', doors: [{ side: 'top', at: 270 }, { side: 'right', at: 110 }, { side: 'bottom', at: 200 }] },
+  { id: 'control', name: 'Network Control Room', x: 600, y: 420, w: 540, h: 340, floor: '#171614', doors: [{ side: 'top', at: 310 }, { side: 'left', at: 170 }, { side: 'right', at: 150 }, { side: 'bottom', at: 240 }] },
+  { id: 'router', name: 'Router Room', x: 40, y: 840, w: 480, h: 220, floor: '#151412', doors: [{ side: 'top', at: 200 }, { side: 'right', at: 90 }] },
+  { id: 'server', name: 'Server Room', x: 600, y: 840, w: 960, h: 220, floor: '#141311', doors: [{ side: 'left', at: 90 }, { side: 'top', at: 240 }, { side: 'top', at: 760 }] },
 ];
 
 export interface Door {

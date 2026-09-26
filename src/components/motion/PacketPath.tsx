@@ -82,7 +82,7 @@ export function PacketPath({
                 y1={a.y}
                 x2={b.x}
                 y2={b.y}
-                stroke={isBreak ? 'rgb(148 163 184 / 0.5)' : 'hsl(var(--primary))'}
+                stroke={isBreak ? 'rgb(163 162 160 / 0.5)' : 'hsl(var(--primary))'}
                 strokeWidth={1.5}
                 strokeDasharray={isBreak ? '3 4' : undefined}
                 initial={{ pathLength: reduce ? 1 : 0, opacity: 0.9 }}
@@ -132,7 +132,7 @@ export function PacketPath({
         {!reduce && (
           <motion.circle
             r={compact ? 3 : 4}
-            fill={failed ? 'rgb(226 232 240)' : 'hsl(var(--primary))'}
+            fill={failed ? 'rgb(233 232 230)' : 'hsl(var(--primary))'}
             initial={{ cx: pos(0).x, cy: pos(0).y, opacity: 0 }}
             animate={play ? { cx: keysX, cy: keysY, opacity: [0, 1, 1, failed ? 0 : 1] } : undefined}
             transition={{
@@ -196,7 +196,7 @@ export function LinkLoader({ label = 'Transmitting', className }: { label?: stri
             {i > 0 && <span className="h-px w-3 bg-slate-600" />}
             <motion.span
               className="h-1.5 w-1.5 rounded-full border border-emerald-400"
-              animate={reduce ? { backgroundColor: 'rgb(96 165 250)' } : { backgroundColor: ['rgba(96,165,250,0)', 'rgb(96,165,250)', 'rgb(96,165,250)', 'rgba(96,165,250,0)'] }}
+              animate={reduce ? { backgroundColor: 'rgb(255 122 56)' } : { backgroundColor: ['rgba(255,122,56,0)', 'rgb(255,122,56)', 'rgb(255,122,56)', 'rgba(255,122,56,0)'] }}
               transition={{ duration: 1.2, times: [0, 0.2, 0.75, 1], delay: i * 0.18, repeat: Infinity }}
             />
           </span>

@@ -203,7 +203,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
   };
 
   return (
-    <section className="py-10 bg-[#070a12]">
+    <section className="py-10 bg-[#0c0b09]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -224,7 +224,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
               playSound('success');
               onProceedToSimulation();
             }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0 active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,95,31,0.3)] shrink-0 active:scale-95 cursor-pointer"
           >
             <span>Proceed to Simulation</span>
             <ArrowRight className="w-4 h-4" />
@@ -256,9 +256,9 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
         />
 
         {/* Core Canvas Workspace with Zoom Controls */}
-        <div className="relative w-full h-[600px] bg-[#090d16] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl select-none tech-dot-bg">
+        <div className="relative w-full h-[600px] bg-[#0f0e0c] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl select-none tech-dot-bg">
           {/* Zoom Rulers & Controls */}
-          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-[#0d1322]/90 backdrop-blur-md p-1.5 rounded-xl border border-slate-800 shadow-xl">
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-[#151412]/90 backdrop-blur-md p-1.5 rounded-xl border border-slate-800 shadow-xl">
             <button
               onClick={() => setZoom(prev => Math.min(1.4, prev + 0.1))}
               title="Zoom In"
@@ -319,7 +319,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
                       y1={y1}
                       x2={x2}
                       y2={y2}
-                      stroke={isDown ? '#f43f5e' : '#3b82f6'}
+                      stroke={isDown ? '#f43f5e' : '#ff5f1f'}
                       strokeWidth="5"
                       strokeOpacity="0.2"
                     />
@@ -329,7 +329,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
                       y1={y1}
                       x2={x2}
                       y2={y2}
-                      stroke={isDown ? '#f43f5e' : '#3b82f6'}
+                      stroke={isDown ? '#f43f5e' : '#ff5f1f'}
                       strokeWidth="2.5"
                       strokeDasharray={isDown ? '5' : 'none'}
                     />
@@ -339,8 +339,8 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
                       cx={(x1 + x2) / 2}
                       cy={(y1 + y2) / 2}
                       r="9"
-                      fill="#0f172a"
-                      stroke={isDown ? '#f43f5e' : '#334155'}
+                      fill="#191816"
+                      stroke={isDown ? '#f43f5e' : '#41403e'}
                       strokeWidth="1.5"
                       className="cursor-pointer hover:stroke-rose-400 transition-colors"
                       onClick={e => {
@@ -379,14 +379,14 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
                     isConnectSource
                       ? 'bg-amber-500/20 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.5)]'
                       : isSelected
-                      ? 'bg-[#0f172a] border-emerald-400 shadow-[0_0_20px_rgba(59,130,246,0.35)] ring-2 ring-emerald-500/50'
-                      : 'bg-[#0d1322]/95 border-slate-800 hover:border-slate-700 shadow-xl'
+                      ? 'bg-[#191816] border-emerald-400 shadow-[0_0_20px_rgba(255,95,31,0.35)] ring-2 ring-emerald-500/50'
+                      : 'bg-[#151412]/95 border-slate-800 hover:border-slate-700 shadow-xl'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     {/* Status LED */}
                     <div className="flex items-center gap-1.5">
-                      <div className={`w-2.5 h-2.5 rounded-full ${isDown ? 'bg-rose-500 animate-pulse' : 'bg-emerald-400 shadow-[0_0_8px_#3b82f6]'}`} />
+                      <div className={`w-2.5 h-2.5 rounded-full ${isDown ? 'bg-rose-500 animate-pulse' : 'bg-emerald-400 shadow-[0_0_8px_#ff5f1f]'}`} />
                       <span className="text-[9px] font-mono text-slate-400 uppercase">
                         {isDown ? 'DOWN' : 'UP'}
                       </span>

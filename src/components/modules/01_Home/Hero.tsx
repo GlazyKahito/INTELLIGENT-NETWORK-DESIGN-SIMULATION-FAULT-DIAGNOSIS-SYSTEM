@@ -128,7 +128,7 @@ export const Hero: React.FC<HeroProps> = ({
             </p>
 
             {/* Core Workflow Strip */}
-            <div className="bg-[#0c1220]/90 border border-slate-800 rounded-2xl p-4 max-w-2xl shadow-xl">
+            <div className="bg-[#141311]/90 border border-slate-800 rounded-2xl p-4 max-w-2xl shadow-xl">
               <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
                 <span>The design → diagnose loop</span>
                 <span className="text-emerald-400 font-bold">Deterministic Simulation</span>
@@ -168,7 +168,7 @@ export const Hero: React.FC<HeroProps> = ({
                   playSound('success');
                   onExploreLab();
                 }}
-                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm font-mono transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] active:scale-95 cursor-pointer"
+                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm font-mono transition-all shadow-[0_0_20px_rgba(255,95,31,0.3)] active:scale-95 cursor-pointer"
               >
                 <Layers className="w-4 h-4" />
                 <span>EXPLORE THE SYSTEM</span>
@@ -201,7 +201,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* Right Column: Hero Interactive Topology Monitor */}
           <div className="lg:col-span-5">
-            <div className="bg-[#0d1322] border border-slate-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+            <div className="bg-[#151412] border border-slate-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
               <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-800/80">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
@@ -226,7 +226,7 @@ export const Hero: React.FC<HeroProps> = ({
                     }}
                     className={`p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                       selectedHeroNode === 'pc1'
-                        ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(59,130,246,0.3)] ring-1 ring-emerald-400'
+                        ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(255,95,31,0.3)] ring-1 ring-emerald-400'
                         : pulseHop === 0
                         ? 'bg-emerald-500/10 border-emerald-500'
                         : 'bg-slate-900/90 border-slate-800 hover:border-slate-700'
@@ -245,7 +245,7 @@ export const Hero: React.FC<HeroProps> = ({
                     }}
                     className={`p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                       selectedHeroNode === 'pc2'
-                        ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(59,130,246,0.3)] ring-1 ring-emerald-400'
+                        ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(255,95,31,0.3)] ring-1 ring-emerald-400'
                         : 'bg-slate-900/90 border-slate-800 hover:border-slate-700'
                     }`}
                   >
@@ -258,10 +258,10 @@ export const Hero: React.FC<HeroProps> = ({
                 {/* Connecting Lines */}
                 <div className="w-48 h-4 relative flex justify-center">
                   <svg className="w-full h-full" viewBox="0 0 200 16">
-                    <line x1="50" y1="0" x2="100" y2="16" stroke="#334155" strokeWidth="2" />
-                    <line x1="150" y1="0" x2="100" y2="16" stroke="#334155" strokeWidth="2" />
+                    <line x1="50" y1="0" x2="100" y2="16" stroke="#41403e" strokeWidth="2" />
+                    <line x1="150" y1="0" x2="100" y2="16" stroke="#41403e" strokeWidth="2" />
                     {pulseHop === 0 && (
-                      <circle cx="75" cy="8" r="3.5" fill="#3b82f6" className="animate-pulse" />
+                      <circle cx="75" cy="8" r="3.5" fill="#ff5f1f" className="animate-pulse" />
                     )}
                   </svg>
                 </div>
@@ -330,7 +330,7 @@ export const Hero: React.FC<HeroProps> = ({
                   }}
                   className={`w-full max-w-xs p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                     selectedHeroNode === 'server'
-                      ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(59,130,246,0.3)] ring-1 ring-emerald-400'
+                      ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(255,95,31,0.3)] ring-1 ring-emerald-400'
                       : pulseHop === 3
                       ? 'bg-emerald-500/15 border-emerald-400'
                       : 'bg-slate-900/90 border-slate-800 hover:border-slate-700'

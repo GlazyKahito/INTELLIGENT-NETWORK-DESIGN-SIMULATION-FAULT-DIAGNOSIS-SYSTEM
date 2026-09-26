@@ -173,7 +173,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
   }
 
   return (
-    <section className="py-10 bg-[#070a12]">
+    <section className="py-10 bg-[#0c0b09]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -202,7 +202,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
         </div>
 
         {/* Controller Bar */}
-        <div className="p-5 bg-[#0d1322] border border-slate-800 rounded-3xl shadow-2xl flex flex-wrap items-center justify-between gap-4">
+        <div className="p-5 bg-[#151412] border border-slate-800 rounded-3xl shadow-2xl flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-3">
             {/* Source select */}
             <div className="flex items-center gap-2 text-xs font-mono">
@@ -285,7 +285,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
             className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-bold font-mono text-xs transition-all shadow-xl cursor-pointer ${
               isSimulating
                 ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-[0_0_20px_rgba(59,130,246,0.35)] active:scale-95'
+                : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-[0_0_20px_rgba(255,95,31,0.35)] active:scale-95'
             }`}
           >
             <Send className="w-4 h-4" />
@@ -294,7 +294,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
         </div>
 
         {/* Live Simulation Topology Canvas */}
-        <div className="relative w-full h-[520px] bg-[#090d16] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl select-none tech-dot-bg">
+        <div className="relative w-full h-[520px] bg-[#0f0e0c] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl select-none tech-dot-bg">
           {/* SVG Links */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
             {links.map(link => {
@@ -315,7 +315,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke={isDown ? '#f43f5e' : '#3b82f6'}
+                    stroke={isDown ? '#f43f5e' : '#ff5f1f'}
                     strokeWidth="4"
                     strokeOpacity="0.2"
                   />
@@ -324,13 +324,13 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke={isDown ? '#f43f5e' : '#3b82f6'}
+                    stroke={isDown ? '#f43f5e' : '#ff5f1f'}
                     strokeWidth="2.5"
                     strokeDasharray={isDown ? '5' : 'none'}
                   />
                   {/* Idle keep-alive traffic so the network reads as live before you run anything */}
                   {!isDown && !isSimulating && !reduceMotion && (
-                    <circle r="2.5" fill="#93c5fd" opacity="0.7">
+                    <circle r="2.5" fill="#ffa370" opacity="0.7">
                       <animateMotion dur={`${2.4 + (link.id.length % 5) * 0.45}s`} repeatCount="indefinite" path={`M${x1},${y1} L${x2},${y2}`} />
                     </circle>
                   )}
@@ -355,7 +355,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
             >
               <div className="relative">
                 <div className={`w-9 h-9 rounded-full flex items-center justify-center text-slate-950 font-bold shadow-2xl ${
-                  protocol === 'TCP' ? 'bg-cyan-400 shadow-[0_0_20px_#06b6d4]' : protocol === 'UDP' ? 'bg-amber-400 shadow-[0_0_20px_#f59e0b]' : 'bg-emerald-400 shadow-[0_0_20px_#3b82f6]'
+                  protocol === 'TCP' ? 'bg-cyan-400 shadow-[0_0_20px_#06b6d4]' : protocol === 'UDP' ? 'bg-amber-400 shadow-[0_0_20px_#f59e0b]' : 'bg-emerald-400 shadow-[0_0_20px_#ff5f1f]'
                 }`}>
                   <Zap className="w-4 h-4 fill-current" />
                 </div>
@@ -382,12 +382,12 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
                 }}
                 className={`absolute top-0 left-0 w-32 sm:w-36 p-3 rounded-2xl border transition-all z-10 ${
                   isCurrentHop
-                    ? 'bg-emerald-500/25 border-emerald-400 shadow-[0_0_25px_rgba(59,130,246,0.5)] scale-105'
+                    ? 'bg-emerald-500/25 border-emerald-400 shadow-[0_0_25px_rgba(255,95,31,0.5)] scale-105'
                     : isSource
                     ? 'bg-slate-900 border-cyan-500/80 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
                     : isTarget
                     ? 'bg-slate-900 border-indigo-500/80 shadow-[0_0_15px_rgba(99,102,241,0.3)]'
-                    : 'bg-[#0d1322]/95 border-slate-800'
+                    : 'bg-[#151412]/95 border-slate-800'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
@@ -414,13 +414,13 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
 
         {/* Live Metrics & Forwarding Status Panel */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="p-5 rounded-2xl bg-[#0d1322] border border-slate-800 text-xs font-mono shadow-xl">
+          <div className="p-5 rounded-2xl bg-[#151412] border border-slate-800 text-xs font-mono shadow-xl">
             <div className="text-slate-400 uppercase text-[10px] font-semibold">Round-Trip Latency (RTT)</div>
             <div className="text-2xl font-bold text-emerald-400 mt-1">{stats.latency} ms</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Wire Transmission Delay</div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#0d1322] border border-slate-800 text-xs font-mono shadow-xl">
+          <div className="p-5 rounded-2xl bg-[#151412] border border-slate-800 text-xs font-mono shadow-xl">
             <div className="text-slate-400 uppercase text-[10px] font-semibold">Packet Loss Rate</div>
             <div className={`text-2xl font-bold mt-1 ${stats.lost > 0 ? 'text-rose-400' : 'text-emerald-400'}`}>
               {stats.sent > 0 ? `${Math.round((stats.lost / stats.sent) * 100)}%` : '0%'}
@@ -428,13 +428,13 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
             <div className="text-[10px] text-slate-500 mt-0.5">{stats.lost} dropped of {stats.sent} sent</div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#0d1322] border border-slate-800 text-xs font-mono shadow-xl">
+          <div className="p-5 rounded-2xl bg-[#151412] border border-slate-800 text-xs font-mono shadow-xl">
             <div className="text-slate-400 uppercase text-[10px] font-semibold">Active L4 Protocol</div>
             <div className="text-2xl font-bold text-cyan-400 mt-1">{protocol}</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Layer 4 Multiplexing</div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#0d1322] border border-slate-800 text-xs font-mono flex items-center justify-between shadow-xl">
+          <div className="p-5 rounded-2xl bg-[#151412] border border-slate-800 text-xs font-mono flex items-center justify-between shadow-xl">
             <div>
               <div className="text-slate-400 uppercase text-[10px] font-semibold">Wireshark Tap</div>
               <div className="text-xs font-bold text-slate-200 mt-1">Deep Inspection</div>
@@ -457,7 +457,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
 
         {/* Live Event Log */}
         {simulationLog.length > 0 && (
-          <div className="p-4 rounded-2xl bg-[#0b101d] border border-slate-800 font-mono text-xs space-y-1.5 shadow-xl">
+          <div className="p-4 rounded-2xl bg-[#12110f] border border-slate-800 font-mono text-xs space-y-1.5 shadow-xl">
             <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-1 font-semibold">
               Packet Event Log:
             </div>

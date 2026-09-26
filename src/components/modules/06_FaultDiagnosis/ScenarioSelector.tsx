@@ -55,7 +55,7 @@ export const ScenarioSelector: React.FC<ScenarioSelectorProps> = ({
               className={`p-3.5 rounded-xl border text-left cursor-pointer transition-all flex flex-col justify-between ${
                 isActive
                   ? 'bg-amber-500/15 border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.25)] ring-1 ring-amber-400'
-                  : 'bg-[#0d1322] border-slate-800 hover:border-slate-700 hover:bg-slate-900/60'
+                  : 'bg-[#151412] border-slate-800 hover:border-slate-700 hover:bg-slate-900/60'
               }`}
             >
               <div>

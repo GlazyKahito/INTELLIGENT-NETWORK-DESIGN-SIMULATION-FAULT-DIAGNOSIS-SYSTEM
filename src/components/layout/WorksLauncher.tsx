@@ -155,10 +155,10 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#05070d]/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
-      <div className="max-w-4xl w-full bg-[#0d1322] border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 bg-[#090806]/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+      <div className="max-w-4xl w-full bg-[#151412] border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Hub Header */}
-        <div className="p-5 border-b border-slate-800 flex items-center justify-between bg-[#0a0f1c]">
+        <div className="p-5 border-b border-slate-800 flex items-center justify-between bg-[#11100e]">
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">
@@ -202,8 +202,8 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
                 }}
                 className={`node-card group relative p-4 rounded-xl border transition-colors cursor-pointer flex items-center justify-between gap-4 ${
                   isSelected
-                    ? 'bg-slate-800/90 border-emerald-500/60 shadow-[0_0_15px_rgba(59,130,246,0.15)] translate-x-1'
-                    : 'bg-[#0f172a]/50 border-slate-800/80 hover:border-slate-700'
+                    ? 'bg-slate-800/90 border-emerald-500/60 shadow-[0_0_15px_rgba(255,95,31,0.15)] translate-x-1'
+                    : 'bg-[#191816]/50 border-slate-800/80 hover:border-slate-700'
                 }`}
               >
                 <div className="flex items-center gap-4">
@@ -254,7 +254,7 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
         </div>
 
         {/* Footer shortcuts hint */}
-        <div className="p-4 bg-[#0a0f1c] border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400 font-mono">
+        <div className="p-4 bg-[#11100e] border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400 font-mono">
           <div className="flex items-center gap-3">
             <span><kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300">↑</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300">↓</kbd> Navigate</span>
             <span><kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300">Enter</kbd> Open</span>

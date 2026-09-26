@@ -70,7 +70,7 @@ export const HammingSimulator: React.FC = () => {
       </div>
 
       {/* Step 1: Input 4 Data Bits */}
-      <div className="p-5 rounded-xl bg-[#0d1322] border border-slate-800 space-y-4">
+      <div className="p-5 rounded-xl bg-[#151412] border border-slate-800 space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-xs font-mono font-bold text-slate-300 uppercase">
             Step 1: Input 4-Bit Data Word (Click to Toggle 0/1)
@@ -124,7 +124,7 @@ export const HammingSimulator: React.FC = () => {
       </div>
 
       {/* Step 2: Channel Bit-Flipper (Inject Transmission Error) */}
-      <div className="p-5 rounded-xl bg-[#0d1322] border border-slate-800 space-y-4">
+      <div className="p-5 rounded-xl bg-[#151412] border border-slate-800 space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-xs font-mono font-bold text-slate-300 uppercase">
             Step 2: Transmission Channel (Click ANY Bit to Corrupt / Flip)
@@ -165,7 +165,7 @@ export const HammingSimulator: React.FC = () => {
       </div>
 
       {/* Step 3: Receiver Syndrome Calculation & Forward Error Correction */}
-      <div className="p-5 rounded-xl bg-[#0b101d] border border-slate-800 space-y-4">
+      <div className="p-5 rounded-xl bg-[#12110f] border border-slate-800 space-y-4">
         <div className="text-xs font-mono font-bold text-slate-300 uppercase">
           Step 3: Receiver Syndrome Calculation (S4, S2, S1)
         </div>

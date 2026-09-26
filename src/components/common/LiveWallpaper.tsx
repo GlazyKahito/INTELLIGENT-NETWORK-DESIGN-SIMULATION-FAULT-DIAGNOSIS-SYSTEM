@@ -98,7 +98,7 @@ function initTopo(canvas: HTMLCanvasElement) {
     mouse: gl.getUniformLocation(prog, 'uMouse'),
     color: gl.getUniformLocation(prog, 'uColor'),
   };
-  gl.uniform3f(u.color, 59 / 255, 130 / 255, 246 / 255);
+  gl.uniform3f(u.color, 255 / 255, 95 / 255, 31 / 255);
   return {
     draw(time: number, w: number, h: number, mx: number, my: number) {
       gl.viewport(0, 0, w, h);
@@ -188,7 +188,7 @@ export const LiveWallpaper: React.FC = () => {
           if (drawn.has(key)) return;
           drawn.add(key);
           const m = nodes[j];
-          ctx.strokeStyle = 'rgba(100,116,139,0.10)';
+          ctx.strokeStyle = 'rgba(116,115,113,0.10)';
           ctx.beginPath();
           ctx.moveTo(n.x, n.y);
           ctx.lineTo(m.x, m.y);
@@ -200,29 +200,29 @@ export const LiveWallpaper: React.FC = () => {
         const b = nodes[p.b];
         const x = a.x + (b.x - a.x) * p.t;
         const y = a.y + (b.y - a.y) * p.t;
-        ctx.strokeStyle = 'rgba(96,165,250,0.28)';
+        ctx.strokeStyle = 'rgba(255,122,56,0.28)';
         ctx.beginPath();
         ctx.moveTo(a.x + (b.x - a.x) * Math.max(0, p.t - 0.12), a.y + (b.y - a.y) * Math.max(0, p.t - 0.12));
         ctx.lineTo(x, y);
         ctx.stroke();
-        ctx.fillStyle = 'rgba(147,197,253,0.75)';
+        ctx.fillStyle = 'rgba(255,163,112,0.75)';
         ctx.beginPath();
         ctx.arc(x, y, 1.8, 0, Math.PI * 2);
         ctx.fill();
       }
       for (const n of nodes) {
-        ctx.strokeStyle = `rgba(96,165,250,${0.16 + n.pulse * 0.5})`;
-        ctx.fillStyle = '#070a12';
+        ctx.strokeStyle = `rgba(255,122,56,${0.16 + n.pulse * 0.5})`;
+        ctx.fillStyle = '#0c0b09';
         ctx.beginPath();
         ctx.arc(n.x, n.y, 3.2, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
         if (n.pulse > 0.02) {
-          ctx.fillStyle = `rgba(96,165,250,${n.pulse * 0.8})`;
+          ctx.fillStyle = `rgba(255,122,56,${n.pulse * 0.8})`;
           ctx.beginPath();
           ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
           ctx.fill();
-          ctx.strokeStyle = `rgba(96,165,250,${n.pulse * 0.25})`;
+          ctx.strokeStyle = `rgba(255,122,56,${n.pulse * 0.25})`;
           ctx.beginPath();
           ctx.arc(n.x, n.y, 3.2 + (1 - n.pulse) * 14, 0, Math.PI * 2);
           ctx.stroke();

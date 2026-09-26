@@ -77,7 +77,7 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
   const mistakes = filteredQuestions.filter(q => submitted && answers[q.id] !== q.correctOptionId);
 
   return (
-    <section className="py-10 bg-[#070a12]">
+    <section className="py-10 bg-[#0c0b09]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -98,14 +98,14 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
               playSound('success');
               onProceedToMiniGame();
             }}
-            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0"
+            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,95,31,0.3)] shrink-0"
           >
             Play Mini-Game: Rogue Packet →
           </button>
         </div>
 
         {/* Phase Filter Pill Bar & Score Summary */}
-        <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-[#0d1322] border border-slate-800 rounded-2xl shadow-xl">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-[#151412] border border-slate-800 rounded-2xl shadow-xl">
           <div className="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-mono">
             <button
               onClick={() => {
@@ -160,7 +160,7 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
               <button
                 onClick={handleSubmit}
                 disabled={Object.keys(answers).length === 0}
-                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_12px_rgba(59,130,246,0.3)] active:scale-95"
+                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_12px_rgba(255,95,31,0.3)] active:scale-95"
               >
                 Submit Answers ({Object.keys(answers).length}/{total})
               </button>
@@ -201,8 +201,8 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
                       ? 'bg-emerald-500/5 border-emerald-500/40 shadow-sm'
                       : isWrong
                       ? 'bg-rose-500/5 border-rose-500/40 shadow-sm'
-                      : 'bg-[#0d1322] border-slate-800'
-                    : 'bg-[#0d1322] border-slate-800 hover:border-slate-700'
+                      : 'bg-[#151412] border-slate-800'
+                    : 'bg-[#151412] border-slate-800 hover:border-slate-700'
                 }`}
               >
                 {/* Meta Header */}
@@ -275,7 +275,7 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
 
                 {/* Explanation Card (Revealed upon Submission) */}
                 {submitted && (
-                  <div className="mt-4 p-4 rounded-xl bg-[#0a0f1c] border border-slate-800 text-xs space-y-1.5 animate-in fade-in">
+                  <div className="mt-4 p-4 rounded-xl bg-[#11100e] border border-slate-800 text-xs space-y-1.5 animate-in fade-in">
                     <div className="font-bold text-emerald-400 font-mono">
                       Theoretical & Practical Explanation:
                     </div>

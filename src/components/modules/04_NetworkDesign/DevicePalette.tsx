@@ -37,7 +37,7 @@ export const DevicePalette: React.FC<DevicePaletteProps> = ({
   ];
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-[#0d1322] border border-slate-800 rounded-2xl shadow-xl">
+    <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-[#151412] border border-slate-800 rounded-2xl shadow-xl">
       {/* Device placement buttons */}
       <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
         <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline">
@@ -83,7 +83,7 @@ export const DevicePalette: React.FC<DevicePaletteProps> = ({
             playSound('click');
             onValidate();
           }}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-mono font-bold transition-all shadow-[0_0_12px_rgba(59,130,246,0.3)] active:scale-95"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-mono font-bold transition-all shadow-[0_0_12px_rgba(255,95,31,0.3)] active:scale-95"
         >
           <CheckCircle className="w-3.5 h-3.5" />
           <span>Validate Topology</span>

@@ -61,13 +61,13 @@ export function TopologyWalkthrough() {
             const hot = hover === i || hover === i + 1;
             return (
               <g key={`l${i}`}>
-                <line x1={40} y1={Y(i)} x2={40} y2={Y(i + 1)} stroke="rgb(30 41 59)" strokeWidth={2} />
+                <line x1={40} y1={Y(i)} x2={40} y2={Y(i + 1)} stroke="rgb(42 41 39)" strokeWidth={2} />
                 <motion.line
                   x1={40}
                   y1={Y(i)}
                   x2={40}
                   y2={Y(i + 1)}
-                  stroke={hot ? 'rgb(191 219 254)' : 'rgb(96 165 250)'}
+                  stroke={hot ? 'rgb(255 201 168)' : 'rgb(255 122 56)'}
                   strokeWidth={2}
                   initial={false}
                   animate={{ pathLength: lit ? 1 : 0 }}
@@ -84,14 +84,14 @@ export function TopologyWalkthrough() {
                   cx={40}
                   cy={Y(i)}
                   r={11}
-                  fill="#070a12"
+                  fill="#0c0b09"
                   strokeWidth={2}
                   initial={false}
-                  animate={{ stroke: lit ? 'rgb(96 165 250)' : 'rgb(51 65 85)', scale: hover === i ? 1.12 : 1 }}
+                  animate={{ stroke: lit ? 'rgb(255 122 56)' : 'rgb(65 64 62)', scale: hover === i ? 1.12 : 1 }}
                   transition={{ duration: 0.3 }}
                   style={{ originX: '40px', originY: `${Y(i)}px` }}
                 />
-                <motion.circle cx={40} cy={Y(i)} r={4.5} fill="rgb(96 165 250)" initial={false} animate={{ opacity: lit ? 1 : 0 }} transition={{ delay: lit ? 0.35 : 0, duration: 0.2 }} />
+                <motion.circle cx={40} cy={Y(i)} r={4.5} fill="rgb(255 122 56)" initial={false} animate={{ opacity: lit ? 1 : 0 }} transition={{ delay: lit ? 0.35 : 0, duration: 0.2 }} />
                 <text x={64} y={Y(i) - 2} className={lit ? 'fill-slate-100' : 'fill-slate-600'} style={{ fontSize: 13, fontWeight: 600 }}>
                   {s.node}
                 </text>
@@ -105,11 +105,11 @@ export function TopologyWalkthrough() {
             <motion.circle
               cx={40}
               r={5}
-              fill="rgb(191 219 254)"
+              fill="rgb(255 201 168)"
               initial={false}
               animate={{ cy: Y(shown) }}
               transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
-              style={{ filter: 'drop-shadow(0 0 5px rgb(96 165 250))' }}
+              style={{ filter: 'drop-shadow(0 0 5px rgb(255 122 56))' }}
             />
           )}
         </svg>

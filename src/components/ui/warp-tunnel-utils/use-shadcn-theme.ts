@@ -24,12 +24,12 @@ const TOKENS: Record<keyof ShadcnThemeColors, string> = {
 };
 
 const FALLBACK: ShadcnThemeColors = {
-  background: '#070a12',
-  foreground: '#e2e8f0',
-  primary: '#3b82f6',
-  accent: '#38bdf8',
-  muted: '#94a3b8',
-  border: '#1f293d',
+  background: '#0c0b09',
+  foreground: '#e9e8e6',
+  primary: '#ff5f1f',
+  accent: '#e8dfd2',
+  muted: '#a3a2a0',
+  border: '#2a2927',
 };
 
 function hslToHex(h: number, s: number, l: number): string {

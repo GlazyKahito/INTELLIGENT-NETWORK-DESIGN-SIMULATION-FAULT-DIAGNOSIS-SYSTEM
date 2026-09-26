@@ -473,12 +473,12 @@ export class GameEngine {
 
   // ---- rendering -------------------------------------------------------------------
   private drawStatic(g: CanvasRenderingContext2D) {
-    g.fillStyle = '#05070d';
+    g.fillStyle = '#090806';
     g.fillRect(0, 0, WORLD.w, WORLD.h);
     // Corridor floor
-    g.fillStyle = '#0a0f19';
+    g.fillStyle = '#11100e';
     g.fillRect(20, 20, WORLD.w - 40, WORLD.h - 40);
-    g.strokeStyle = 'rgba(148,163,184,0.035)';
+    g.strokeStyle = 'rgba(163,162,160,0.035)';
     g.lineWidth = 1;
     g.beginPath();
     for (let x = 20; x < WORLD.w; x += 40) (g.moveTo(x, 20), g.lineTo(x, WORLD.h - 20));
@@ -489,13 +489,13 @@ export class GameEngine {
     for (const r of ROOMS) {
       g.fillStyle = r.floor;
       g.fillRect(r.x, r.y, r.w, r.h);
-      g.strokeStyle = 'rgba(148,163,184,0.05)';
+      g.strokeStyle = 'rgba(163,162,160,0.05)';
       g.beginPath();
       for (let x = r.x + 32; x < r.x + r.w; x += 32) (g.moveTo(x, r.y), g.lineTo(x, r.y + r.h));
       for (let y = r.y + 32; y < r.y + r.h; y += 32) (g.moveTo(r.x, y), g.lineTo(r.x + r.w, y));
       g.stroke();
       const grad = g.createRadialGradient(r.x + r.w / 2, r.y + r.h / 2, 10, r.x + r.w / 2, r.y + r.h / 2, Math.max(r.w, r.h) * 0.7);
-      grad.addColorStop(0, 'rgba(59,130,246,0.025)');
+      grad.addColorStop(0, 'rgba(255,95,31,0.025)');
       grad.addColorStop(1, 'rgba(0,0,0,0.18)');
       g.fillStyle = grad;
       g.fillRect(r.x, r.y, r.w, r.h);
@@ -508,10 +508,10 @@ export class GameEngine {
       const pts = CABLES[l.id];
       g.beginPath();
       pts.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y)));
-      g.strokeStyle = '#060910';
+      g.strokeStyle = '#0b0a08';
       g.lineWidth = 8;
       g.stroke();
-      g.strokeStyle = l.id === 'L-SRV' ? '#5c4f2a' : l.id === 'L-TRUNK' ? '#34445f' : l.id === 'L-UPLINK' ? '#255565' : '#1e3a5f';
+      g.strokeStyle = l.id === 'L-SRV' ? '#5c4f2a' : l.id === 'L-TRUNK' ? '#444341' : l.id === 'L-UPLINK' ? '#255565' : '#4a2616';
       g.lineWidth = 2.2;
       g.stroke();
     }
@@ -522,23 +522,23 @@ export class GameEngine {
     // Walls with drop shadow
     g.fillStyle = 'rgba(0,0,0,0.35)';
     for (const w of this.walls) g.fillRect(w.x, w.y + 5, w.w, w.h);
-    g.fillStyle = '#1a2334';
+    g.fillStyle = '#242321';
     for (const w of this.walls) g.fillRect(w.x, w.y, w.w, w.h);
-    g.fillStyle = 'rgba(148,163,184,0.14)';
+    g.fillStyle = 'rgba(163,162,160,0.14)';
     for (const w of this.walls) g.fillRect(w.x, w.y, w.w, 2);
 
     // Labels
     g.textBaseline = 'top';
     for (const r of ROOMS) {
       g.font = `600 11px ${MONO}`;
-      g.fillStyle = '#4d5d78';
+      g.fillStyle = '#5d5c5a';
       this.spaced(g, r.name.toUpperCase(), r.x + 16, r.y + 16, 2);
     }
     g.font = `500 10px ${MONO}`;
     for (const p of PROPS) {
       const text = p.device ?? p.label;
       if (!text) continue;
-      g.fillStyle = '#65758f';
+      g.fillStyle = '#757472';
       const w = g.measureText(text).width;
       const below = p.kind === 'desk' || (p.kind === 'rack' && !p.device?.startsWith('SWITCH'));
       g.fillText(text, p.x + p.w / 2 - w / 2, below ? p.y - 15 : p.y + p.h + 6);
@@ -566,39 +566,39 @@ export class GameEngine {
     g.fill();
     switch (p.kind) {
       case 'desk': {
-        g.fillStyle = '#182133';
+        g.fillStyle = '#22211f';
         this.roundRect(g, p.x, p.y, p.w, p.h, 6);
         g.fill();
-        g.strokeStyle = '#26324a';
+        g.strokeStyle = '#333230';
         g.stroke();
-        g.fillStyle = '#0b111d';
+        g.fillStyle = '#131210';
         this.roundRect(g, p.x + p.w / 2 - 34, p.y + 8, 68, 10, 3);
         g.fill();
-        g.fillStyle = '#222d42';
+        g.fillStyle = '#2e2d2b';
         this.roundRect(g, p.x + p.w / 2 - 24, p.y + 32, 48, 12, 2);
         g.fill();
-        g.fillStyle = '#1c2638';
+        g.fillStyle = '#272624';
         g.beginPath();
         g.arc(p.x + p.w / 2 + 40, p.y + 38, 5, 0, Math.PI * 2);
         g.fill();
         break;
       }
       case 'chair':
-        g.fillStyle = '#131b2a';
+        g.fillStyle = '#1c1b19';
         g.beginPath();
         g.arc(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, 0, Math.PI * 2);
         g.fill();
-        g.strokeStyle = '#223047';
+        g.strokeStyle = '#302f2d';
         g.stroke();
         break;
       case 'rack': {
-        g.fillStyle = '#0e1522';
+        g.fillStyle = '#161513';
         this.roundRect(g, p.x, p.y, p.w, p.h, 4);
         g.fill();
-        g.strokeStyle = '#2a3850';
+        g.strokeStyle = '#393836';
         g.lineWidth = 1.5;
         g.stroke();
-        g.strokeStyle = 'rgba(148,163,184,0.08)';
+        g.strokeStyle = 'rgba(163,162,160,0.08)';
         g.lineWidth = 1;
         for (let y = p.y + 8; y < p.y + p.h - 4; y += 8) {
           g.beginPath();
@@ -609,29 +609,29 @@ export class GameEngine {
         break;
       }
       case 'console':
-        g.fillStyle = '#131c2c';
+        g.fillStyle = '#1d1c1a';
         this.roundRect(g, p.x, p.y, p.w, p.h, 8);
         g.fill();
-        g.strokeStyle = '#27344c';
+        g.strokeStyle = '#353432';
         g.stroke();
         break;
       case 'bench':
-        g.fillStyle = '#161f30';
+        g.fillStyle = '#201f1d';
         this.roundRect(g, p.x, p.y, p.w, p.h, 5);
         g.fill();
-        g.strokeStyle = '#26324a';
+        g.strokeStyle = '#333230';
         g.stroke();
-        g.fillStyle = '#0d1422';
+        g.fillStyle = '#161513';
         for (let i = 0; i < 3; i++) {
           this.roundRect(g, p.x + 12 + i * (p.w / 3), p.y + 10, p.w / 3 - 24, p.h - 20, 3);
           g.fill();
         }
         break;
       case 'screen':
-        g.fillStyle = '#0a101b';
+        g.fillStyle = '#11100e';
         this.roundRect(g, p.x, p.y, p.w, p.h, 3);
         g.fill();
-        g.strokeStyle = '#2b3950';
+        g.strokeStyle = '#393836';
         g.stroke();
         break;
       case 'plant':
@@ -649,12 +649,12 @@ export class GameEngine {
         break;
       case 'ups':
       case 'cabinet':
-        g.fillStyle = '#121a28';
+        g.fillStyle = '#1b1a18';
         this.roundRect(g, p.x, p.y, p.w, p.h, 4);
         g.fill();
-        g.strokeStyle = '#243049';
+        g.strokeStyle = '#31302e';
         g.stroke();
-        g.strokeStyle = 'rgba(148,163,184,0.07)';
+        g.strokeStyle = 'rgba(163,162,160,0.07)';
         for (let x = p.x + 8; x < p.x + p.w - 6; x += 6) {
           g.beginPath();
           g.moveTo(x, p.y + 8);
@@ -672,7 +672,7 @@ export class GameEngine {
     const ox = this.viewW / 2 - this.cam.x * this.zoom;
     const oy = this.viewH / 2 - this.cam.y * this.zoom;
     g.setTransform(1, 0, 0, 1, 0, 0);
-    g.fillStyle = '#05070d';
+    g.fillStyle = '#090806';
     g.fillRect(0, 0, this.canvas.width, this.canvas.height);
     g.setTransform(z, 0, 0, z, ox * this.dpr, oy * this.dpr);
 
@@ -701,7 +701,7 @@ export class GameEngine {
     this.doors.forEach((d, i) => {
       const open = this.doorOpen[i];
       const half = 32 * (1 - open * 0.92);
-      g.fillStyle = '#233049';
+      g.fillStyle = '#31302e';
       if (d.horizontal) {
         g.fillRect(d.x, d.y - 4, half, 8);
         g.fillRect(d.x + 64 - half, d.y - 4, half, 8);
@@ -709,7 +709,7 @@ export class GameEngine {
         g.fillRect(d.x - 4, d.y, 8, half);
         g.fillRect(d.x - 4, d.y + 64 - half, 8, half);
       }
-      g.fillStyle = open > 0.5 ? 'rgba(96,165,250,0.7)' : 'rgba(100,116,139,0.6)';
+      g.fillStyle = open > 0.5 ? 'rgba(255,122,56,0.7)' : 'rgba(116,115,113,0.6)';
       const lx = d.horizontal ? d.x - 6 : d.x - 1.5;
       const ly = d.horizontal ? d.y - 1.5 : d.y - 6;
       g.fillRect(lx, ly, 3, 3);
@@ -718,7 +718,7 @@ export class GameEngine {
 
   private led(g: CanvasRenderingContext2D, x: number, y: number, color: string, on: number) {
     if (on <= 0) {
-      g.fillStyle = '#1b2433';
+      g.fillStyle = '#252422';
       g.fillRect(x - 1.5, y - 1.5, 3, 3);
       return;
     }
@@ -744,7 +744,7 @@ export class GameEngine {
         const link = LINKS.find(l => l.a === p.device)!;
         const up = linkUp(st, link.id);
         const flicker = 0.85 + Math.sin(t * 3 + p.x) * 0.05;
-        g.fillStyle = up ? `rgba(56,189,248,${0.35 * flicker})` : 'rgba(148,163,184,0.22)';
+        g.fillStyle = up ? `rgba(255,163,112,${0.35 * flicker})` : 'rgba(163,162,160,0.22)';
         g.fillRect(p.x + p.w / 2 - 32, p.y + 10, 64, 6);
         if (!up) {
           // tray icon: tiny warning glyph, not a highlight
@@ -771,7 +771,7 @@ export class GameEngine {
           this.led(g, p.x + 24 + (i % 3) * 20, p.y + 30 + Math.floor(i / 3) * 18, G, on);
         }
         const fibre = linkUp(st, 'L-SRV');
-        this.led(g, p.x + p.w - 10, p.y + p.h - 10, 'rgba(56,189,248,A)', fibre ? blink('L-SRV', 9) : 0);
+        this.led(g, p.x + p.w - 10, p.y + p.h - 10, 'rgba(255,163,112,A)', fibre ? blink('L-SRV', 9) : 0);
       }
       if (p.kind === 'rack' && !p.device) {
         for (let i = 0; i < 5; i++) {
@@ -783,7 +783,7 @@ export class GameEngine {
         const bars = Math.floor(p.w / 12);
         for (let i = 0; i < bars; i++) {
           const h = (0.3 + 0.7 * Math.abs(Math.sin(t * 0.8 + i * 0.7))) * (p.h - 8);
-          g.fillStyle = `rgba(56,189,248,${0.25 + 0.2 * hash(i)})`;
+          g.fillStyle = `rgba(255,163,112,${0.25 + 0.2 * hash(i)})`;
           g.fillRect(p.x + 6 + i * 12, p.y + p.h - 4 - h, 6, h);
         }
       }
@@ -792,9 +792,9 @@ export class GameEngine {
         for (let i = 0; i < n; i++) {
           const sx = p.x + 14 + i * ((p.w - 28) / n);
           const w = (p.w - 28) / n - 10;
-          g.fillStyle = `rgba(56,189,248,${0.12 + 0.06 * Math.sin(t * 2 + i)})`;
+          g.fillStyle = `rgba(255,163,112,${0.12 + 0.06 * Math.sin(t * 2 + i)})`;
           g.fillRect(sx, p.y + 12, w, 6);
-          g.fillStyle = 'rgba(148,163,184,0.15)';
+          g.fillStyle = 'rgba(163,162,160,0.15)';
           g.fillRect(sx, p.y + 22, w * (0.4 + 0.5 * hash(i + p.x)), 2);
         }
       }
@@ -819,7 +819,7 @@ export class GameEngine {
         g.fillRect(-3.5, -3.5, 7, 7);
         g.restore();
         if (s.traced) {
-          g.strokeStyle = 'rgba(221,214,254,0.6)';
+          g.strokeStyle = 'rgba(223,222,220,0.6)';
           g.lineWidth = 1;
           g.beginPath();
           g.arc(x, y, 14 + Math.sin(this.time * 6) * 2, 0, Math.PI * 2);
@@ -827,7 +827,7 @@ export class GameEngine {
         }
         continue;
       }
-      const color = s.kind === 'reply' ? '103,232,249' : s.kind === 'loop' ? '251,191,36' : '96,165,250';
+      const color = s.kind === 'reply' ? '103,232,249' : s.kind === 'loop' ? '251,191,36' : '255,122,56';
       g.fillStyle = `rgba(${color},0.18)`;
       g.beginPath();
       g.arc(x, y, 5, 0, Math.PI * 2);
@@ -839,7 +839,7 @@ export class GameEngine {
     }
     for (const f of this.puffs) {
       const a = 1 - f.t / 0.8;
-      g.strokeStyle = f.ok ? `rgba(96,165,250,${a * 0.5})` : `rgba(226,232,240,${a * 0.7})`;
+      g.strokeStyle = f.ok ? `rgba(255,122,56,${a * 0.5})` : `rgba(233,232,230,${a * 0.7})`;
       g.lineWidth = 1.2;
       g.beginPath();
       g.arc(f.x, f.y, 3 + f.t * 16, 0, Math.PI * 2);
@@ -860,7 +860,7 @@ export class GameEngine {
     if (!this.near) return;
     const { x, y } = this.near;
     g.save();
-    g.strokeStyle = 'rgba(96,165,250,0.55)';
+    g.strokeStyle = 'rgba(255,122,56,0.55)';
     g.lineWidth = 1.5;
     g.setLineDash([4, 5]);
     g.lineDashOffset = -this.time * 12;
@@ -884,32 +884,32 @@ export class GameEngine {
     g.rotate(p.angle + Math.PI / 2);
     g.scale(breathe, breathe);
     // legs
-    g.fillStyle = '#1e293b';
+    g.fillStyle = '#2a2927';
     g.beginPath();
     g.ellipse(-5, walk * 6, 3.5, 6, 0, 0, Math.PI * 2);
     g.ellipse(5, -walk * 6, 3.5, 6, 0, 0, Math.PI * 2);
     g.fill();
     // tool pack (behind)
-    g.fillStyle = '#1d4ed8';
+    g.fillStyle = '#c0390a';
     g.beginPath();
     g.roundRect(-7, 5, 14, 8, 2);
     g.fill();
     // torso
-    g.fillStyle = '#334155';
+    g.fillStyle = '#41403e';
     g.beginPath();
     g.ellipse(0, 0, 12, 8, 0, 0, Math.PI * 2);
     g.fill();
-    g.strokeStyle = '#475569';
+    g.strokeStyle = '#555452';
     g.lineWidth = 1;
     g.stroke();
     // shoulder stripe
-    g.strokeStyle = '#60a5fa';
+    g.strokeStyle = '#ff7a38';
     g.lineWidth = 1.6;
     g.beginPath();
     g.arc(0, 0, 9.5, Math.PI * 1.15, Math.PI * 1.85);
     g.stroke();
     // arms
-    g.fillStyle = '#3b4a61';
+    g.fillStyle = '#4a4947';
     g.beginPath();
     g.arc(-12, -walk * 4, 3.2, 0, Math.PI * 2);
     g.arc(12, walk * 4, 3.2, 0, Math.PI * 2);
@@ -919,17 +919,17 @@ export class GameEngine {
     g.beginPath();
     g.arc(0, -1, 6.2, 0, Math.PI * 2);
     g.fill();
-    g.fillStyle = '#1f2937';
+    g.fillStyle = '#2a2927';
     g.beginPath();
     g.arc(0, 0.5, 6.4, 0, Math.PI);
     g.fill();
-    g.strokeStyle = '#0f172a';
+    g.strokeStyle = '#191816';
     g.lineWidth = 1.8;
     g.beginPath();
     g.arc(0, -1, 7.4, Math.PI * 0.05, Math.PI * 0.95);
     g.stroke();
     const ledOn = Math.sin(this.time * 3) > 0.6;
-    g.fillStyle = ledOn ? '#60a5fa' : '#1e3a8a';
+    g.fillStyle = ledOn ? '#ff7a38' : '#5a2410';
     g.fillRect(6, -3, 2.4, 2.4);
     g.restore();
   }
@@ -943,10 +943,10 @@ export class GameEngine {
     const inside = p.x >= r.x && p.x <= r.x + r.w && p.y >= r.y && p.y <= r.y + r.h;
     if (inside) {
       const grad = g.createRadialGradient(p.x, p.y, 20, p.x, p.y, 170);
-      grad.addColorStop(0, 'rgba(2,4,8,0)');
-      grad.addColorStop(1, 'rgba(2,4,8,0.9)');
+      grad.addColorStop(0, 'rgba(6,5,3,0)');
+      grad.addColorStop(1, 'rgba(6,5,3,0.9)');
       g.fillStyle = grad;
-    } else g.fillStyle = 'rgba(2,4,8,0.88)';
+    } else g.fillStyle = 'rgba(6,5,3,0.88)';
     g.fillRect(r.x - 7, r.y - 7, r.w + 14, r.h + 14);
   }
 
@@ -959,13 +959,13 @@ export class GameEngine {
     m.setTransform(1, 0, 0, 1, 0, 0);
     m.clearRect(0, 0, w, h);
     m.setTransform(s, 0, 0, s, (w - WORLD.w * s) / 2, (h - WORLD.h * s) / 2);
-    m.fillStyle = 'rgba(10,15,25,0.9)';
+    m.fillStyle = 'rgba(17,16,14,0.9)';
     m.fillRect(0, 0, WORLD.w, WORLD.h);
     for (const r of ROOMS) {
       const seen = this.visited.has(r.id);
-      m.fillStyle = seen ? 'rgba(30,41,59,0.95)' : 'rgba(20,27,40,0.8)';
+      m.fillStyle = seen ? 'rgba(42,41,39,0.95)' : 'rgba(28,27,25,0.8)';
       m.fillRect(r.x, r.y, r.w, r.h);
-      m.strokeStyle = r.id === this.room?.id ? 'rgba(96,165,250,0.9)' : seen ? 'rgba(100,116,139,0.6)' : 'rgba(51,65,85,0.5)';
+      m.strokeStyle = r.id === this.room?.id ? 'rgba(255,122,56,0.9)' : seen ? 'rgba(116,115,113,0.6)' : 'rgba(65,64,62,0.5)';
       m.lineWidth = 12;
       m.strokeRect(r.x, r.y, r.w, r.h);
     }
@@ -973,7 +973,7 @@ export class GameEngine {
     for (const d of known) {
       const it = INTERACTABLES.find(i => i.device === d);
       if (!it) continue;
-      m.fillStyle = 'rgba(148,163,184,0.9)';
+      m.fillStyle = 'rgba(163,162,160,0.9)';
       m.fillRect(it.x - 14, it.y - 14, 28, 28);
     }
     if (this.tracing) {
@@ -983,7 +983,7 @@ export class GameEngine {
       m.arc(x, y, 22, 0, Math.PI * 2);
       m.fill();
     }
-    m.fillStyle = '#60a5fa';
+    m.fillStyle = '#ff7a38';
     m.beginPath();
     m.arc(this.player.x, this.player.y, 26, 0, Math.PI * 2);
     m.fill();

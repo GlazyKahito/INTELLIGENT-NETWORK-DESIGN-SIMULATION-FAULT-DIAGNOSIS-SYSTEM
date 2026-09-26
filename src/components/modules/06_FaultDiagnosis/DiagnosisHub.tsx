@@ -97,7 +97,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
   };
 
   return (
-    <section className="py-10 bg-[#070a12]">
+    <section className="py-10 bg-[#0c0b09]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -118,7 +118,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
               playSound('success');
               onProceedToAssessments();
             }}
-            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0"
+            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,95,31,0.3)] shrink-0"
           >
             Take Assessments (Quiz) →
           </button>
@@ -133,7 +133,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
 
         {/* Where the packet dies — replays whenever the fault changes or is repaired */}
         {activeFault && (
-          <div className="rounded-2xl border border-slate-800 bg-[#0b101d] px-5 py-4">
+          <div className="rounded-2xl border border-slate-800 bg-[#12110f] px-5 py-4">
             <div className="mb-1 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
               <span>Packet path · PC → server</span>
               <span>{isFixed ? 'after repair' : 'fault injected'}</span>
@@ -209,7 +209,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
 
             {/* Suggested test commands quick strip */}
             {activeFault && (
-              <div className="p-3 bg-[#0d1322] border border-slate-800 rounded-xl flex items-center justify-between text-xs font-mono">
+              <div className="p-3 bg-[#151412] border border-slate-800 rounded-xl flex items-center justify-between text-xs font-mono">
                 <span className="text-slate-400">Recommended Test Commands:</span>
                 <div className="flex gap-2">
                   {activeFault.testCommands.map(cmd => (
@@ -228,7 +228,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
 
           {/* Right: Deductive Reasoning & Remediation Panel */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="p-6 rounded-2xl bg-[#0d1322] border border-slate-800 shadow-xl space-y-5">
+            <div className="p-6 rounded-2xl bg-[#151412] border border-slate-800 shadow-xl space-y-5">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
                   Deductive Diagnostic Engine
@@ -264,7 +264,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
               </div>
 
               {/* 2. Isolated Root Cause */}
-              <div className="p-4 rounded-xl bg-[#0e1626] border-l-4 border-amber-400 shadow">
+              <div className="p-4 rounded-xl bg-[#171614] border-l-4 border-amber-400 shadow">
                 <span className="text-[10px] font-mono text-amber-400 uppercase font-bold block mb-1">
                   2. Inferred Root Cause:
                 </span>
@@ -285,7 +285,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
                 {activeFault && !isFixed && (
                   <button
                     onClick={handleApplyFix}
-                    className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl font-mono text-xs transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] active:scale-95 flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl font-mono text-xs transition-all shadow-[0_0_15px_rgba(255,95,31,0.3)] active:scale-95 flex items-center justify-center gap-2"
                   >
                     <Wrench className="w-4 h-4" />
                     <span>EXECUTE CORRECTIVE ACTION (APPLY FIX)</span>

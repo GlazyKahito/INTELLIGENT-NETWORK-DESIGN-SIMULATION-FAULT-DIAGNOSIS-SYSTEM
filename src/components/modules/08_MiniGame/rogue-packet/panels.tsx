@@ -61,7 +61,7 @@ export function Sheet({
 }) {
   return (
     <motion.div
-      className="absolute inset-0 z-30 flex items-end justify-center bg-[#04060b]/60 p-2 backdrop-blur-[2px] sm:items-center sm:p-6"
+      className="absolute inset-0 z-30 flex items-end justify-center bg-[#080705]/60 p-2 backdrop-blur-[2px] sm:items-center sm:p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -72,7 +72,7 @@ export function Sheet({
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={cn('flex max-h-[88%] w-full flex-col overflow-hidden rounded-lg border border-slate-700/80 bg-[#0a0f1a]/97 shadow-2xl', wide ? 'max-w-4xl' : 'max-w-2xl')}
+        className={cn('flex max-h-[88%] w-full flex-col overflow-hidden rounded-lg border border-slate-700/80 bg-[#11100e]/97 shadow-2xl', wide ? 'max-w-4xl' : 'max-w-2xl')}
         initial={{ y: 16, opacity: 0, scale: 0.985 }}
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: 8, opacity: 0 }}
@@ -573,7 +573,7 @@ export function TopologyMap({
           const w = linkStats ? 1 + (counters.link[l.id] / max) * 3 : 1.2;
           return (
             <g key={l.id}>
-              <motion.line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgb(96 165 250 / 0.45)" strokeWidth={w} initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.5, ease: EASE_NET }} />
+              <motion.line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgb(255 122 56 / 0.45)" strokeWidth={w} initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.5, ease: EASE_NET }} />
               {linkStats && (
                 <text x={(x1 + x2) / 2 + 6} y={(y1 + y2) / 2} className="fill-slate-500 font-mono" style={{ fontSize: 9 }}>
                   {counters.link[l.id]}
@@ -587,8 +587,8 @@ export function TopologyMap({
           const known = discovered.has(d);
           return (
             <g key={d}>
-              <circle cx={x} cy={y} r={known ? 9 : 7} fill="#0a0f1a" stroke={known ? 'rgb(96 165 250 / 0.8)' : 'rgb(71 85 105 / 0.6)'} strokeDasharray={known ? undefined : '2 3'} strokeWidth={1.5} />
-              {known && <circle cx={x} cy={y} r={3.5} fill="rgb(96 165 250)" />}
+              <circle cx={x} cy={y} r={known ? 9 : 7} fill="#11100e" stroke={known ? 'rgb(255 122 56 / 0.8)' : 'rgb(85 84 82 / 0.6)'} strokeDasharray={known ? undefined : '2 3'} strokeWidth={1.5} />
+              {known && <circle cx={x} cy={y} r={3.5} fill="rgb(255 122 56)" />}
               <text x={x} y={y + 22} textAnchor="middle" className={known ? 'fill-slate-300 font-mono' : 'fill-slate-600 font-mono'} style={{ fontSize: 10 }}>
                 {known ? d : '?'}
               </text>

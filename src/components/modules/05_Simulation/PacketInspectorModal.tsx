@@ -17,10 +17,10 @@ export const PacketInspectorModal: React.FC<PacketInspectorModalProps> = ({
   if (!isOpen || !packet) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#05070d]/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-150">
-      <div className="max-w-2xl w-full bg-[#0d1322] border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col font-mono text-xs">
+    <div className="fixed inset-0 z-50 bg-[#090806]/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-150">
+      <div className="max-w-2xl w-full bg-[#151412] border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col font-mono text-xs">
         {/* Header */}
-        <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-[#0a0f1c]">
+        <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-[#11100e]">
           <div className="flex items-center gap-2">
             <Search className="w-4 h-4 text-emerald-400" />
             <span className="font-bold text-slate-100 uppercase tracking-wider">
@@ -179,7 +179,7 @@ export const PacketInspectorModal: React.FC<PacketInspectorModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-3 bg-[#0a0f1c] border-t border-slate-800 flex items-center justify-between text-slate-500 text-[11px]">
+        <div className="p-3 bg-[#11100e] border-t border-slate-800 flex items-center justify-between text-slate-500 text-[11px]">
           <span>CAPTURED VIA VIRTUAL PROMISCUOUS TAP</span>
           <button
             onClick={() => {

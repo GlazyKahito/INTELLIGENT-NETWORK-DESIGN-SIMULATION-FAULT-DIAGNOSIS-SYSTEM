@@ -438,14 +438,14 @@ export function RoguePacketGame({ onExit, onReport }: { onExit: () => void; onRe
   const firstOpen = LEVELS.findIndex(l => !cleared.includes(l.id));
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#05070d] font-sans text-slate-100 select-none">
+    <div className="relative h-full w-full overflow-hidden bg-[#090806] font-sans text-slate-100 select-none">
       <canvas ref={canvasRef} className="absolute inset-0 block" aria-label="Rogue Packet — network operations centre" role="img" />
 
       {/* HUD */}
       <AnimatePresence>
         {screen === 'play' && (
           <motion.div className="pointer-events-none absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="pointer-events-auto absolute left-3 top-3 max-w-[60%] rounded-md border border-slate-800 bg-[#070b14]/85 px-3 py-2 backdrop-blur sm:left-4 sm:top-4">
+            <div className="pointer-events-auto absolute left-3 top-3 max-w-[60%] rounded-md border border-slate-800 bg-[#0d0c0a]/85 px-3 py-2 backdrop-blur sm:left-4 sm:top-4">
               <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-emerald-400">
                 Level {level.id} · {level.title}
               </div>
@@ -468,7 +468,7 @@ export function RoguePacketGame({ onExit, onReport }: { onExit: () => void; onRe
             </div>
 
             <div className="pointer-events-auto absolute right-3 top-3 flex flex-col items-end gap-2 sm:right-4 sm:top-4">
-              <div className="flex items-center gap-3 rounded-md border border-slate-800 bg-[#070b14]/85 px-3 py-2 backdrop-blur">
+              <div className="flex items-center gap-3 rounded-md border border-slate-800 bg-[#0d0c0a]/85 px-3 py-2 backdrop-blur">
                 <span className="font-mono text-sm tabular-nums text-slate-200">{mmss(elapsed)}</span>
                 <div className="w-20 sm:w-28">
                   <div className="flex justify-between font-mono text-[9px] uppercase tracking-wider text-slate-500">
@@ -515,7 +515,7 @@ export function RoguePacketGame({ onExit, onReport }: { onExit: () => void; onRe
             <AnimatePresence>
               {traceLog && (
                 <motion.div
-                  className="pointer-events-auto absolute inset-x-0 top-20 mx-auto w-[min(94%,34rem)] rounded-md border border-violet-300/30 bg-[#0d0a18]/90 px-4 py-3 backdrop-blur sm:top-[6.5rem]"
+                  className="pointer-events-auto absolute inset-x-0 top-20 mx-auto w-[min(94%,34rem)] rounded-md border border-violet-300/30 bg-[#0e0d0b]/90 px-4 py-3 backdrop-blur sm:top-[6.5rem]"
                   initial={{ opacity: 0, y: -8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
@@ -573,7 +573,7 @@ export function RoguePacketGame({ onExit, onReport }: { onExit: () => void; onRe
       </AnimatePresence>
 
       {/* Minimap (always mounted so the engine can draw into it) */}
-      <div className={cn('pointer-events-none absolute bottom-3 right-3 rounded-md border border-slate-800 bg-[#070b14]/80 p-1 backdrop-blur transition-opacity sm:bottom-4 sm:right-4', screen === 'play' && !touch ? 'opacity-100' : 'opacity-0')}>
+      <div className={cn('pointer-events-none absolute bottom-3 right-3 rounded-md border border-slate-800 bg-[#0d0c0a]/80 p-1 backdrop-blur transition-opacity sm:bottom-4 sm:right-4', screen === 'play' && !touch ? 'opacity-100' : 'opacity-0')}>
         <canvas ref={miniRef} width={184} height={126} className="block h-[126px] w-[184px]" aria-hidden />
       </div>
 
@@ -784,7 +784,7 @@ export function RoguePacketGame({ onExit, onReport }: { onExit: () => void; onRe
       <AnimatePresence>
         {screen === 'play' && elapsed < 9 && !panel && faults.length > 0 && (
           <motion.div
-            className="pointer-events-none absolute inset-x-0 bottom-40 mx-auto w-[min(92%,30rem)] rounded-md border border-slate-700 bg-[#0a0f1a]/92 px-4 py-3 backdrop-blur sm:bottom-24"
+            className="pointer-events-none absolute inset-x-0 bottom-40 mx-auto w-[min(92%,30rem)] rounded-md border border-slate-700 bg-[#11100e]/92 px-4 py-3 backdrop-blur sm:bottom-24"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
@@ -814,7 +814,7 @@ function HudButton({ label, k, icon, onClick, primary }: { label: string; k: str
       aria-label={`${label} (${k})`}
       className={cn(
         'flex h-8 items-center gap-1.5 rounded-md border px-2.5 text-xs backdrop-blur transition-colors',
-        primary ? 'border-emerald-400/60 bg-emerald-500/15 text-emerald-200 hover:bg-emerald-500/25' : 'border-slate-800 bg-[#070b14]/85 text-slate-300 hover:border-slate-600 hover:text-slate-100',
+        primary ? 'border-emerald-400/60 bg-emerald-500/15 text-emerald-200 hover:bg-emerald-500/25' : 'border-slate-800 bg-[#0d0c0a]/85 text-slate-300 hover:border-slate-600 hover:text-slate-100',
       )}
     >
       {icon}
@@ -827,7 +827,7 @@ function HudButton({ label, k, icon, onClick, primary }: { label: string; k: str
 function Overlay({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      className="absolute inset-0 z-40 flex items-start justify-center overflow-y-auto bg-[#04060b]/75 p-4 backdrop-blur-[3px] sm:items-center sm:p-8"
+      className="absolute inset-0 z-40 flex items-start justify-center overflow-y-auto bg-[#080705]/75 p-4 backdrop-blur-[3px] sm:items-center sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -907,7 +907,7 @@ function Joystick({ onMove }: { onMove: (x: number, y: number) => void }) {
   return (
     <div
       ref={base}
-      className="absolute bottom-6 left-5 h-28 w-28 touch-none rounded-full border border-slate-700 bg-[#070b14]/60 backdrop-blur"
+      className="absolute bottom-6 left-5 h-28 w-28 touch-none rounded-full border border-slate-700 bg-[#0d0c0a]/60 backdrop-blur"
       onPointerDown={e => (e.currentTarget.setPointerCapture(e.pointerId), move(e))}
       onPointerMove={e => e.buttons && move(e)}
       onPointerUp={end}

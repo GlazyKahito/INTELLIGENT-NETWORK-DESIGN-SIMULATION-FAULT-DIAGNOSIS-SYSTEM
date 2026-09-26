@@ -81,7 +81,7 @@ export const CommandReference: React.FC<{ onTestInTerminal: (cmd: string) => voi
         {commands.map(cmd => (
           <div
             key={cmd.name}
-            className="p-5 rounded-xl bg-[#0d1322] border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-4"
+            className="p-5 rounded-xl bg-[#151412] border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-4"
           >
             <div>
               <div className="flex items-center justify-between mb-2">
