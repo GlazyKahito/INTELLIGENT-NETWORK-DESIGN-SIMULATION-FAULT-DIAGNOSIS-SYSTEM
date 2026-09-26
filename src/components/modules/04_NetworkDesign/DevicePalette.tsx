@@ -83,7 +83,7 @@ export const DevicePalette: React.FC<DevicePaletteProps> = ({
             playSound('click');
             onValidate();
           }}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-mono font-bold transition-all shadow-[0_0_12px_rgba(16,185,129,0.3)] active:scale-95"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-mono font-bold transition-all shadow-[0_0_12px_rgba(59,130,246,0.3)] active:scale-95"
         >
           <CheckCircle className="w-3.5 h-3.5" />
           <span>Validate Topology</span>

@@ -72,7 +72,7 @@ export const CommandReference: React.FC<{ onTestInTerminal: (cmd: string) => voi
             <span>DCN Core Networking Commands Playbook</span>
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
-            Experiment 01: Layer 3 & 4 Diagnostic CLI Utilities for Connectivity and Socket Inspection.
+            Layer 3 & 4 Diagnostic CLI Utilities for Connectivity and Socket Inspection.
           </p>
         </div>
       </div>

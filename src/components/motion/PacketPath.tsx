@@ -196,7 +196,7 @@ export function LinkLoader({ label = 'Transmitting', className }: { label?: stri
             {i > 0 && <span className="h-px w-3 bg-slate-600" />}
             <motion.span
               className="h-1.5 w-1.5 rounded-full border border-emerald-400"
-              animate={reduce ? { backgroundColor: 'rgb(52 211 153)' } : { backgroundColor: ['rgba(52,211,153,0)', 'rgb(52,211,153)', 'rgb(52,211,153)', 'rgba(52,211,153,0)'] }}
+              animate={reduce ? { backgroundColor: 'rgb(96 165 250)' } : { backgroundColor: ['rgba(96,165,250,0)', 'rgb(96,165,250)', 'rgb(96,165,250)', 'rgba(96,165,250,0)'] }}
               transition={{ duration: 1.2, times: [0, 0.2, 0.75, 1], delay: i * 0.18, repeat: Infinity }}
             />
           </span>

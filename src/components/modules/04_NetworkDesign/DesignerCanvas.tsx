@@ -209,7 +209,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest mb-1.5">
-              <span>Experiment 08 // Central Capstone</span>
+              <span>Network design // System core</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
               Network Topology Designer
@@ -224,7 +224,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
               playSound('success');
               onProceedToSimulation();
             }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0 active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0 active:scale-95 cursor-pointer"
           >
             <span>Proceed to Simulation</span>
             <ArrowRight className="w-4 h-4" />
@@ -319,7 +319,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
                       y1={y1}
                       x2={x2}
                       y2={y2}
-                      stroke={isDown ? '#f43f5e' : '#10b981'}
+                      stroke={isDown ? '#f43f5e' : '#3b82f6'}
                       strokeWidth="5"
                       strokeOpacity="0.2"
                     />
@@ -329,7 +329,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
                       y1={y1}
                       x2={x2}
                       y2={y2}
-                      stroke={isDown ? '#f43f5e' : '#10b981'}
+                      stroke={isDown ? '#f43f5e' : '#3b82f6'}
                       strokeWidth="2.5"
                       strokeDasharray={isDown ? '5' : 'none'}
                     />
@@ -379,14 +379,14 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
                     isConnectSource
                       ? 'bg-amber-500/20 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.5)]'
                       : isSelected
-                      ? 'bg-[#0f172a] border-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.35)] ring-2 ring-emerald-500/50'
+                      ? 'bg-[#0f172a] border-emerald-400 shadow-[0_0_20px_rgba(59,130,246,0.35)] ring-2 ring-emerald-500/50'
                       : 'bg-[#0d1322]/95 border-slate-800 hover:border-slate-700 shadow-xl'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     {/* Status LED */}
                     <div className="flex items-center gap-1.5">
-                      <div className={`w-2.5 h-2.5 rounded-full ${isDown ? 'bg-rose-500 animate-pulse' : 'bg-emerald-400 shadow-[0_0_8px_#10b981]'}`} />
+                      <div className={`w-2.5 h-2.5 rounded-full ${isDown ? 'bg-rose-500 animate-pulse' : 'bg-emerald-400 shadow-[0_0_8px_#3b82f6]'}`} />
                       <span className="text-[9px] font-mono text-slate-400 uppercase">
                         {isDown ? 'DOWN' : 'UP'}
                       </span>

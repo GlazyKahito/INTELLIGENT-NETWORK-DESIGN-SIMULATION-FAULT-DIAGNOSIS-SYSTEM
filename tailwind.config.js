@@ -1,3 +1,5 @@
+import colors from 'tailwindcss/colors';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -21,6 +23,10 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        // Signal Blue: the brand accent. The whole UI was authored against "emerald",
+        // so remapping the scale recolours every utility in one place.
+        emerald: colors.blue,
+        teal: colors.sky,
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -41,8 +47,8 @@ export default {
           card: '#101726',
           border: '#1f293d',
           borderLight: '#2c3b59',
-          accent: '#10b981', // Emerald
-          accentGlow: 'rgba(16, 185, 129, 0.18)',
+          accent: '#3b82f6', // Signal blue
+          accentGlow: 'rgba(59, 130, 246, 0.18)',
           cyan: '#06b6d4',
           amber: '#f59e0b',
           rose: '#f43f5e',

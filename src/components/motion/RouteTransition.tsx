@@ -41,27 +41,27 @@ export function RouteTransition({ from, to }: { from: string; to: string }) {
             y1={8}
             x2={B}
             y2={8}
-            stroke="rgb(52 211 153)"
+            stroke="rgb(96 165 250)"
             strokeWidth={1}
             initial={{ pathLength: 0 }}
             animate={{ pathLength: variant === 'break' ? 0.64 : 1 }}
             transition={{ duration: 0.45, ease: EASE_NET }}
           />
-          <circle cx={A} cy={8} r={3.5} fill="rgb(52 211 153)" />
+          <circle cx={A} cy={8} r={3.5} fill="rgb(96 165 250)" />
           <motion.circle
             cx={B}
             cy={8}
             r={3.5}
             fill="#070a12"
-            stroke={variant === 'break' ? 'rgb(100 116 139)' : 'rgb(52 211 153)'}
+            stroke={variant === 'break' ? 'rgb(100 116 139)' : 'rgb(96 165 250)'}
             strokeWidth={1.4}
-            animate={variant === 'break' ? {} : { fill: 'rgb(52 211 153)' }}
+            animate={variant === 'break' ? {} : { fill: 'rgb(96 165 250)' }}
             transition={{ delay: 0.45, duration: 0.15 }}
           />
           <motion.circle
             r={2.4}
             cy={8}
-            fill="rgb(167 243 208)"
+            fill="rgb(191 219 254)"
             initial={{ cx: A, opacity: 1 }}
             animate={{ cx: stopX, opacity: variant === 'break' ? [1, 1, 0] : [1, 1, 0] }}
             transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1], opacity: { times: [0, 0.9, 1], duration: 0.5 } }}

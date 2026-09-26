@@ -56,7 +56,7 @@ export const HammingSimulator: React.FC = () => {
             <span>Hamming Code (7,4) Error Detection & Single-Bit Correction</span>
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
-            Experiment 06: Richard Hamming's Linear Block Code with Even Parity and 3-Bit Syndrome Vectoring.
+            Richard Hamming's Linear Block Code with Even Parity and 3-Bit Syndrome Vectoring.
           </p>
         </div>
 

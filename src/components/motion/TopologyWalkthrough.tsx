@@ -67,7 +67,7 @@ export function TopologyWalkthrough() {
                   y1={Y(i)}
                   x2={40}
                   y2={Y(i + 1)}
-                  stroke={hot ? 'rgb(167 243 208)' : 'rgb(52 211 153)'}
+                  stroke={hot ? 'rgb(191 219 254)' : 'rgb(96 165 250)'}
                   strokeWidth={2}
                   initial={false}
                   animate={{ pathLength: lit ? 1 : 0 }}
@@ -87,11 +87,11 @@ export function TopologyWalkthrough() {
                   fill="#070a12"
                   strokeWidth={2}
                   initial={false}
-                  animate={{ stroke: lit ? 'rgb(52 211 153)' : 'rgb(51 65 85)', scale: hover === i ? 1.12 : 1 }}
+                  animate={{ stroke: lit ? 'rgb(96 165 250)' : 'rgb(51 65 85)', scale: hover === i ? 1.12 : 1 }}
                   transition={{ duration: 0.3 }}
                   style={{ originX: '40px', originY: `${Y(i)}px` }}
                 />
-                <motion.circle cx={40} cy={Y(i)} r={4.5} fill="rgb(52 211 153)" initial={false} animate={{ opacity: lit ? 1 : 0 }} transition={{ delay: lit ? 0.35 : 0, duration: 0.2 }} />
+                <motion.circle cx={40} cy={Y(i)} r={4.5} fill="rgb(96 165 250)" initial={false} animate={{ opacity: lit ? 1 : 0 }} transition={{ delay: lit ? 0.35 : 0, duration: 0.2 }} />
                 <text x={64} y={Y(i) - 2} className={lit ? 'fill-slate-100' : 'fill-slate-600'} style={{ fontSize: 13, fontWeight: 600 }}>
                   {s.node}
                 </text>
@@ -105,11 +105,11 @@ export function TopologyWalkthrough() {
             <motion.circle
               cx={40}
               r={5}
-              fill="rgb(167 243 208)"
+              fill="rgb(191 219 254)"
               initial={false}
               animate={{ cy: Y(shown) }}
               transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
-              style={{ filter: 'drop-shadow(0 0 5px rgb(52 211 153))' }}
+              style={{ filter: 'drop-shadow(0 0 5px rgb(96 165 250))' }}
             />
           )}
         </svg>

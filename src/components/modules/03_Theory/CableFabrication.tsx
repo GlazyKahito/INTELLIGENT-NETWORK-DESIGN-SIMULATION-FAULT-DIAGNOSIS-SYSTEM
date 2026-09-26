@@ -54,7 +54,7 @@ export const CableFabrication: React.FC = () => {
             <span>LAN Cable Fabrication (ANSI/TIA-568-A vs TIA-568-B)</span>
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
-            Experiment 02: UTP Cat6 Termination, RJ-45 (8P8C) Modular Plug Pinout Standards & Cable Continuity Tester.
+            UTP Cat6 Termination, RJ-45 (8P8C) Modular Plug Pinout Standards & Cable Continuity Tester.
           </p>
         </div>
 
@@ -139,7 +139,7 @@ export const CableFabrication: React.FC = () => {
                 onMouseLeave={() => setActivePin(null)}
                 className={`flex items-center gap-3 text-xs font-mono p-2 rounded-xl border transition-all ${
                   activePin === w.pin
-                    ? 'bg-slate-800 border-emerald-500/60 shadow-[0_0_10px_rgba(16,185,129,0.2)]'
+                    ? 'bg-slate-800 border-emerald-500/60 shadow-[0_0_10px_rgba(59,130,246,0.2)]'
                     : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700'
                 }`}
               >
@@ -218,7 +218,7 @@ export const CableFabrication: React.FC = () => {
         </div>
         <button
           onClick={runContinuityTest}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0 active:scale-95 cursor-pointer"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0 active:scale-95 cursor-pointer"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           <span>RUN PIN CONTINUITY TEST</span>

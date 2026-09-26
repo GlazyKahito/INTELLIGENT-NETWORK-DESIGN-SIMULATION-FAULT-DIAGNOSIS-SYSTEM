@@ -17,7 +17,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'The "arp -a" command queries and prints the local ARP table containing IPv4-to-Ethernet MAC address mappings learned via Layer 2 broadcast discovery.',
-    conceptReview: 'Experiment 1: Address Resolution Protocol (ARP) & Networking Commands',
+    conceptReview: 'Address Resolution Protocol (ARP) & Networking Commands',
   },
   {
     id: 'q2-cabling',
@@ -32,7 +32,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'TIA-568-B pinout order is: 1: White-Orange, 2: Orange, 3: White-Green, 4: Blue, 5: White-Blue, 6: Green, 7: White-Brown, 8: Brown. Note that pins 4 and 5 are the solid/striped blue pair, and pin 6 is solid green.',
-    conceptReview: 'Experiment 2: LAN Cable Fabrication & ANSI/TIA-568 Standards',
+    conceptReview: 'LAN Cable Fabrication & ANSI/TIA-568 Standards',
   },
   {
     id: 'q3-addressing',
@@ -47,7 +47,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'Mask 255.255.240.0 has a block size in the 3rd octet of 256 - 240 = 16. Subnet intervals in octet 3 are 0, 16, 32, 48... Since 45 falls between 32 and 47, the Network Address is 172.24.32.0 and the Broadcast is 172.24.47.255.',
-    conceptReview: 'Experiment 5: IPv4 Subnetting & CIDR Calculation',
+    conceptReview: 'IPv4 Subnetting & CIDR Calculation',
   },
   {
     id: 'q4-tcp',
@@ -62,7 +62,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'c',
     explanation: 'Step 1: Client sends SYN. Step 2: Server responds with SYN-ACK (acknowledging client’s ISN and transmitting its own ISN). Step 3: Client replies with ACK.',
-    conceptReview: 'Experiment 4: TCP Header Architecture & Handshake Flow',
+    conceptReview: 'TCP Header Architecture & Handshake Flow',
   },
   {
     id: 'q5-hamming',
@@ -77,7 +77,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'The decimal value of the syndrome word (S4 S2 S1)_2 directly indicates the 1-based index of the corrupted bit. Decimal 6 corresponds to bit position 6 (D3). Inverting this bit restores original transmission integrity.',
-    conceptReview: 'Experiment 6: Hamming Code Error Detection and Syndrome Vectoring',
+    conceptReview: 'Hamming Code Error Detection and Syndrome Vectoring',
   },
   {
     id: 'q6-udp',
@@ -92,7 +92,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'UDP is connectionless and has minimal 8-byte header overhead. It does not establish handshakes or retransmit dropped packets, eliminating latency spikes (jitter) which are detrimental to real-time streams.',
-    conceptReview: 'Experiment 7: UDP Communication & Connectionless Sockets',
+    conceptReview: 'UDP Communication & Connectionless Sockets',
   },
 
   // --- PHASE 2: NETWORK DIAGNOSIS SCENARIOS ---
@@ -110,7 +110,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'Because PC1 can communicate locally with PC2, Layer 1 and 2 are functioning. Pinging a foreign subnet (192.168.2.0/24) requires forwarding to the router gateway. Since PC1 points to non-existent 192.168.1.254, ARP for the gateway fails and packets are never forwarded.',
-    conceptReview: 'Experiment 8: Inter-Subnet Routing & Gateway Troubleshooting',
+    conceptReview: 'Inter-Subnet Routing & Gateway Troubleshooting',
   },
   {
     id: 'q8-scen-mask',
@@ -126,7 +126,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'a',
     explanation: 'By applying mask 255.255.0.0, the network ID is 192.168.0.0. Both 192.168.1.10 and 192.168.2.10 fall inside the same /16 network. PC1 assumes the destination is on-link and attempts direct Layer 2 ARP rather than routing via the gateway.',
-    conceptReview: 'Experiment 5 & 8: Subnet Mask Boundary Faults',
+    conceptReview: 'Subnet Mask Boundary Faults',
   },
   {
     id: 'q9-scen-trace',
@@ -142,7 +142,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'Hop 1 succeeds at 192.168.1.1 (Router R1), confirming PC1-to-R1 connectivity. R1 then performs a routing lookup for destination 192.168.2.10. Lacking any route or default route, R1 drops the packet and times out.',
-    conceptReview: 'Experiment 1 & 8: Traceroute Route Analysis & Router Routing Tables',
+    conceptReview: 'Traceroute Route Analysis & Router Routing Tables',
   },
   {
     id: 'q10-scen-dns',
@@ -158,7 +158,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'Successful IP ping proves Layers 1 through 3 are fully operational to the server. The inability to resolve the human-readable domain "server.local" combined with an invalid DNS server IP confirms an application layer DNS resolver configuration fault.',
-    conceptReview: 'Experiment 1 & 7: DNS Name Resolution & Layer 7 Diagnosis',
+    conceptReview: 'DNS Name Resolution & Layer 7 Diagnosis',
   },
   {
     id: 'q11-scen-port',
@@ -174,7 +174,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'c',
     explanation: 'A TCP RST-ACK indicates that the host operating system received the SYN packet on an active IP address, but no application socket is listening on the requested port (Port 80). The OS actively rejects the connection.',
-    conceptReview: 'Experiment 4: TCP Header Flags & Socket States',
+    conceptReview: 'TCP Header Flags & Socket States',
   },
   {
     id: 'q12-scen-dup',
@@ -190,6 +190,6 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation: 'When two different hosts have the same IP, both transmit ARP replies with different MAC addresses. The switch constantly updates its CAM (Content Addressable Memory) table, sending traffic to whichever port spoke last.',
-    conceptReview: 'Experiment 1, 3 & 8: Duplicate IP Conflicts & Layer 2 Switching Behavior',
+    conceptReview: 'Duplicate IP Conflicts & Layer 2 Switching Behavior',
   },
 ];

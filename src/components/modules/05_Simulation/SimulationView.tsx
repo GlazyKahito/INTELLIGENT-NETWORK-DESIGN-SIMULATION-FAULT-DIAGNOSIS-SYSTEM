@@ -285,7 +285,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
             className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-bold font-mono text-xs transition-all shadow-xl cursor-pointer ${
               isSimulating
                 ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] active:scale-95'
+                : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-[0_0_20px_rgba(59,130,246,0.35)] active:scale-95'
             }`}
           >
             <Send className="w-4 h-4" />
@@ -315,7 +315,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke={isDown ? '#f43f5e' : '#10b981'}
+                    stroke={isDown ? '#f43f5e' : '#3b82f6'}
                     strokeWidth="4"
                     strokeOpacity="0.2"
                   />
@@ -324,13 +324,13 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke={isDown ? '#f43f5e' : '#10b981'}
+                    stroke={isDown ? '#f43f5e' : '#3b82f6'}
                     strokeWidth="2.5"
                     strokeDasharray={isDown ? '5' : 'none'}
                   />
                   {/* Idle keep-alive traffic so the network reads as live before you run anything */}
                   {!isDown && !isSimulating && !reduceMotion && (
-                    <circle r="2.5" fill="#6ee7b7" opacity="0.7">
+                    <circle r="2.5" fill="#93c5fd" opacity="0.7">
                       <animateMotion dur={`${2.4 + (link.id.length % 5) * 0.45}s`} repeatCount="indefinite" path={`M${x1},${y1} L${x2},${y2}`} />
                     </circle>
                   )}
@@ -355,7 +355,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
             >
               <div className="relative">
                 <div className={`w-9 h-9 rounded-full flex items-center justify-center text-slate-950 font-bold shadow-2xl ${
-                  protocol === 'TCP' ? 'bg-cyan-400 shadow-[0_0_20px_#06b6d4]' : protocol === 'UDP' ? 'bg-amber-400 shadow-[0_0_20px_#f59e0b]' : 'bg-emerald-400 shadow-[0_0_20px_#10b981]'
+                  protocol === 'TCP' ? 'bg-cyan-400 shadow-[0_0_20px_#06b6d4]' : protocol === 'UDP' ? 'bg-amber-400 shadow-[0_0_20px_#f59e0b]' : 'bg-emerald-400 shadow-[0_0_20px_#3b82f6]'
                 }`}>
                   <Zap className="w-4 h-4 fill-current" />
                 </div>
@@ -382,7 +382,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
                 }}
                 className={`absolute top-0 left-0 w-32 sm:w-36 p-3 rounded-2xl border transition-all z-10 ${
                   isCurrentHop
-                    ? 'bg-emerald-500/25 border-emerald-400 shadow-[0_0_25px_rgba(16,185,129,0.5)] scale-105'
+                    ? 'bg-emerald-500/25 border-emerald-400 shadow-[0_0_25px_rgba(59,130,246,0.5)] scale-105'
                     : isSource
                     ? 'bg-slate-900 border-cyan-500/80 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
                     : isTarget

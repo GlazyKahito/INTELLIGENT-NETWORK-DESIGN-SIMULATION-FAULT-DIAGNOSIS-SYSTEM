@@ -38,7 +38,7 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
       id: 'home',
       num: '00',
       title: 'HOME & LABORATORY OVERVIEW',
-      desc: 'System orientation, experiment overview, and laboratory objectives.',
+      desc: 'System overview, live topology and what you can do in the lab.',
       icon: Home,
       tag: 'Overview',
     },
@@ -46,7 +46,7 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
       id: 'aim',
       num: '01',
       title: 'AIM & OBJECTIVES',
-      desc: 'Formal academic statement, syllabus alignment, and target learning outcomes.',
+      desc: 'What the system is for and the outcomes you build towards.',
       icon: BookOpen,
       tag: 'Foundation',
     },
@@ -54,9 +54,9 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
       id: 'theory',
       num: '02',
       title: 'INTERACTIVE THEORY & CONCEPTS',
-      desc: 'Experiments 1-7: Commands, T568A/B Pinout, TCP/UDP Headers, Subnetting & Hamming Code.',
+      desc: 'The foundations the system runs on: commands, cabling, TCP/UDP, subnetting and error detection.',
       icon: HelpCircle,
-      tag: 'Experiments 1-7',
+      tag: 'Foundations',
     },
     {
       id: 'design',
@@ -202,7 +202,7 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
                 }}
                 className={`node-card group relative p-4 rounded-xl border transition-colors cursor-pointer flex items-center justify-between gap-4 ${
                   isSelected
-                    ? 'bg-slate-800/90 border-emerald-500/60 shadow-[0_0_15px_rgba(16,185,129,0.15)] translate-x-1'
+                    ? 'bg-slate-800/90 border-emerald-500/60 shadow-[0_0_15px_rgba(59,130,246,0.15)] translate-x-1'
                     : 'bg-[#0f172a]/50 border-slate-800/80 hover:border-slate-700'
                 }`}
               >

@@ -98,7 +98,7 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
               playSound('success');
               onProceedToMiniGame();
             }}
-            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0"
+            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0"
           >
             Play Mini-Game: Rogue Packet →
           </button>
@@ -160,7 +160,7 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
               <button
                 onClick={handleSubmit}
                 disabled={Object.keys(answers).length === 0}
-                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_12px_rgba(16,185,129,0.3)] active:scale-95"
+                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_12px_rgba(59,130,246,0.3)] active:scale-95"
               >
                 Submit Answers ({Object.keys(answers).length}/{total})
               </button>

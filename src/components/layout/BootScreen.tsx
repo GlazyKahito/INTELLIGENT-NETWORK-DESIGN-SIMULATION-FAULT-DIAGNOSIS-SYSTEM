@@ -15,7 +15,7 @@ export const BootScreen: React.FC<BootScreenProps> = ({ onComplete }) => {
     { text: 'LOADING PROTOCOL STACK (TCP/IP, ICMP, UDP, ARP)...', delay: 300 },
     { text: 'LOADING DISCRETE SIMULATION ENGINE...', delay: 250 },
     { text: 'INITIALIZING DETERMINISTIC FAULT DIAGNOSIS MATRIX...', delay: 250 },
-    { text: 'SYSTEM READY — EXPERIMENT 08 READY FOR EXECUTION', delay: 200 },
+    { text: 'SYSTEM READY — NETWORK LAB ONLINE', delay: 200 },
   ];
 
   useEffect(() => {

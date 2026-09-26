@@ -87,7 +87,7 @@ export function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen bg-[#070a12] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#070a12] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-clip">
       {/* 1. Subtle Constellation Live Wallpaper (Background) */}
       <LiveWallpaper />
 
@@ -160,7 +160,7 @@ export function App() {
             />
 
             {/* Quick syllabus progression cards */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-36">
               <div className="p-6 rounded-3xl bg-[#0d1322]/90 backdrop-blur-md border border-slate-800 space-y-4 shadow-2xl">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
@@ -186,7 +186,7 @@ export function App() {
                     className="node-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-colors cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">02 THEORY</div>
-                    <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Experiments 1 to 7</div>
+                    <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Networking foundations</div>
                     <p className="text-xs text-slate-400 mt-1">Commands, Cabling, TCP/UDP, Subnetting, Hamming Code.</p>
                   </div>
 
@@ -304,13 +304,11 @@ export function App() {
       </main>
 
       {/* 7. Floating Journey Stepper Dock (Across Learning Modules) */}
-      {activeModule !== 'home' && (
-        <JourneyDock
-          activeModule={activeModule}
-          onNavigate={handleNavigateModule}
-          completedModules={completedModules}
-        />
-      )}
+      <JourneyDock
+        activeModule={activeModule}
+        onNavigate={handleNavigateModule}
+        completedModules={completedModules}
+      />
 
       {/* 8. Academic Institutional Footer */}
       <footer className="border-t border-slate-800/80 bg-[#06090e] py-8 text-xs text-slate-500 font-mono relative z-10 pb-20 sm:pb-8">

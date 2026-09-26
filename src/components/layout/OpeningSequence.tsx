@@ -502,7 +502,7 @@ function IntroPanel({
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-4 py-8 sm:px-8">
         <motion.div variants={rise} className="mb-5 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
           <span className="h-px w-8 bg-primary" aria-hidden />
-          Experiment 08 · Capstone virtual lab
+          Interactive network laboratory
         </motion.div>
 
         <h1 className="max-w-5xl font-display text-[2.15rem] font-semibold uppercase leading-[1.02] tracking-tight text-foreground sm:text-6xl lg:text-7xl">

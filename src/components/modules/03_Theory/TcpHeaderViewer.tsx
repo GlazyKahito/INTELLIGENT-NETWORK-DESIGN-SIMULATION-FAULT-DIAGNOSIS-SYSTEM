@@ -84,7 +84,7 @@ export const TcpHeaderViewer: React.FC = () => {
             <span>TCP Header Structure & Transport Layer Protocol Analysis</span>
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
-            Experiments 04 & 07: 20-Byte TCP Frame Architecture, 3-Way Handshake & TCP vs UDP Matrix.
+            20-byte TCP Frame Architecture, 3-Way Handshake & TCP vs UDP Matrix.
           </p>
         </div>
 
@@ -303,7 +303,7 @@ export const TcpHeaderViewer: React.FC = () => {
                   onClick={() => toggleFlag(f)}
                   className={`p-2 rounded-lg border font-mono text-xs uppercase font-bold flex items-center justify-between transition-all ${
                     flags[f]
-                      ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.2)]'
+                      ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300 shadow-[0_0_8px_rgba(59,130,246,0.2)]'
                       : 'bg-slate-900 border-slate-800 text-slate-500'
                   }`}
                 >

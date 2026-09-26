@@ -37,13 +37,13 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
 
   const tabs = [
     { id: 'fundamentals', label: 'Network Fundamentals', icon: Layers, exp: 'Theory' },
-    { id: 'commands', label: '01 Commands', icon: Terminal, exp: 'Exp 01' },
-    { id: 'cabling', label: '02 Cabling & Pinout', icon: Cable, exp: 'Exp 02' },
-    { id: 'wireshark', label: '03 Packet Analysis', icon: Search, exp: 'Exp 03' },
-    { id: 'tcp', label: '04 TCP Header', icon: ShieldCheck, exp: 'Exp 04' },
-    { id: 'addressing', label: '05 IP Classes & Subnet', icon: Network, exp: 'Exp 05' },
-    { id: 'hamming', label: '06 Hamming Code', icon: Binary, exp: 'Exp 06' },
-    { id: 'udp', label: '07 UDP Datagrams', icon: Zap, exp: 'Exp 07' },
+    { id: 'commands', label: '01 Commands', icon: Terminal, exp: 'CLI' },
+    { id: 'cabling', label: '02 Cabling & Pinout', icon: Cable, exp: 'L1' },
+    { id: 'wireshark', label: '03 Packet Analysis', icon: Search, exp: 'L2–L7' },
+    { id: 'tcp', label: '04 TCP Header', icon: ShieldCheck, exp: 'L4' },
+    { id: 'addressing', label: '05 IP Classes & Subnet', icon: Network, exp: 'L3' },
+    { id: 'hamming', label: '06 Hamming Code', icon: Binary, exp: 'L2' },
+    { id: 'udp', label: '07 UDP Datagrams', icon: Zap, exp: 'L4' },
   ];
 
   // Captured packets for Wireshark analysis pane
@@ -132,7 +132,7 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest mb-1.5">
               <BookOpen className="w-4 h-4" />
-              <span>DCN Theoretical Modules // Experiments 01–07</span>
+              <span>Networking foundations behind the system</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
               Interactive Theory & Protocol Dissection
@@ -147,9 +147,9 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
               playSound('success');
               onProceedToDesign();
             }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0 active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0 active:scale-95 cursor-pointer"
           >
-            <span>Proceed to Network Design (Exp 08)</span>
+            <span>Proceed to Network Design</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -168,7 +168,7 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
                 }}
                 className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.2)] font-semibold'
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(59,130,246,0.2)] font-semibold'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent'
                 }`}
               >
@@ -274,7 +274,7 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
                     <span>Wireshark Dual-Pane Protocol Dissector & Hex Dump</span>
                   </h3>
                   <p className="text-xs text-slate-400 mt-0.5">
-                    Experiment 03: Frame Decapsulation, Protocol Trees & Byte-Level Hex/ASCII Dump.
+                    Frame decapsulation, Protocol Trees & Byte-Level Hex/ASCII Dump.
                   </p>
                 </div>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">

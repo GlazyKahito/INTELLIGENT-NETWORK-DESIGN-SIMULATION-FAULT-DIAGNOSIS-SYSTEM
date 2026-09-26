@@ -204,7 +204,7 @@ export function MinigameHub({ onProceedToConclusion }: { onProceedToConclusion: 
                       key={i}
                       x1={cx}
                       y1={cy}
-                      stroke="rgb(52 211 153 / 0.6)"
+                      stroke="rgb(96 165 250 / 0.6)"
                       strokeWidth={1.2}
                       initial={{ x2: cx, y2: cy }}
                       animate={{ x2: cx + Math.cos(a) * far, y2: cy + Math.sin(a) * far }}
@@ -216,7 +216,7 @@ export function MinigameHub({ onProceedToConclusion }: { onProceedToConclusion: 
                   cx={mode === 'entering' ? origin.x : W / 2}
                   cy={mode === 'entering' ? origin.y : Hh / 2}
                   fill="none"
-                  stroke="rgb(52 211 153)"
+                  stroke="rgb(96 165 250)"
                   strokeWidth={2}
                   initial={{ r: 6 }}
                   animate={{ r: 90 }}
