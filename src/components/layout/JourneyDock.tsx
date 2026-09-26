@@ -16,6 +16,7 @@ import {
   Award
 } from 'lucide-react';
 import { playSound } from '../../lib/sound';
+import { MODULE_LABEL, MODULE_ORDER, NAV_GROUPS } from '../../lib/nav';
 
 interface JourneyDockProps {
   activeModule: string;
@@ -31,18 +32,12 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Ordered educational sequence
-  const steps = [
-    { id: 'aim', num: '01', title: 'Aim & Objectives', short: 'Aim', icon: BookOpen },
-    { id: 'theory', num: '02', title: 'Networking Theory', short: 'Theory', icon: HelpCircle },
-    { id: 'design', num: '03', title: 'Network Design', short: 'Design', icon: Layers },
-    { id: 'simulation', num: '04', title: 'Packet Simulator', short: 'Simulate', icon: Play },
-    { id: 'diagnostics', num: '05', title: 'Fault Diagnosis', short: 'Diagnose', icon: Terminal },
-    { id: 'assessments', num: '06', title: 'Assessments', short: 'Assess', icon: Activity },
-    { id: 'minigame', num: '07', title: 'Mini Game · Rogue Packet', short: 'Mini Game', icon: Gamepad2 },
-    { id: 'conclusion', num: '08', title: 'Completion Report', short: 'Report', icon: Award },
-  ];
+  const steps = NAV_GROUPS.map((g, i) => ({ ...g, num: String(i + 1).padStart(2, '0'), title: g.label, short: g.label }));
 
-  const currentIndex = steps.findIndex(s => s.id === activeModule);
+  const currentIndex = steps.findIndex(s => s.modules.includes(activeModule));
+  const order = MODULE_ORDER.indexOf(activeModule);
+  const prevModule = order > 0 ? MODULE_ORDER[order - 1] : null;
+  const nextModule = order < MODULE_ORDER.length - 1 ? MODULE_ORDER[order + 1] : null;
 
   // Remember where we came from so a packet can travel the path to the new node.
   const reduce = useReducedMotion();
@@ -55,10 +50,8 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
     prevIndex.current = currentIndex;
   }, [currentIndex, reduce]);
   const pct = (i: number) => ((i + 0.5) / steps.length) * 100;
-  const reached = Math.max(currentIndex, ...steps.map((s, i) => (completedModules.has(s.id) ? i : -1)));
-
-  const prevStep = currentIndex > 0 ? steps[currentIndex - 1] : null;
-  const nextStep = currentIndex < steps.length - 1 ? steps[currentIndex + 1] : null;
+  const visited = (s: (typeof steps)[number]) => s.modules.some(m => completedModules.has(m));
+  const reached = Math.max(currentIndex, ...steps.map((s, i) => (visited(s) ? i : -1)));
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-full max-w-4xl px-4 pointer-events-none select-none">
@@ -69,13 +62,13 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-slate-400">LAB JOURNEY:</span>
             <span className="text-emerald-400 font-bold">
-              {currentIndex !== -1 ? `Step ${currentIndex + 1} of ${steps.length}: ${steps[currentIndex].title}` : 'Home — start with Aim & Objectives'}
+              {`Step ${currentIndex + 1} of ${steps.length}: ${steps[currentIndex].title} · ${MODULE_LABEL[activeModule]}`}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-slate-500 hidden sm:inline">
-              Progress: {completedModules.size}/{steps.length} Completed
+              Progress: {steps.filter(visited).length}/{steps.length} sections
             </span>
             <button
               onClick={() => {
@@ -96,12 +89,12 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
             {/* Prev Button */}
             <button
               onClick={() => {
-                if (prevStep) {
+                if (prevModule) {
                   playSound('click');
-                  onNavigate(prevStep.id);
+                  onNavigate(prevModule);
                 }
               }}
-              disabled={!prevStep}
+              disabled={!prevModule}
               className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-mono disabled:opacity-30 disabled:pointer-events-none hover:bg-slate-800 transition-colors"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
@@ -130,15 +123,15 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
               )}
               <ol className="relative flex">
                 {steps.map((st, idx) => {
-                  const isActive = activeModule === st.id;
-                  const isDone = completedModules.has(st.id);
+                  const isActive = st.modules.includes(activeModule);
+                  const isDone = visited(st);
                   return (
                     <li key={st.id} className="flex flex-1 justify-center">
                       <button
                         type="button"
                         onClick={() => {
                           playSound('click');
-                          onNavigate(st.id);
+                          if (!isActive) onNavigate(st.modules[0]);
                         }}
                         className="group flex flex-col items-center gap-1 rounded-md px-1 pb-0.5 outline-offset-2"
                         aria-current={isActive ? 'step' : undefined}
@@ -185,15 +178,15 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
             {/* Next Button */}
             <button
               onClick={() => {
-                if (nextStep) {
+                if (nextModule) {
                   playSound('success');
-                  onNavigate(nextStep.id);
+                  onNavigate(nextModule);
                 }
               }}
-              disabled={!nextStep}
+              disabled={!nextModule}
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold disabled:opacity-30 disabled:pointer-events-none hover:bg-emerald-500/30 transition-colors shadow-sm"
             >
-              <span className="hidden md:inline">Next: {nextStep?.short || 'Finish'}</span>
+              <span className="hidden md:inline">Next: {nextModule ? MODULE_LABEL[nextModule] : 'Finish'}</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>

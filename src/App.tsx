@@ -21,6 +21,7 @@ import { LabReport } from './components/modules/09_Conclusion/LabReport';
 import { FullLabSandbox } from './components/modules/10_LaunchLab/FullLabSandbox';
 import { playSound } from './lib/sound';
 import { hasSeenIntro } from './lib/intro-session';
+import { MODULE_LABEL, groupOf } from './lib/nav';
 
 // Three.js only ships with the opening sequence, so returning visitors never download it.
 const OpeningSequence = lazy(() => import('./components/layout/OpeningSequence').then(m => ({ default: m.OpeningSequence })));
@@ -164,6 +165,28 @@ export function App() {
             {SHEET_NO[activeModule] ?? '01'}
           </motion.div>
         </AnimatePresence>
+        {/* Grouped sections get a switcher between their pages */}
+        {groupOf(activeModule).modules.length > 1 && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
+            <div className="inline-flex border border-slate-800 bg-[#12110f]/80" role="tablist" aria-label={groupOf(activeModule).label}>
+              {groupOf(activeModule).modules.map(m => (
+                <button
+                  key={m}
+                  role="tab"
+                  aria-selected={m === activeModule}
+                  onClick={() => m !== activeModule && handleNavigateModule(m)}
+                  className={`relative px-5 py-2 text-sm font-medium transition-colors ${m === activeModule ? 'text-slate-950' : 'text-slate-400 hover:text-slate-100'}`}
+                >
+                  {m === activeModule && (
+                    <motion.span layoutId="section-tab" className="absolute inset-0 bg-emerald-500" transition={{ type: 'spring', stiffness: 520, damping: 42 }} />
+                  )}
+                  <span className="relative">{MODULE_LABEL[m]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={activeModule}
