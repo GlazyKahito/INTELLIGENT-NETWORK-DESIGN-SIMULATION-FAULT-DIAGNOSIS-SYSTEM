@@ -39,7 +39,7 @@ function Step({ i, active, onActive, children }: { i: number; active: boolean; o
     if (inView) onActive(i);
   }, [inView, i, onActive]);
   return (
-    <li ref={ref} className={cn('border-l-2 py-6 pl-5 transition-colors duration-300 md:py-10', active ? 'border-emerald-400' : 'border-slate-800')}>
+    <li ref={ref} className={cn('border-l-2 py-4 pl-5 transition-colors duration-300 md:py-6', active ? 'border-emerald-400' : 'border-slate-800')}>
       {children}
     </li>
   );

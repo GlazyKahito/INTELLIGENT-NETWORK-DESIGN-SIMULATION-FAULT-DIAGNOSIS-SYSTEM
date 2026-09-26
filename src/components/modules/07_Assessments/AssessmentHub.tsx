@@ -27,6 +27,8 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
   const [selectedPhase, setSelectedPhase] = useState<'all' | 'phase1' | 'phase2'>('all');
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  // One question on screen at a time keeps the page to a single screen.
+  const [current, setCurrent] = useState(0);
 
   const filteredQuestions = ASSESSMENT_QUESTIONS.filter(q => {
     if (selectedPhase === 'phase1') return q.phase.includes('Phase 1');
@@ -185,9 +187,32 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
           </div>
         )}
 
-        {/* Questions Grid */}
-        <div className="space-y-6">
+        {/* Question navigator */}
+        <div className="flex flex-wrap items-center gap-1.5" role="tablist" aria-label="Questions">
+          {filteredQuestions.map((q, i) => {
+            const answered = !!answers[q.id];
+            const right = submitted && answers[q.id] === q.correctOptionId;
+            const wrong = submitted && !right;
+            return (
+              <button
+                key={q.id}
+                role="tab"
+                aria-selected={i === current}
+                onClick={() => setCurrent(i)}
+                className={`h-8 w-8 border font-mono text-xs transition-colors ${
+                  i === current ? 'border-emerald-400 text-emerald-300' : 'border-slate-800 text-slate-400 hover:border-slate-600'
+                } ${right ? 'bg-emerald-500/20' : wrong ? 'bg-rose-500/15' : answered ? 'bg-slate-800' : 'bg-transparent'}`}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Current question */}
+        <div className="space-y-4">
           {filteredQuestions.map((q, qIdx) => {
+            if (qIdx !== Math.min(current, filteredQuestions.length - 1)) return null;
             const isAnswered = !!answers[q.id];
             const isCorrect = submitted && answers[q.id] === q.correctOptionId;
             const isWrong = submitted && isAnswered && !isCorrect;
@@ -234,7 +259,7 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
                 </h3>
 
                 {/* Options List */}
-                <div className="space-y-2.5">
+                <div className="grid gap-2.5 md:grid-cols-2">
                   {q.options.map(opt => {
                     const isSelected = answers[q.id] === opt.id;
                     const isCorrectOpt = opt.id === q.correctOptionId;
@@ -290,6 +315,25 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
               </div>
             );
           })}
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setCurrent(c => Math.max(0, c - 1))}
+              disabled={current === 0}
+              className="px-4 py-2 border border-slate-700 text-slate-300 text-xs font-mono disabled:opacity-30 hover:border-slate-500"
+            >
+              ← Previous
+            </button>
+            <span className="text-xs font-mono text-slate-500">
+              {Math.min(current, total - 1) + 1} / {total}
+            </span>
+            <button
+              onClick={() => setCurrent(c => Math.min(total - 1, c + 1))}
+              disabled={current >= total - 1}
+              className="px-4 py-2 border border-emerald-500/60 text-emerald-300 text-xs font-mono disabled:opacity-30 hover:bg-emerald-500/10"
+            >
+              Next →
+            </button>
+          </div>
         </div>
       </div>
     </section>
