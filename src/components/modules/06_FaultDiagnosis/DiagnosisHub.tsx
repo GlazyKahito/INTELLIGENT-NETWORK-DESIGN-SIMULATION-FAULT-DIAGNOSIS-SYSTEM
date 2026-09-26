@@ -11,7 +11,8 @@ import {
   ArrowRight,
   Sparkles
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { notifyNet } from '@/components/motion/NetStatus';
+import { PacketPath } from '@/components/motion/PacketPath';
 import { NetworkDevice, NetworkLink } from '../../../types/network';
 import { FaultScenario, DiagnosticEvidence } from '../../../types/diagnostics';
 import { FAULT_SCENARIOS } from '../../../data/faults';
@@ -88,11 +89,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
     // Run verification ping check
     setTimeout(() => {
       playSound('success');
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.7 },
-      });
+      notifyNet({ ok: true, title: 'Connection established', detail: 'Fault repaired — verification ping reached its destination.' });
       setVerificationOutput(
         `VERIFICATION SUCCESSFUL: Host connectivity restored (100% packets received, 0% loss, Gateway UP, DNS resolved). ${message}`
       );
@@ -133,6 +130,24 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
           onSelectFault={handleSelectFault}
           onClearFault={handleClearFault}
         />
+
+        {/* Where the packet dies — replays whenever the fault changes or is repaired */}
+        {activeFault && (
+          <div className="rounded-2xl border border-slate-800 bg-[#0b101d] px-5 py-4">
+            <div className="mb-1 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
+              <span>Packet path · PC → server</span>
+              <span>{isFixed ? 'after repair' : 'fault injected'}</span>
+            </div>
+            <PacketPath
+              key={`${activeFault.id}-${isFixed}`}
+              nodes={['PC', 'SWITCH', 'ROUTER', 'SERVER']}
+              broken={isFixed ? null : /Layer (1|2)/.test(activeFault.category) ? 0 : /Layer 3/.test(activeFault.category) ? 1 : 2}
+              okLabel="Connection established"
+              failLabel="Packet dropped"
+              className="max-w-xl"
+            />
+          </div>
+        )}
 
         {/* Active Anomaly Network Alert Banner */}
         {activeFault && (

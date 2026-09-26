@@ -13,7 +13,9 @@ import { DesignerCanvas } from './components/modules/04_NetworkDesign/DesignerCa
 import { SimulationView } from './components/modules/05_Simulation/SimulationView';
 import { DiagnosisHub } from './components/modules/06_FaultDiagnosis/DiagnosisHub';
 import { AssessmentHub } from './components/modules/07_Assessments/AssessmentHub';
-import { ForwardingPlaneGame } from './components/modules/08_MiniGame/ForwardingPlaneGame';
+import { MinigameHub } from './components/modules/08_MiniGame/MinigameHub';
+import { NetStatusHost } from './components/motion/NetStatus';
+import { RouteTransition } from './components/motion/RouteTransition';
 import { LabReport } from './components/modules/09_Conclusion/LabReport';
 import { FullLabSandbox } from './components/modules/10_LaunchLab/FullLabSandbox';
 import { playSound } from './lib/sound';
@@ -37,8 +39,21 @@ export function App() {
   // Track completed lab modules
   const [completedModules, setCompletedModules] = useState<Set<string>>(new Set(['home']));
 
+  // A packet hops between the old and new section on every navigation.
+  const [routeHop, setRouteHop] = useState<{ from: string; to: string; id: number } | null>(null);
+  const activeRef = React.useRef(activeModule);
+  useEffect(() => {
+    if (!routeHop) return;
+    const t = window.setTimeout(() => setRouteHop(null), 1150);
+    return () => clearTimeout(t);
+  }, [routeHop]);
+
   // Mark module visited / completed
   const handleNavigateModule = (modId: string) => {
+    if (activeRef.current !== modId && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setRouteHop({ from: activeRef.current, to: modId, id: Date.now() });
+    }
+    activeRef.current = modId;
     setActiveModule(modId);
     setCompletedModules(prev => new Set([...prev, modId]));
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -50,7 +65,7 @@ export function App() {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLSelectElement) {
         return;
       }
-      if (!bootDoneRef.current || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (!bootDoneRef.current || e.metaKey || e.ctrlKey || e.altKey || document.body.dataset.gameActive) return;
       if (e.key === 'm' || e.key === 'M') {
         e.preventDefault();
         playSound('click');
@@ -75,6 +90,8 @@ export function App() {
     <div className="min-h-screen bg-[#070a12] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-hidden">
       {/* 1. Subtle Constellation Live Wallpaper (Background) */}
       <LiveWallpaper />
+
+      <NetStatusHost />
 
       {/* 2. Opening sequence: warp tunnel → product intro → lab */}
       {!bootDone && (
@@ -121,6 +138,8 @@ export function App() {
         />
       )}
 
+      <AnimatePresence>{routeHop && bootDone && <RouteTransition key={routeHop.id} from={routeHop.from} to={routeHop.to} />}</AnimatePresence>
+
       {/* 6. Main Content Modules */}
       <main className="flex-1 relative z-10">
         <AnimatePresence mode="wait" initial={false}>
@@ -155,7 +174,7 @@ export function App() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div
                     onClick={() => handleNavigateModule('aim')}
-                    className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group shadow-sm"
+                    className="node-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-colors cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">01 AIM</div>
                     <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Aim & Objectives</div>
@@ -164,7 +183,7 @@ export function App() {
 
                   <div
                     onClick={() => handleNavigateModule('theory')}
-                    className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group shadow-sm"
+                    className="node-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-colors cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">02 THEORY</div>
                     <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Experiments 1 to 7</div>
@@ -173,7 +192,7 @@ export function App() {
 
                   <div
                     onClick={() => handleNavigateModule('design')}
-                    className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group shadow-sm"
+                    className="node-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-colors cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">03 DESIGN</div>
                     <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Network Designer</div>
@@ -182,7 +201,7 @@ export function App() {
 
                   <div
                     onClick={() => handleNavigateModule('diagnostics')}
-                    className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group shadow-sm"
+                    className="node-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-colors cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">04 DIAGNOSIS</div>
                     <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Intelligent Troubleshooting</div>
@@ -268,7 +287,7 @@ export function App() {
 
         {/* Module 07: Mini-Game */}
         {activeModule === 'minigame' && (
-          <ForwardingPlaneGame
+          <MinigameHub
             onProceedToConclusion={() => handleNavigateModule('conclusion')}
           />
         )}

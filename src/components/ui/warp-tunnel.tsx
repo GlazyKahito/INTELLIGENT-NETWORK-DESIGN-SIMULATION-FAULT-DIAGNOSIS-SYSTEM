@@ -20,6 +20,8 @@ export interface WarpTunnelProps {
   speed?: number;
   /** Overall brightness, 0–1. Changes are eased. */
   intensity?: number;
+  /** 0 = open tunnel, 1 = streaks converged on the vanishing point. Eased. */
+  collapse?: number;
   /** Streak count. Picked from the device class when omitted. */
   count?: number;
   /** Tunnel radius in world units. */
@@ -56,30 +58,33 @@ interface SceneProps {
   depth: number;
   speed: number;
   intensity: number;
+  collapse: number;
   still: boolean;
   isDark: boolean;
   background: string;
   colors: WarpTunnelColors;
 }
 
-function TunnelScene({ count, radius, depth, speed, intensity, still, isDark, background, colors }: SceneProps) {
+function TunnelScene({ count, radius, depth, speed, intensity, collapse, still, isDark, background, colors }: SceneProps) {
   const streaks = useRef<THREE.InstancedMesh>(null);
   const rings = useRef<THREE.InstancedMesh>(null);
   const invalidate = useThree(s => s.invalidate);
 
   // Eased live values; the parent only sets targets, so no React re-render per frame.
-  const live = useRef({ speed, intensity, roll: 0 });
-  const target = useRef({ speed, intensity });
+  const live = useRef({ speed, intensity, collapse, roll: 0 });
+  const target = useRef({ speed, intensity, collapse });
 
   useEffect(() => {
     target.current.speed = speed;
     target.current.intensity = intensity;
+    target.current.collapse = collapse;
     if (still) {
       live.current.speed = speed;
       live.current.intensity = intensity;
+      live.current.collapse = collapse;
     }
     invalidate();
-  }, [speed, intensity, still, invalidate]);
+  }, [speed, intensity, collapse, still, invalidate]);
 
   const streakData = useMemo(() => {
     const angle = new Float32Array(count);
@@ -130,6 +135,8 @@ function TunnelScene({ count, radius, depth, speed, intensity, still, isDark, ba
     const L = live.current;
     L.speed += (target.current.speed - L.speed) * (1 - Math.exp(-dt * 2.4));
     L.intensity += (target.current.intensity - L.intensity) * (1 - Math.exp(-dt * 3));
+    L.collapse += (target.current.collapse - L.collapse) * (1 - Math.exp(-dt * 4.5));
+    const squeeze = 1 - 0.9 * L.collapse * L.collapse;
 
     const travel = L.speed * UNITS_PER_SECOND * dt;
     const stretch = 1 + Math.min(L.speed, 8) * 1.1;
@@ -144,7 +151,7 @@ function TunnelScene({ count, radius, depth, speed, intensity, still, isDark, ba
       }
       const len = length[i] * (packet[i] ? 1 + (stretch - 1) * 0.35 : stretch);
       const thick = packet[i] ? 0.024 : 0.016;
-      tmpObject.position.set(Math.cos(angle[i]) * r[i], Math.sin(angle[i]) * r[i], z[i] - len / 2);
+      tmpObject.position.set(Math.cos(angle[i]) * r[i] * squeeze, Math.sin(angle[i]) * r[i] * squeeze, z[i] - len / 2);
       tmpObject.rotation.set(0, 0, 0);
       tmpObject.scale.set(thick, thick, len);
       tmpObject.updateMatrix();
@@ -166,7 +173,7 @@ function TunnelScene({ count, radius, depth, speed, intensity, still, isDark, ba
       ringData.spin[i] += dt * 0.15;
       tmpObject.position.set(0, 0, ringData.z[i]);
       tmpObject.rotation.set(0, 0, ringData.spin[i]);
-      tmpObject.scale.setScalar(radius * 1.22);
+      tmpObject.scale.setScalar(radius * 1.22 * squeeze);
       tmpObject.updateMatrix();
       g.setMatrixAt(i, tmpObject.matrix);
 
@@ -210,6 +217,7 @@ function TunnelScene({ count, radius, depth, speed, intensity, still, isDark, ba
 export function WarpTunnel({
   speed = 1,
   intensity = 1,
+  collapse = 0,
   count,
   radius = 3,
   depth = 60,
@@ -251,6 +259,7 @@ export function WarpTunnel({
         depth={depth}
         speed={reduced ? 0 : speed}
         intensity={intensity}
+        collapse={reduced ? 0 : collapse}
         still={reduced}
         isDark={theme.isDark}
         background={theme.colors.background}

@@ -93,8 +93,8 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
     {
       id: 'minigame',
       num: '07',
-      title: 'MINI-GAME: FORWARDING PLANE',
-      desc: 'Be the router: apply ACLs, TTL and longest-prefix match to a live ingress queue across four timed shifts.',
+      title: 'MINI-GAME: ROGUE PACKET',
+      desc: 'Walk a live network operations centre, trace the rogue packet and name the faulty device. Five levels, randomized faults.',
       icon: Gamepad2,
       tag: 'Gamified Practice',
     },
@@ -200,7 +200,7 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
                   onSelectModule(mod.id);
                   onClose();
                 }}
-                className={`group relative p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-4 ${
+                className={`node-card group relative p-4 rounded-xl border transition-colors cursor-pointer flex items-center justify-between gap-4 ${
                   isSelected
                     ? 'bg-slate-800/90 border-emerald-500/60 shadow-[0_0_15px_rgba(16,185,129,0.15)] translate-x-1'
                     : 'bg-[#0f172a]/50 border-slate-800/80 hover:border-slate-700'

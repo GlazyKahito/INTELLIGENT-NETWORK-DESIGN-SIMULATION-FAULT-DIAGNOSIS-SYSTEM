@@ -15,14 +15,17 @@ const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 // Warp timeline (ms). Speed/intensity are targets; the tunnel eases between them.
 const TUNNEL_STAGES = [
-  { at: 0, speed: 0.15, intensity: 0 },
-  { at: 300, speed: 0.7, intensity: 0.9 },
-  { at: 900, speed: 1.9, intensity: 1 },
-  { at: 1700, speed: 3.8, intensity: 1 },
-  { at: 2500, speed: 7.5, intensity: 1.15 },
+  { at: 0, speed: 0.15, intensity: 0, collapse: 0 },
+  { at: 300, speed: 0.7, intensity: 0.9, collapse: 0 },
+  { at: 900, speed: 1.9, intensity: 1, collapse: 0 },
+  { at: 1700, speed: 3.8, intensity: 1, collapse: 0 },
+  { at: 2500, speed: 7.5, intensity: 1.15, collapse: 0 },
+  // Streaks converge on the vanishing point; a network node bursts out of it.
+  { at: 3000, speed: 9, intensity: 1.2, collapse: 1 },
 ];
-const TUNNEL_DURATION = 3500;
-const EXIT_DURATION = 700;
+const BURST_STAGE = 5;
+const TUNNEL_DURATION = 3750;
+const EXIT_DURATION = 1100;
 
 const OSI_LAYERS = ['Physical', 'Data link', 'Network', 'Transport', 'Session', 'Presentation', 'Application'];
 const LAYER_START = 600;
@@ -41,12 +44,13 @@ const JOURNEY = ['Aim', 'Theory', 'Design', 'Simulate', 'Diagnose', 'Assess', 'P
 const QUICK_JUMPS = [
   { key: '1', label: 'Network designer', target: 'design' },
   { key: '2', label: 'Fault diagnosis', target: 'diagnostics' },
-  { key: '3', label: 'Forwarding Plane game', target: 'minigame' },
+  { key: '3', label: 'Rogue Packet game', target: 'minigame' },
 ];
 
 const stagger: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
+  leave: { opacity: 0.12, transition: { duration: 0.3 } },
 };
 
 const rise: Variants = {
@@ -145,8 +149,8 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
     phase === 'tunnel'
       ? TUNNEL_STAGES[stage]
       : phase === 'exit'
-        ? { speed: 6, intensity: 0.9 }
-        : { speed: 0.35, intensity: 0.55 };
+        ? { speed: 4, intensity: 0.5, collapse: 0 }
+        : { speed: 0.35, intensity: 0.55, collapse: 0 };
 
   return (
     <motion.div
@@ -155,16 +159,16 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
       aria-label="Intelligent Network Lab — introduction"
       className="fixed inset-0 z-[60] overflow-hidden bg-background text-foreground"
       animate={{ opacity: phase === 'exit' ? 0 : 1 }}
-      transition={{ duration: EXIT_DURATION / 1000, ease: 'easeInOut' }}
+      transition={{ delay: phase === 'exit' && !reduceMotion ? 0.72 : 0, duration: 0.38, ease: 'easeInOut' }}
     >
       {/* Stage: warp tunnel */}
       <motion.div
         className="absolute inset-0"
         initial={{ opacity: reduceMotion ? 1 : 0 }}
-        animate={{ opacity: phase === 'tunnel' && stage === 0 ? 0 : 1, scale: phase === 'exit' ? 1.08 : 1 }}
+        animate={{ opacity: phase === 'tunnel' && stage === 0 ? 0 : 1, scale: phase === 'exit' ? 1.06 : 1 }}
         transition={{ duration: phase === 'exit' ? EXIT_DURATION / 1000 : 0.9, ease: EASE_OUT }}
       >
-        <WarpTunnel speed={tunnel.speed} intensity={tunnel.intensity} onReady={markReady} aria-label="Travelling through a network data tunnel" />
+        <WarpTunnel speed={tunnel.speed} intensity={tunnel.intensity} collapse={tunnel.collapse} onReady={markReady} aria-label="Travelling through a network data tunnel" />
       </motion.div>
 
       {/* Vanishing-point bloom + readability vignette */}
@@ -187,7 +191,7 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
 
       <AnimatePresence mode="wait">
         {phase === 'tunnel' ? (
-          <TunnelOverlay key="tunnel" started={ready} layer={layer} onSkip={skipTunnel} />
+          <TunnelOverlay key="tunnel" started={ready} stage={stage} layer={layer} onSkip={skipTunnel} />
         ) : (
           <IntroPanel
             key="intro"
@@ -198,9 +202,13 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
               if (!next) playSound('click');
             }}
             onEnter={enter}
+            leaving={phase === 'exit'}
           />
         )}
       </AnimatePresence>
+
+      {/* Enter lab: the lab topology links up and a packet carries you in */}
+      <AnimatePresence>{phase === 'exit' && !reduceMotion && <EnterTopology key="enter" />}</AnimatePresence>
 
       {/* Peak flash when the warp hands over to the intro */}
       <AnimatePresence>
@@ -220,50 +228,112 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
   );
 }
 
-function TunnelOverlay({ started, layer, onSkip }: { started: boolean; layer: number; onSkip: () => void }) {
+const GLYPHS = '01ABCDEF#<>/:';
+
+/** Characters resolve left-to-right out of hex noise — a link decoding, not a fade. */
+function DecodeText({ text, start, duration = 1300 }: { text: string; start: boolean; duration?: number }) {
+  const [out, setOut] = useState(() => text.replace(/\S/g, ' '));
+  useEffect(() => {
+    if (!start) return;
+    const t0 = performance.now();
+    const id = window.setInterval(() => {
+      const p = Math.min(1, (performance.now() - t0) / duration);
+      const shown = Math.floor(p * text.length);
+      setOut(
+        text
+          .split('')
+          .map((ch, i) => (ch === ' ' ? ' ' : i < shown ? ch : i < shown + 6 ? GLYPHS[Math.floor(Math.random() * GLYPHS.length)] : ' '))
+          .join(''),
+      );
+      if (p >= 1) clearInterval(id);
+    }, 45);
+    return () => clearInterval(id);
+  }, [start, text, duration]);
+  return <span aria-label={text}>{out}</span>;
+}
+
+const HANDSHAKE = ['SYN', 'SYN-ACK', 'ACK'];
+
+function TunnelOverlay({ started, stage, layer, onSkip }: { started: boolean; stage: number; layer: number; onSkip: () => void }) {
+  const [hs, setHs] = useState(-1);
+  const [pkts, setPkts] = useState(0);
+  const stageRef = useRef(stage);
+  stageRef.current = stage;
+  const burst = stage >= BURST_STAGE;
+
+  useEffect(() => {
+    if (!started) return;
+    const timers = [1250, 1650, 2050, 2450].map((at, i) => window.setTimeout(() => setHs(i), at));
+    const id = window.setInterval(() => setPkts(p => p + 7 + stageRef.current * stageRef.current * 18 + Math.floor(Math.random() * 9)), 60);
+    return () => {
+      timers.forEach(clearTimeout);
+      clearInterval(id);
+    };
+  }, [started]);
+
   return (
     <motion.div className="absolute inset-0" exit={{ opacity: 0 }} transition={{ duration: 0.35 }}>
-      {/* Wordmark — we fly through it on exit */}
-      <div className="absolute inset-0 flex items-center justify-center px-6">
+      {/* Link readout — we fly through it as the streaks converge */}
+      <div className="absolute inset-0 flex items-center justify-center px-4">
         <motion.div
           className="text-center"
-          initial={{ opacity: 0, letterSpacing: '0.7em', filter: 'blur(12px)' }}
-          animate={started ? { opacity: 1, letterSpacing: '0.24em', filter: 'blur(0px)' } : undefined}
-          exit={{ opacity: 0, scale: 1.7, filter: 'blur(8px)', transition: { duration: 0.45, ease: 'easeIn' } }}
-          transition={{ delay: 0.7, duration: 1.5, ease: EASE_OUT }}
+          initial={{ opacity: 0 }}
+          animate={started ? (burst ? { opacity: 0, scale: 1.5, filter: 'blur(8px)' } : { opacity: 1 }) : undefined}
+          transition={burst ? { duration: 0.4, ease: 'easeIn' } : { delay: 0.5, duration: 0.6 }}
         >
-          <div className="font-mono text-[10px] uppercase text-muted-foreground sm:text-[11px]">Somaiya Virtual Labs · DCN</div>
-          <div className="mt-3 font-display text-2xl font-semibold uppercase text-foreground sm:text-4xl md:text-5xl">
-            Intelligent Network Lab
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[11px]">
+            Opening link → <span className="text-foreground">dcn-lab.somaiya</span> · gw 192.168.1.1
+          </div>
+          <div className="mt-4 font-mono text-[1.3rem] font-semibold uppercase tracking-[0.16em] text-foreground sm:text-4xl md:text-5xl">
+            <DecodeText text="Intelligent Network Lab" start={started} />
+          </div>
+          <div className="mt-5 flex items-center justify-center gap-2 font-mono text-[11px] sm:gap-3" aria-hidden>
+            {HANDSHAKE.map((h, i) => (
+              <span key={h} className="flex items-center gap-2 sm:gap-3">
+                {i > 0 && <span className={`h-px w-5 transition-colors duration-300 sm:w-8 ${hs >= i ? 'bg-primary' : 'bg-border'}`} />}
+                <span className={`rounded border px-2 py-0.5 transition-colors duration-300 ${hs >= i ? 'border-primary/60 text-primary' : 'border-border text-muted-foreground/60'}`}>{h}</span>
+              </span>
+            ))}
+          </div>
+          <div className="mt-3 h-4 font-mono text-[11px] uppercase tracking-[0.2em]">
+            <AnimatePresence>
+              {hs >= 3 && (
+                <motion.span initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="text-primary">
+                  Connected · 3 hops · 12 ms
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>
+
+      {/* Convergence: a node forms at the vanishing point and the network bursts outward */}
+      <AnimatePresence>{burst && <NodeBurst key="burst" />}</AnimatePresence>
 
       {/* OSI trace readout — the tunnel descends the stack */}
       <div className="absolute bottom-6 left-4 font-mono text-[11px] text-muted-foreground sm:bottom-8 sm:left-8" aria-hidden>
         <div className="mb-2 flex gap-1">
           {OSI_LAYERS.map((_, i) => (
-            <span
-              key={i}
-              className={`h-1 w-4 rounded-full transition-colors duration-300 sm:w-6 ${i <= layer ? 'bg-primary' : 'bg-border'}`}
-            />
+            <span key={i} className={`h-1 w-4 rounded-full transition-colors duration-300 sm:w-6 ${i <= layer ? 'bg-primary' : 'bg-border'}`} />
           ))}
         </div>
         <div className="h-4 overflow-hidden">
           <AnimatePresence mode="popLayout" initial={false}>
             {layer >= 0 && (
-              <motion.div
-                key={layer}
-                initial={{ y: 12, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -12, opacity: 0 }}
-                transition={{ duration: 0.22 }}
-              >
+              <motion.div key={layer} initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -12, opacity: 0 }} transition={{ duration: 0.22 }}>
                 <span className="text-primary">L{layer + 1}</span> · {OSI_LAYERS[layer]}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
+      </div>
+
+      {/* Packet counter */}
+      <div className="absolute bottom-6 right-4 text-right font-mono text-[11px] tabular-nums text-muted-foreground sm:bottom-8 sm:right-8" aria-hidden>
+        <div>
+          RX <span className="text-foreground">{pkts.toLocaleString()}</span> pkts
+        </div>
+        <div className="mt-1">{((pkts * 1.46) / 1024).toFixed(1)} MB · 0 dropped</div>
       </div>
 
       {/* Skip */}
@@ -293,20 +363,120 @@ function TunnelOverlay({ started, layer, onSkip }: { started: boolean; layer: nu
   );
 }
 
+function NodeBurst() {
+  const rays = 14;
+  return (
+    <motion.svg
+      className="pointer-events-none absolute inset-0 h-full w-full"
+      viewBox="-500 -500 1000 1000"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {Array.from({ length: rays }, (_, i) => {
+        const a = (i / rays) * Math.PI * 2 + 0.2;
+        const len = 180 + (i % 3) * 110;
+        return (
+          <g key={i}>
+            <motion.line
+              x1={0}
+              y1={0}
+              stroke="hsl(var(--primary))"
+              strokeOpacity={0.55}
+              strokeWidth={1.2}
+              initial={{ x2: 0, y2: 0 }}
+              animate={{ x2: Math.cos(a) * len, y2: Math.sin(a) * len }}
+              transition={{ delay: 0.28, duration: 0.55, ease: EASE_OUT }}
+            />
+            <motion.circle
+              r={3}
+              fill="hsl(var(--primary))"
+              initial={{ cx: 0, cy: 0, opacity: 0 }}
+              animate={{ cx: Math.cos(a) * len, cy: Math.sin(a) * len, opacity: [0, 1, 1] }}
+              transition={{ delay: 0.28, duration: 0.55, ease: EASE_OUT }}
+            />
+          </g>
+        );
+      })}
+      <motion.circle r={9} fill="hsl(var(--background))" stroke="hsl(var(--primary))" strokeWidth={2} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.3, ease: EASE_OUT }} />
+      <motion.circle r={4} fill="hsl(var(--primary))" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.12, duration: 0.25 }} />
+      <motion.circle r={9} fill="none" stroke="hsl(var(--primary))" initial={{ scale: 1, opacity: 0.9 }} animate={{ scale: 9, opacity: 0 }} transition={{ delay: 0.2, duration: 0.8, ease: EASE_OUT }} />
+    </motion.svg>
+  );
+}
+
+const ENTER_NODES = ['PC', 'SWITCH', 'ROUTER', 'SERVER'];
+
+/** Enter lab: the topology links up, a packet crosses it, and the lab takes over. */
+function EnterTopology() {
+  const xs = ENTER_NODES.map((_, i) => 12 + i * (76 / (ENTER_NODES.length - 1)));
+  return (
+    <motion.div
+      className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      aria-hidden
+    >
+      <svg viewBox="0 0 100 16" className="mx-auto h-auto w-full max-w-4xl overflow-visible">
+        {xs.slice(0, -1).map((x, i) => (
+          <motion.line
+            key={i}
+            x1={x}
+            y1={6}
+            x2={xs[i + 1]}
+            y2={6}
+            stroke="hsl(var(--primary))"
+            strokeWidth={0.25}
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ delay: 0.05 + i * 0.08, duration: 0.22, ease: EASE_OUT }}
+          />
+        ))}
+        {xs.map((x, i) => (
+          <g key={i}>
+            <motion.circle cx={x} cy={6} r={1.4} fill="hsl(var(--background))" stroke="hsl(var(--primary))" strokeWidth={0.3} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: i * 0.08, duration: 0.2, ease: EASE_OUT }} />
+            <motion.circle cx={x} cy={6} r={0.6} fill="hsl(var(--primary))" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.36 + i * 0.12, duration: 0.1 }} />
+            <text x={x} y={11.2} textAnchor="middle" className="fill-slate-400 font-mono" style={{ fontSize: 1.7, letterSpacing: 0.3 }}>
+              {ENTER_NODES[i]}
+            </text>
+          </g>
+        ))}
+        <motion.circle
+          r={0.9}
+          cy={6}
+          fill="hsl(var(--primary))"
+          initial={{ cx: xs[0], opacity: 0 }}
+          animate={{ cx: xs, opacity: [0, 1, 1, 1] }}
+          transition={{ delay: 0.34, duration: 0.42, ease: 'easeInOut' }}
+        />
+        <motion.circle cx={xs[xs.length - 1]} cy={6} r={1.4} fill="none" stroke="hsl(var(--primary))" strokeWidth={0.3} initial={{ scale: 1, opacity: 0 }} animate={{ scale: 4, opacity: [0, 0.8, 0] }} transition={{ delay: 0.74, duration: 0.45 }} />
+      </svg>
+      <motion.div className="mt-3 text-center font-mono text-[11px] uppercase tracking-[0.24em] text-primary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.2 }}>
+        Link up · entering lab
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function IntroPanel({
   muted,
   onToggleMute,
   onEnter,
+  leaving,
 }: {
   muted: boolean;
   onToggleMute: () => void;
   onEnter: (target?: string) => void;
+  leaving: boolean;
 }) {
   return (
     <motion.div
       className="absolute inset-0 flex flex-col overflow-y-auto"
       initial="hidden"
-      animate="show"
+      animate={leaving ? 'leave' : 'show'}
       exit={{ opacity: 0 }}
       variants={stagger}
     >

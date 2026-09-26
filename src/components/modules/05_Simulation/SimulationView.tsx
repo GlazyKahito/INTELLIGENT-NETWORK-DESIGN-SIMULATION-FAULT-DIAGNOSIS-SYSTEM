@@ -44,6 +44,7 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
 
   // Simulation execution state
   const [isSimulating, setIsSimulating] = useState(false);
+  const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const [currentPacket, setCurrentPacket] = useState<SimulatedPacket | null>(null);
   const [inspectedPacket, setInspectedPacket] = useState<SimulatedPacket | null>(null);
   const [simulationLog, setSimulationLog] = useState<string[]>([]);
@@ -327,6 +328,12 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
                     strokeWidth="2.5"
                     strokeDasharray={isDown ? '5' : 'none'}
                   />
+                  {/* Idle keep-alive traffic so the network reads as live before you run anything */}
+                  {!isDown && !isSimulating && !reduceMotion && (
+                    <circle r="2.5" fill="#6ee7b7" opacity="0.7">
+                      <animateMotion dur={`${2.4 + (link.id.length % 5) * 0.45}s`} repeatCount="indefinite" path={`M${x1},${y1} L${x2},${y2}`} />
+                    </circle>
+                  )}
                 </g>
               );
             })}

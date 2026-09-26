@@ -15,6 +15,8 @@ import {
   QrCode
 } from 'lucide-react';
 import { playSound } from '../../../lib/sound';
+import { motion } from 'motion/react';
+import { PacketPath } from '@/components/motion/PacketPath';
 
 interface LabReportProps {
   onLaunchFullLab: () => void;
@@ -75,6 +77,29 @@ export const LabReport: React.FC<LabReportProps> = ({
   return (
     <section className="py-12 bg-[#070a12]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-10">
+        {/* The journey closes: one last packet crosses the whole network */}
+        <div className="rounded-2xl border border-slate-800 bg-[#0b101d] p-6 sm:p-8">
+          <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-emerald-400">Final verification</div>
+          <PacketPath nodes={['PC', 'SWITCH', 'ROUTER', 'SERVER']} okLabel="Network stable · Lab complete" className="mt-4 max-w-2xl" />
+          <motion.ul
+            className="mt-5 flex flex-wrap gap-2"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={{ hidden: {}, show: { transition: { delayChildren: 2.1, staggerChildren: 0.07 } } }}
+          >
+            {['Cabling & L1', 'Switching', 'IP addressing', 'Routing', 'TCP / UDP', 'Error detection', 'Fault isolation', 'Diagnosis'].map(c => (
+              <motion.li
+                key={c}
+                variants={{ hidden: { opacity: 0, y: 6 }, show: { opacity: 1, y: 0 } }}
+                className="rounded-full border border-emerald-500/30 bg-emerald-500/5 px-3 py-1 font-mono text-[11px] text-emerald-200"
+              >
+                ✓ {c}
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
+
         {/* Student Customization Bar */}
         <div className="p-5 rounded-2xl bg-[#0d1322] border border-slate-800 shadow-xl flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">

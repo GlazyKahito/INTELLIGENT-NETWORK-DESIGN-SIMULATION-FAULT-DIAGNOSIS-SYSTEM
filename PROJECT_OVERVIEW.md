@@ -13,7 +13,7 @@
 3. [The 10-Module Virtual Lab Suite](#3-the-10-module-virtual-lab-suite)
 4. [DCN Experiments 01 to 08 Implementation Detail](#4-dcn-experiments-01-to-08-implementation-detail)
 5. [Deterministic Kernel & Mathematical Engines](#5-deterministic-kernel--mathematical-engines)
-6. [Forwarding Plane Mini-Game](#6-forwarding-plane-mini-game)
+6. [Rogue Packet Mini-Game](#6-rogue-packet-mini-game)
 7. [Opening Sequence: Warp Tunnel & Product Intro](#7-opening-sequence-warp-tunnel--product-intro)
 8. [UI/UX & Audio Synthesis System](#8-uiux--audio-synthesis-system)
 9. [Deployment & Verification](#9-deployment--verification)
@@ -46,7 +46,7 @@ The lab guides students through the complete scientific engineering lifecycle:
                                                                                ▼
 ┌──────────────┐     ┌──────────────┐     ┌───────────────────┐     ┌─────────────────────┐
 │ 8. REPORT    │ <── │ 7. ROUTER    │ <── │ 6. VERIFY         │ <── │ 5. DIAGNOSE & FIX   │
-│ PDF / Cert   │     │ GAME (LPM)   │     │ Ping Sweep Audit  │     │ Hypothesis & CLI    │
+│ PDF / Cert   │     │ ROGUE PACKET │     │ Ping Sweep Audit  │     │ Hypothesis & CLI    │
 └──────────────┘     └──────────────┘     └───────────────────┘     └─────────────────────┘
 ```
 
@@ -63,7 +63,7 @@ The lab guides students through the complete scientific engineering lifecycle:
 | **05_Simulation** | **Discrete Event Packet Simulator** | Multi-hop packet animation with speed control (0.5x–2x), pause/step execution, and L2–L4 packet inspector. |
 | **06_FaultDiagnosis** | **Empirical Fault Reasoner & CLI** | 10 realistic network fault scenarios, interactive diagnostic terminal, structured hypothesis-evidence reasoning framework, and fix verification. |
 | **07_Assessments** | **Formative & Summative Quiz Suite** | 12 rigorous assessment questions covering theoretical protocols and clinical troubleshooting with immediate Bloom-mapped explanations. |
-| **08_MiniGame** | **Forwarding Plane** | Be router R1's forwarding engine: apply ACL → TTL → longest-prefix match to a live ingress queue across four timed shifts, with binary-lens hints, per-decision explanations and star ratings. |
+| **08_MiniGame** | **Rogue Packet** (+ Forwarding Plane drill) | 2D top-down NOC exploration game: inspect devices, ping/traceroute, trace the rogue packet and diagnose one of 11 randomized faults across five levels. |
 | **09_Conclusion** | **Automated Academic Lab Report** | Printable collegiate laboratory certificate with student name, roll number, diagnostic proof log, quiz scorecard, and JSON export. |
 | **10_LaunchLab** | **Fullscreen Unrestricted Sandbox** | Distraction-free full-viewport CAD workbench accessible via keyboard shortcut `[F]`. |
 
@@ -155,19 +155,18 @@ The system is powered by deterministic TypeScript engines located in `src/lib/`:
 
 ---
 
-## 6. Forwarding Plane Mini-Game
+## 6. Rogue Packet Mini-Game
 
-Located in `src/components/modules/08_MiniGame/ForwardingPlaneGame.tsx`, driven by the pure engine in `src/lib/network/forwarding.ts`:
-- **Premise**: the student *is* router R1's forwarding engine. Packets queue at ingress; each must leave by `Gi0/0`, `Gi0/1`, `Se0/0/0`, or be dropped — before its head-of-queue timer expires.
-- **Decision model (`decide()`)**: inbound ACL (first matching line) → TTL (≤1 ⇒ drop, ICMP Time Exceeded) → longest-prefix match (no match & no default ⇒ drop; Null0 ⇒ blackhole). Every verdict carries a human-readable reason.
-- **Four shifts**:
-  - *Connected networks* — two /24 LANs + default route.
-  - *Longest prefix wins* — overlapping /8, /16, /24 and a /12; no default route.
-  - *Filters & hop limits* — ACL 110 (telnet, spoofed 10.66/16) and TTL-1 packets.
-  - *Peak hour* — /16 with a /18 and a /24 carve-out, Null0 route, SNMP filter, faster arrivals.
-- **Pressure & scoring**: arrival rate, head timeout and queue capacity per shift; tail-drop on overflow; link health drains on wrong ports, timeouts and overflow. Points reward speed and streaks (up to ×2).
-- **Teaching aids**: Binary Lens hint (`H`, −50) shows the destination and matched prefix bit-by-bit; the routing-table row / ACL line that decided each packet is highlighted; each shift ends with accuracy, average decision time, best streak, 1–3 stars and a mistake review.
-- **Controls**: `1`–`4` / `D`, `H`, `Space`; full touch support via port buttons. Best run stored per browser (`localStorage`).
+Located in `src/components/modules/08_MiniGame/` — `MinigameHub.tsx` (landing, "enter the network" node-expansion transition, Forwarding Plane drill) and `rogue-packet/` (`network.ts` model & faults, `map.ts` facility, `engine.ts` canvas loop, `panels.tsx`, `RoguePacketGame.tsx`).
+
+- **Premise:** a 2D top-down network operations centre. Walk seven rooms (Computer Lab, Switch Room, Router Room, Server Room, Packet Analysis Lab, Monitoring Room, Network Control Room), inspect real devices and find the component breaking the network.
+- **Real simulation:** every clue comes from a network model with ARP per segment, default gateways, longest-prefix routing, TTL, link/port state and loss (`rogue-packet/network.ts`).
+- **11 randomized faults:** disconnected cable, shut-down switch port, wrong IP, wrong mask, server on the wrong subnet, duplicate IP, router interface down, bad static route, routing loop, duplex-mismatch loss, server offline. Several share symptoms on purpose (cable vs. disabled port; server offline vs. wrong subnet).
+- **Tools:** walk up and press `E` to inspect PCs, switches (`show interfaces status`, MAC table), the router (`show ip route`, `show arp`), the server, cables, MONITOR-01 and the packet analyzer. `P` opens ping / traceroute from any host; the analyzer unlocks **Packet Trace**, which follows the rogue packet hop by hop with the camera.
+- **Live packets** travel the floor cables; the rogue packet loops, vanishes or goes to the wrong host depending on the fault. Random events (packet storm, blackout, switch reload, link flap…) add noise.
+- **Five levels:** Cable Chaos → IP Crisis → Switch Failure → Routing Nightmare → Network Blackout (two faults). Wrong diagnoses explain why and let you keep investigating; each level ends with accuracy, packets investigated, time, stability and a short "you learned".
+- **Controls:** WASD/arrows, E, P, Tab (topology map), G (diagnose), Esc; on-screen joystick + interact button on touch devices. Forwarding Plane remains available in the hub as a quick drill.
+- **Engineering:** one requestAnimationFrame loop; static geometry pre-rendered to an offscreen canvas; React only hears about changes (nearest object, room, trace hops). The game chunk is lazy-loaded (~92 kB) and portalled above the site chrome.
 
 ---
 
@@ -187,7 +186,8 @@ Located in `src/components/layout/OpeningSequence.tsx` and `src/components/ui/wa
 
 - **Typography**: IBM Plex Sans / Plex Sans Condensed / Plex Mono — an engineering typeface family replacing Inter / Space Grotesk / Fira Code.
 - **Live Wallpaper (`LiveWallpaper.tsx`)**: a light "tunnel echo" of the opening — ~70 faint streaks drifting from a vanishing point over a masked grid; 2D canvas capped at 30 fps, paused when hidden, static under reduced motion.
-- **Page transitions**: modules cross-fade via `motion` `AnimatePresence`.
+- **Motion system** (`src/components/motion/`): `PacketPath` (nodes activate, links draw, a packet arrives or drops), `RouteTransition` (section-to-section hop; Simulation → Diagnosis breaks the link), `TopologyWalkthrough` (scroll-built PC→Switch→Router→Server lesson in Theory), `NetStatus` (network-themed success/error toasts replacing confetti), `LinkLoader` (○──○──○ loader). Journey dock rebuilt as a network path. Timing tokens: micro 100–250 ms, cards 300 ms, panels 250–450 ms, transitions 500–900 ms, cinematic 800–1400 ms.
+- **Opening upgrade**: the warp shows a decoding title, a SYN → SYN-ACK → ACK handshake, a live packet counter and the OSI descent; streaks then converge into a node that bursts into the intro.
 - **Floating Journey Dock (`JourneyDock.tsx`)**: Bottom floating dock with completed percentage gauge, current stage label, and smooth 1-click step advancement.
 - **Works Launcher 10-Module Hub (`WorksLauncher.tsx`)**: Keyboard-driven (`[M]` key) navigation modal displaying all 10 modules, learning objectives, and completion checkmarks.
 - **Web Audio API Synthesizer (`src/lib/sound.ts`)**:
@@ -268,7 +268,7 @@ c:/Users/KRUTIK/Downloads/dcn proj/
 │   │       ├── 05_Simulation/      # Packet transit simulator & Inspector modal
 │   │       ├── 06_FaultDiagnosis/  # Scenario selector, Diagnostic terminal & Engine
 │   │       ├── 07_Assessments/     # 12-question quiz engine with Bloom feedback
-│   │       ├── 08_MiniGame/ForwardingPlaneGame.tsx # Router forwarding-plane game
+│   │       ├── 08_MiniGame/        # MinigameHub, rogue-packet/ (Rogue Packet), ForwardingPlaneGame drill
 │   │       ├── 09_Conclusion/LabReport.tsx # Collegiate lab report & printable cert
 │   │       └── 10_LaunchLab/FullLabSandbox.tsx # Fullscreen unrestricted workbench
 │   ├── App.tsx                     # Main application controller & state store
