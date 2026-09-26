@@ -68,7 +68,14 @@ export function App() {
 
       {/* 2. Cinematic Intentional Intro Experience */}
       {!bootDone && (
-        <CinematicIntro onEnter={() => setBootDone(true)} />
+        <CinematicIntro
+          onEnter={(targetModule?: string) => {
+            if (targetModule && targetModule !== 'home') {
+              handleNavigateModule(targetModule);
+            }
+            setBootDone(true);
+          }}
+        />
       )}
 
       {/* 3. Persistent Navigation Header */}
