@@ -47,7 +47,7 @@ void main() {
   float major = step(abs(mod(floor(lines + 0.5), 5.0)), 0.5);
   vec2 q = gl_FragCoord.xy / uRes - 0.5;
   float vig = 1.0 - smoothstep(0.15, 0.85, length(q * vec2(1.1, 1.3)));
-  float a = line * (0.07 + 0.09 * major) * vig;
+  float a = line * (0.035 + 0.045 * major) * vig;
   a = (a == a) ? clamp(a, 0.0, 0.25) : 0.0; // guard NaN on odd drivers
   outColor = vec4(uColor * a, a);
 }`;
@@ -281,7 +281,7 @@ export const LiveWallpaper: React.FC = () => {
       }
       spawnIn -= dt;
       if (spawnIn <= 0 && nodes.length > 1) {
-        spawnIn = 1.1 + Math.random() * 1.6;
+        spawnIn = 2.4 + Math.random() * 2.4;
         const a = Math.floor(Math.random() * nodes.length);
         const links = nodes[a].links;
         if (links.length) {
@@ -326,7 +326,7 @@ export const LiveWallpaper: React.FC = () => {
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
-      <div className="absolute inset-0 tech-grid-bg opacity-25 [mask-image:radial-gradient(ellipse_at_50%_40%,black,transparent_75%)]" />
+      <div className="absolute inset-0 tech-grid-bg opacity-10 [mask-image:radial-gradient(ellipse_at_50%_40%,black,transparent_75%)]" />
       <canvas ref={topoRef} className="absolute inset-0 h-full w-full" />
       <canvas ref={netRef} className="absolute inset-0 h-full w-full" />
     </div>

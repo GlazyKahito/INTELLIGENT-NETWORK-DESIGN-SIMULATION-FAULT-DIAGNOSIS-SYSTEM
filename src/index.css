@@ -265,9 +265,9 @@ div[class*='rounded-2xl'][class*='border'],
 div[class*='rounded-3xl'][class*='border'],
 section[class*='rounded-2xl'][class*='border'],
 .sheet-marks {
-  --mark: rgb(255 95 31 / 0.9);
-  --mark-len: 16px;
-  --mark-w: 2px;
+  --mark: rgb(255 95 31 / 0.55);
+  --mark-len: 8px;
+  --mark-w: 1px;
   background-image: linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
     linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
     linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
@@ -283,7 +283,7 @@ section[class*='rounded-2xl'][class*='border'],
 /* Hover: the marks grow toward each other — the block is being selected. */
 div[class*='rounded-2xl'][class*='border'][class*='cursor-pointer']:hover,
 .node-card:hover {
-  --mark-len: 34px;
+  --mark-len: 14px;
   transition: all 0.25s var(--ease-net);
 }
 

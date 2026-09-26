@@ -25,7 +25,7 @@ export function RouteTransition({ from, to }: { from: string; to: string }) {
   const stopX = variant === 'break' ? 138 : B;
   return (
     <motion.div
-      className="pointer-events-none fixed inset-x-0 top-[6rem] z-30 flex justify-center"
+      className="pointer-events-none fixed inset-x-0 top-[4.35rem] z-30 flex justify-center"
       initial={{ opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -4, transition: { duration: 0.25 } }}

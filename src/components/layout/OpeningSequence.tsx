@@ -42,8 +42,6 @@ const WORKFLOW = [
   ['Verify', 'the solution.'],
 ];
 
-const JOURNEY = ['Aim', 'Theory', 'Design', 'Simulate', 'Diagnose', 'Assess', 'Play', 'Report'];
-
 const QUICK_JUMPS = [
   { key: '1', label: 'Network designer', target: 'design' },
   { key: '2', label: 'Fault diagnosis', target: 'diagnostics' },
@@ -153,7 +151,7 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
       ? TUNNEL_STAGES[stage]
       : phase === 'exit'
         ? { speed: 4, intensity: 0.5, collapse: 0 }
-        : { speed: 0.35, intensity: 0.55, collapse: 0 };
+        : { speed: 0.25, intensity: 0.32, collapse: 0 };
 
   return (
     <motion.div
@@ -190,7 +188,7 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 120% 90% at 50% 50%, transparent 30%, hsl(var(--background) / 0.85) 100%), linear-gradient(90deg, hsl(var(--background) / 0.82) 0%, hsl(var(--background) / 0.35) 55%, transparent 100%)',
+            'radial-gradient(ellipse 70% 60% at 50% 50%, hsl(var(--background) / 0.72) 0%, hsl(var(--background) / 0.45) 55%, hsl(var(--background) / 0.9) 100%)',
         }}
         initial={false}
         animate={{ opacity: phase === 'tunnel' ? 0 : 1 }}
@@ -523,14 +521,15 @@ function IntroPanel({
         </button>
       </motion.header>
 
-      {/* Main */}
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-4 py-8 sm:px-8">
-        <motion.div variants={rise} className="mb-5 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
-          <span className="h-px w-8 bg-primary" aria-hidden />
+      {/* Main — one centred column, one obvious action */}
+      <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center px-4 py-8 text-center sm:px-8">
+        <motion.div variants={rise} className="mb-6 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
+          <span className="h-px w-8 bg-primary/60" aria-hidden />
           Interactive network laboratory
+          <span className="h-px w-8 bg-primary/60" aria-hidden />
         </motion.div>
 
-        <h1 className="max-w-5xl font-display text-[2.15rem] font-semibold uppercase leading-[1.02] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+        <h1 className="font-display text-[2.15rem] font-semibold uppercase leading-[1.02] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
           <motion.span variants={rise} className="block">
             Intelligent network design,
           </motion.span>
@@ -539,31 +538,20 @@ function IntroPanel({
           </motion.span>
         </h1>
 
-        {/* Workflow — the lab in five verbs */}
-        <motion.ol variants={rise} className="relative mt-8 grid max-w-4xl grid-cols-2 gap-x-6 gap-y-4 sm:mt-10 sm:grid-cols-5 sm:gap-0">
-          <span aria-hidden className="absolute left-0 right-0 top-0 hidden h-px bg-border sm:block">
-            <span className="packet-run absolute top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-primary" />
-          </span>
-          {WORKFLOW.map(([verb, rest], i) => (
-            <li key={verb} className="sm:pr-4 sm:pt-4">
-              <div className="font-mono text-[11px] text-muted-foreground">{String(i + 1).padStart(2, '0')}</div>
-              <div className="mt-1 text-sm text-foreground sm:text-base">
-                <span className="font-semibold">{verb}</span> {rest}
-              </div>
-            </li>
-          ))}
-        </motion.ol>
+        <motion.p variants={rise} className="mt-6 text-base text-muted-foreground sm:text-lg">
+          Design networks · Inject faults · Trace packets · Diagnose · Verify
+        </motion.p>
 
-        {/* CTA */}
-        <motion.div variants={rise} className="mt-10 flex flex-col gap-5 sm:mt-12 sm:flex-row sm:items-center">
+        {/* The one action */}
+        <motion.div variants={rise} className="mt-12 flex flex-col items-center gap-4">
           <button
             type="button"
             autoFocus
             onClick={() => onEnter('home')}
-            className="group relative inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-offset-4"
+            className="group relative inline-flex h-14 items-center justify-center gap-3 overflow-hidden rounded-md bg-primary px-12 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-offset-4"
           >
             Enter lab
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />
+            <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />
             {/* idle countdown drains along the bottom edge */}
             <span
               aria-hidden
@@ -571,59 +559,32 @@ function IntroPanel({
               style={{ width: `${(idleLeft / AUTO_ENTER_S) * 100}%` }}
             />
           </button>
-          <AnimatePresence>
-            {idleLeft <= 10 && !leaving && (
-              <motion.span
-                initial={{ opacity: 0, x: -6 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0 }}
-                className="font-mono text-xs uppercase tracking-[0.14em] text-primary"
-                role="status"
-              >
-                Entering in {Math.max(0, idleLeft)}s
-              </motion.span>
-            )}
-          </AnimatePresence>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-            <span className="font-mono text-[11px] uppercase tracking-wider">Jump to</span>
-            {QUICK_JUMPS.map(j => (
-              <button
-                key={j.key}
-                type="button"
-                onClick={() => onEnter(j.target)}
-                className="inline-flex items-center gap-1.5 rounded px-1 underline-offset-4 transition-colors hover:text-foreground hover:underline"
-              >
-                {j.label}
-                <kbd className="rounded border border-border px-1 font-mono text-[10px] text-muted-foreground">{j.key}</kbd>
-              </button>
-            ))}
+          <div className="h-5 font-mono text-xs uppercase tracking-[0.14em] text-primary" role="status">
+            <AnimatePresence>
+              {idleLeft <= 10 && !leaving && (
+                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  Entering in {Math.max(0, idleLeft)}s
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>
 
-      {/* Journey rail */}
-      <motion.footer variants={rise} className="shrink-0 px-4 pb-6 sm:px-8 sm:pb-8">
-        <div className="mx-auto hidden max-w-6xl md:block" aria-label="Lab journey">
-          <div className="relative h-px bg-border">
-            <motion.div
-              className="absolute inset-y-0 left-0 w-full origin-left bg-primary/70"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.9, duration: 1.4, ease: EASE_OUT }}
-            />
-          </div>
-          <ol className="mt-3 grid grid-cols-8 font-mono text-[11px] text-muted-foreground">
-            {JOURNEY.map((step, i) => (
-              <li key={step} className="flex items-center gap-2">
-                <span className="text-foreground/40">{String(i + 1).padStart(2, '0')}</span>
-                {step}
-              </li>
-            ))}
-          </ol>
-        </div>
-        <div className="font-mono text-[11px] text-muted-foreground md:hidden">
-          8-step guided journey · Aim → Report
-        </div>
+      {/* Quiet shortcuts at the foot of the screen */}
+      <motion.footer variants={rise} className="flex shrink-0 flex-wrap items-center justify-center gap-x-5 gap-y-2 px-4 pb-8 text-sm text-muted-foreground">
+        <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground/70">Jump to</span>
+        {QUICK_JUMPS.map(j => (
+          <button
+            key={j.key}
+            type="button"
+            onClick={() => onEnter(j.target)}
+            className="inline-flex items-center gap-1.5 rounded px-1 underline-offset-4 transition-colors hover:text-foreground hover:underline"
+          >
+            {j.label}
+            <kbd className="rounded border border-border px-1 font-mono text-[10px] text-muted-foreground">{j.key}</kbd>
+          </button>
+        ))}
       </motion.footer>
     </motion.div>
   );
