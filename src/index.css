@@ -107,6 +107,15 @@
   border: 1px solid rgba(31, 41, 61, 0.8);
 }
 
+/* Column-aligned CLI output (show ip route, arp tables…) must stay monospaced */
+pre,
+pre *,
+code,
+samp {
+  font-family: 'IBM Plex Mono', ui-monospace, Consolas, monospace !important;
+  font-feature-settings: normal;
+}
+
 /* Motion tokens — one timing language for the whole lab */
 :root {
   --ease-net: cubic-bezier(0.22, 1, 0.36, 1);

@@ -9,7 +9,10 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'ui-monospace', 'Consolas', 'monospace'],
+        // Labels, metadata and figures: the UI sans with tabular numerals, so numbers still align.
+        mono: [['"IBM Plex Sans"', 'system-ui', 'sans-serif'], { fontFeatureSettings: '"tnum", "zero"' }],
+        // Genuine code only: terminals, CLI output, commands.
+        code: ['"IBM Plex Mono"', 'ui-monospace', 'Consolas', 'monospace'],
         display: ['"IBM Plex Sans Condensed"', '"IBM Plex Sans"', 'sans-serif'],
       },
       borderRadius: {
