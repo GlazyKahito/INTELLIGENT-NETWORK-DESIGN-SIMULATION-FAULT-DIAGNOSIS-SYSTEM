@@ -21,6 +21,7 @@ import { LabReport } from './components/modules/09_Conclusion/LabReport';
 import { FullLabSandbox } from './components/modules/10_LaunchLab/FullLabSandbox';
 import { playSound } from './lib/sound';
 import { hasSeenIntro } from './lib/intro-session';
+import { initSmoothScroll, scrollToTop } from './lib/smooth-scroll';
 import { MODULE_LABEL, groupOf } from './lib/nav';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { ShimmerButton } from '@/components/magicui/shimmer-button';
@@ -65,8 +66,11 @@ export function App() {
     activeRef.current = modId;
     setActiveModule(modId);
     setCompletedModules(prev => new Set([...prev, modId]));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   };
+
+  // Smooth scrolling across the whole site
+  useEffect(() => initSmoothScroll(), []);
 
   // Keyboard shortcut: Press 'M' to open Works Hub, 'F' for Fullscreen Lab
   useEffect(() => {
