@@ -20,6 +20,7 @@ import { HammingSimulator } from './HammingSimulator';
 import { CommandReference } from './CommandReference';
 import { playSound } from '../../../lib/sound';
 import { TopologyWalkthrough } from '@/components/motion/TopologyWalkthrough';
+import { CablingDiagram, CommandsDiagram, EncapsulationDiagram, HammingDiagram, HandshakeDiagram, SubnetDiagram, UdpVsTcpDiagram } from './TheoryDiagrams';
 
 interface TheoryHubProps {
   initialTab?: string;
@@ -258,14 +259,22 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
           )}
 
           {activeTab === 'commands' && (
-            <CommandReference onTestInTerminal={onTestInTerminal} />
+            <div className="space-y-6">
+              <CommandsDiagram />
+              <CommandReference onTestInTerminal={onTestInTerminal} />
+            </div>
           )}
 
           {activeTab === 'cabling' && (
-            <CableFabrication />
+            <div className="space-y-6">
+              <CablingDiagram />
+              <CableFabrication />
+            </div>
           )}
 
           {activeTab === 'wireshark' && (
+            <div className="space-y-6">
+            <EncapsulationDiagram />
             <div className="p-6 rounded-3xl bg-[#151412] border border-slate-800 space-y-6 shadow-2xl font-mono text-xs">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-slate-800 gap-2">
                 <div>
@@ -384,22 +393,35 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
                 </div>
               </div>
             </div>
+            </div>
           )}
 
           {activeTab === 'tcp' && (
-            <TcpHeaderViewer />
+            <div className="space-y-6">
+              <HandshakeDiagram />
+              <TcpHeaderViewer />
+            </div>
           )}
 
           {activeTab === 'addressing' && (
-            <SubnetCalculator />
+            <div className="space-y-6">
+              <SubnetDiagram />
+              <SubnetCalculator />
+            </div>
           )}
 
           {activeTab === 'hamming' && (
-            <HammingSimulator />
+            <div className="space-y-6">
+              <HammingDiagram />
+              <HammingSimulator />
+            </div>
           )}
 
           {activeTab === 'udp' && (
-            <TcpHeaderViewer />
+            <div className="space-y-6">
+              <UdpVsTcpDiagram />
+              <TcpHeaderViewer />
+            </div>
           )}
         </div>
       </div>
