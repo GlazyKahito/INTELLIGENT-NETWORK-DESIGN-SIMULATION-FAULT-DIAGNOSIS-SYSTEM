@@ -38,7 +38,7 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
     { id: 'simulation', num: '04', title: 'Packet Simulator', short: 'Simulate', icon: Play },
     { id: 'diagnostics', num: '05', title: 'Fault Diagnosis', short: 'Diagnose', icon: Terminal },
     { id: 'assessments', num: '06', title: 'Assessments', short: 'Assess', icon: Activity },
-    { id: 'minigame', num: '07', title: 'Rogue Packet', short: 'Game', icon: Gamepad2 },
+    { id: 'minigame', num: '07', title: 'Mini Game · Rogue Packet', short: 'Mini Game', icon: Gamepad2 },
     { id: 'conclusion', num: '08', title: 'Completion Report', short: 'Report', icon: Award },
   ];
 

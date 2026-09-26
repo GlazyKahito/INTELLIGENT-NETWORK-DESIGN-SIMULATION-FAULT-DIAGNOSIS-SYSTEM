@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
 import { 
   Network, 
   Volume2, 
@@ -50,14 +51,14 @@ export const Header: React.FC<HeaderProps> = ({
 
   const navItems = [
     { id: 'home', label: 'Home', icon: Network },
-    { id: 'aim', label: '01 Aim', icon: BookOpen },
-    { id: 'theory', label: '02 Theory', icon: HelpCircle },
-    { id: 'design', label: '03 Design', icon: Layers },
-    { id: 'simulation', label: '04 Simulate', icon: Play },
-    { id: 'diagnostics', label: '05 Faults', icon: Terminal },
-    { id: 'assessments', label: '06 Assessment', icon: Activity },
-    { id: 'minigame', label: '07 Game', icon: Gamepad2 },
-    { id: 'conclusion', label: '08 Report', icon: Award },
+    { id: 'aim', label: 'Aim', icon: BookOpen },
+    { id: 'theory', label: 'Theory', icon: HelpCircle },
+    { id: 'design', label: 'Design', icon: Layers },
+    { id: 'simulation', label: 'Simulate', icon: Play },
+    { id: 'diagnostics', label: 'Faults', icon: Terminal },
+    { id: 'assessments', label: 'Assessment', icon: Activity },
+    { id: 'minigame', label: 'Mini Game', icon: Gamepad2 },
+    { id: 'conclusion', label: 'Report', icon: Award },
   ];
 
   return (
@@ -96,9 +97,8 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Desktop Quick Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-0.5 min-w-0 bg-[#0b101c]/80 p-1 rounded-xl border border-slate-800/90 shadow-inner">
+        <nav className="hidden xl:flex self-stretch items-stretch min-w-0" aria-label="Sections">
           {navItems.map(item => {
-            const Icon = item.icon;
             const isActive = activeModule === item.id;
             return (
               <button
@@ -107,14 +107,22 @@ export const Header: React.FC<HeaderProps> = ({
                   playSound('click');
                   setActiveModule(item.id);
                 }}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap border transition-all ${
-                  isActive
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(59,130,246,0.2)] font-semibold'
-                    : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                aria-current={isActive ? 'page' : undefined}
+                className={`relative flex items-center px-3 text-[13px] font-medium whitespace-nowrap transition-colors duration-200 ${
+                  isActive ? 'text-slate-50' : 'text-slate-400 hover:text-slate-100'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5 hidden 2xl:block" />
-                <span>{item.label}</span>
+                {item.label}
+                {isActive && (
+                  // One indicator that slides between sections: a link along the header edge with a node on it.
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute inset-x-3 -bottom-px h-[2px] rounded-full bg-emerald-400"
+                    transition={{ type: 'spring', stiffness: 520, damping: 40 }}
+                  >
+                    <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(96,165,250,0.9)]" />
+                  </motion.span>
+                )}
               </button>
             );
           })}
