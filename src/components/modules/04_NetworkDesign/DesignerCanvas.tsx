@@ -9,7 +9,13 @@ import {
   Trash2, 
   Unlink, 
   CheckCircle2, 
-  AlertCircle 
+  AlertCircle,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  Sparkles,
+  Layers,
+  ArrowRight
 } from 'lucide-react';
 import { NetworkDevice, NetworkLink, DeviceType } from '../../../types/network';
 import { DevicePalette } from './DevicePalette';
@@ -41,6 +47,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
   const [showValidation, setShowValidation] = useState(false);
   const [draggedDeviceId, setDraggedDeviceId] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState<number>(1.0);
 
   const canvasRef = useRef<HTMLDivElement>(null);
 
@@ -77,8 +84,8 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
       id,
       name,
       type,
-      x: 100 + (count * 60) % 600,
-      y: 120 + (count * 40) % 300,
+      x: 80 + (count * 70) % 650,
+      y: 100 + (count * 50) % 320,
       defaultGateway: type !== 'switch' ? gw : undefined,
       dnsServer: type === 'pc' || type === 'laptop' ? '192.168.2.10' : undefined,
       interfaces: [
@@ -113,8 +120,8 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     const canvasRect = canvasRef.current?.getBoundingClientRect();
     if (canvasRect) {
       setDragOffset({
-        x: e.clientX - canvasRect.left - dev.x,
-        y: e.clientY - canvasRect.top - dev.y,
+        x: (e.clientX - canvasRect.left) / zoom - dev.x,
+        y: (e.clientY - canvasRect.top) / zoom - dev.y,
       });
     }
   };
@@ -122,8 +129,8 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
   const handleMouseMoveCanvas = (e: React.MouseEvent) => {
     if (!draggedDeviceId || !canvasRef.current) return;
     const canvasRect = canvasRef.current.getBoundingClientRect();
-    const newX = Math.max(30, Math.min(canvasRect.width - 120, e.clientX - canvasRect.left - dragOffset.x));
-    const newY = Math.max(30, Math.min(canvasRect.height - 100, e.clientY - canvasRect.top - dragOffset.y));
+    const newX = Math.max(20, Math.min(1100, (e.clientX - canvasRect.left) / zoom - dragOffset.x));
+    const newY = Math.max(20, Math.min(600, (e.clientY - canvasRect.top) / zoom - dragOffset.y));
 
     setDevices(prev =>
       prev.map(d => (d.id === draggedDeviceId ? { ...d, x: newX, y: newY } : d))
@@ -142,7 +149,7 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
     } else if (connectSourceId === deviceId) {
       setConnectSourceId(null);
     } else {
-      // Create link between connectSourceId and deviceId
+      // Check existing connection
       const exists = links.some(
         l =>
           (l.sourceDeviceId === connectSourceId && l.targetDeviceId === deviceId) ||
@@ -217,9 +224,10 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
               playSound('success');
               onProceedToSimulation();
             }}
-            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0"
+            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0 active:scale-95 cursor-pointer"
           >
-            Launch Packet Simulation →
+            <span>Proceed to Simulation</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
@@ -247,141 +255,187 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
           }}
         />
 
-        {/* Core Canvas Workspace */}
-        <div
-          ref={canvasRef}
-          onMouseMove={handleMouseMoveCanvas}
-          onMouseUp={handleMouseUpCanvas}
-          className="relative w-full h-[580px] bg-[#090d16] border border-slate-800 rounded-2xl overflow-hidden shadow-2xl select-none tech-dot-bg"
-        >
-          {/* SVG Links Layer */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-            {links.map(link => {
-              const src = devices.find(d => d.id === link.sourceDeviceId);
-              const tgt = devices.find(d => d.id === link.targetDeviceId);
-              if (!src || !tgt) return null;
+        {/* Core Canvas Workspace with Zoom Controls */}
+        <div className="relative w-full h-[600px] bg-[#090d16] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl select-none tech-dot-bg">
+          {/* Zoom Rulers & Controls */}
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-[#0d1322]/90 backdrop-blur-md p-1.5 rounded-xl border border-slate-800 shadow-xl">
+            <button
+              onClick={() => setZoom(prev => Math.min(1.4, prev + 0.1))}
+              title="Zoom In"
+              className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 transition-colors"
+            >
+              <ZoomIn className="w-4 h-4" />
+            </button>
+            <span className="text-[10px] font-mono text-slate-400 px-1.5">
+              {Math.round(zoom * 100)}%
+            </span>
+            <button
+              onClick={() => setZoom(prev => Math.max(0.7, prev - 0.1))}
+              title="Zoom Out"
+              className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 transition-colors"
+            >
+              <ZoomOut className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setZoom(1.0)}
+              title="Reset Zoom"
+              className="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 transition-colors"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+            </button>
+          </div>
 
-              const x1 = src.x + 48;
-              const y1 = src.y + 40;
-              const x2 = tgt.x + 48;
-              const y2 = tgt.y + 40;
+          {/* Canvas Viewport */}
+          <div
+            ref={canvasRef}
+            onMouseMove={handleMouseMoveCanvas}
+            onMouseUp={handleMouseUpCanvas}
+            style={{
+              transform: `scale(${zoom})`,
+              transformOrigin: 'top left',
+              width: '1200px',
+              height: '700px',
+            }}
+            className="relative w-full h-full"
+          >
+            {/* SVG Links Layer */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+              {links.map(link => {
+                const src = devices.find(d => d.id === link.sourceDeviceId);
+                const tgt = devices.find(d => d.id === link.targetDeviceId);
+                if (!src || !tgt) return null;
 
-              const isDown = link.status === 'down';
+                const x1 = src.x + 56;
+                const y1 = src.y + 44;
+                const x2 = tgt.x + 56;
+                const y2 = tgt.y + 44;
+                const isDown = link.status === 'down';
+
+                return (
+                  <g key={link.id} className="pointer-events-auto">
+                    {/* Glowing cable aura */}
+                    <line
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke={isDown ? '#f43f5e' : '#10b981'}
+                      strokeWidth="5"
+                      strokeOpacity="0.2"
+                    />
+                    {/* Main cable wire */}
+                    <line
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke={isDown ? '#f43f5e' : '#10b981'}
+                      strokeWidth="2.5"
+                      strokeDasharray={isDown ? '5' : 'none'}
+                    />
+
+                    {/* Midpoint link delete/status icon button */}
+                    <circle
+                      cx={(x1 + x2) / 2}
+                      cy={(y1 + y2) / 2}
+                      r="9"
+                      fill="#0f172a"
+                      stroke={isDown ? '#f43f5e' : '#334155'}
+                      strokeWidth="1.5"
+                      className="cursor-pointer hover:stroke-rose-400 transition-colors"
+                      onClick={e => {
+                        e.stopPropagation();
+                        handleDeleteLink(link.id);
+                      }}
+                    />
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Connection Mode Helper Toast */}
+            {isConnecting && (
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 px-4 py-2 bg-amber-500/90 text-slate-950 font-mono text-xs font-bold rounded-xl shadow-2xl border border-amber-400 flex items-center gap-2 animate-bounce">
+                <span>{connectSourceId ? 'Click target node to connect link' : 'Click first node to start cable'}</span>
+              </div>
+            )}
+
+            {/* Nodes / Devices Layer */}
+            {devices.map(device => {
+              const Icon = getDeviceIcon(device.type);
+              const isSelected = selectedDeviceId === device.id;
+              const isConnectSource = connectSourceId === device.id;
+              const primaryIface = device.interfaces[0];
+              const isDown = !primaryIface?.isUp;
 
               return (
-                <g key={link.id} className="pointer-events-auto">
-                  {/* Glowing background line */}
-                  <line
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    stroke={isDown ? '#f43f5e' : '#10b981'}
-                    strokeWidth="5"
-                    strokeOpacity="0.2"
-                  />
-                  {/* Core cable line */}
-                  <line
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    stroke={isDown ? '#f43f5e' : '#10b981'}
-                    strokeWidth="2.5"
-                    strokeDasharray={isDown ? '4' : 'none'}
-                    className={link.status === 'active' ? '' : 'opacity-80'}
-                  />
+                <div
+                  key={device.id}
+                  onMouseDown={e => handleMouseDownDevice(e, device.id)}
+                  style={{
+                    transform: `translate(${device.x}px, ${device.y}px)`,
+                  }}
+                  className={`absolute top-0 left-0 w-32 sm:w-36 p-3 rounded-2xl border transition-all cursor-grab active:cursor-grabbing z-10 ${
+                    isConnectSource
+                      ? 'bg-amber-500/20 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.5)]'
+                      : isSelected
+                      ? 'bg-[#0f172a] border-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.35)] ring-2 ring-emerald-500/50'
+                      : 'bg-[#0d1322]/95 border-slate-800 hover:border-slate-700 shadow-xl'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    {/* Status LED */}
+                    <div className="flex items-center gap-1.5">
+                      <div className={`w-2.5 h-2.5 rounded-full ${isDown ? 'bg-rose-500 animate-pulse' : 'bg-emerald-400 shadow-[0_0_8px_#10b981]'}`} />
+                      <span className="text-[9px] font-mono text-slate-400 uppercase">
+                        {isDown ? 'DOWN' : 'UP'}
+                      </span>
+                    </div>
 
-                  {/* Midpoint link delete/status button */}
-                  <circle
-                    cx={(x1 + x2) / 2}
-                    cy={(y1 + y2) / 2}
-                    r="8"
-                    fill="#0f172a"
-                    stroke={isDown ? '#f43f5e' : '#334155'}
-                    strokeWidth="1.5"
-                    className="cursor-pointer hover:stroke-rose-400"
-                    onClick={e => {
-                      e.stopPropagation();
-                      handleDeleteLink(link.id);
-                    }}
-                  />
-                </g>
-              );
-            })}
-          </svg>
-
-          {/* Connection Mode Helper Toast */}
-          {isConnecting && (
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 px-4 py-2 bg-amber-500/90 text-slate-950 font-mono text-xs font-bold rounded-xl shadow-lg border border-amber-400 flex items-center gap-2">
-              <span>{connectSourceId ? 'Now click destination node to complete cable' : 'Click first node to start cable'}</span>
-            </div>
-          )}
-
-          {/* Nodes / Devices Layer */}
-          {devices.map(device => {
-            const Icon = getDeviceIcon(device.type);
-            const isSelected = selectedDeviceId === device.id;
-            const isConnectSource = connectSourceId === device.id;
-            const primaryIface = device.interfaces[0];
-            const isDown = !primaryIface?.isUp;
-
-            return (
-              <div
-                key={device.id}
-                onMouseDown={e => handleMouseDownDevice(e, device.id)}
-                style={{
-                  transform: `translate(${device.x}px, ${device.y}px)`,
-                }}
-                className={`absolute top-0 left-0 w-28 sm:w-32 p-2.5 rounded-2xl border transition-shadow cursor-grab active:cursor-grabbing z-10 ${
-                  isConnectSource
-                    ? 'bg-amber-500/20 border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.5)]'
-                    : isSelected
-                    ? 'bg-[#0f172a] border-emerald-400 shadow-[0_0_18px_rgba(16,185,129,0.3)] ring-1 ring-emerald-500/50'
-                    : 'bg-[#0d1322]/95 border-slate-800 hover:border-slate-700 shadow-lg'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className={`w-2 h-2 rounded-full ${isDown ? 'bg-rose-500' : 'bg-emerald-400'}`} />
-                  <button
-                    onClick={e => {
-                      e.stopPropagation();
-                      playSound('click');
-                      setEditingDevice(device);
-                    }}
-                    title="Configure Device Parameters"
-                    className="p-1 rounded bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-emerald-400 transition-colors"
-                  >
-                    <Settings className="w-3 h-3" />
-                  </button>
-                </div>
-
-                <div className="flex flex-col items-center text-center">
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-1 ${
-                    device.type === 'switch'
-                      ? 'bg-cyan-500/10 text-cyan-400'
-                      : device.type === 'router'
-                      ? 'bg-indigo-500/10 text-indigo-400'
-                      : device.type === 'server'
-                      ? 'bg-amber-500/10 text-amber-400'
-                      : 'bg-emerald-500/10 text-emerald-400'
-                  }`}>
-                    <Icon className="w-4 h-4" />
+                    <button
+                      onClick={e => {
+                        e.stopPropagation();
+                        playSound('click');
+                        setEditingDevice(device);
+                      }}
+                      title="Inspect & Configure Node"
+                      className="p-1 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-emerald-400 transition-colors"
+                    >
+                      <Settings className="w-3.5 h-3.5" />
+                    </button>
                   </div>
 
-                  <span className="text-[11px] font-bold text-slate-200 truncate w-full">
-                    {device.name}
-                  </span>
+                  <div className="flex flex-col items-center text-center">
+                    <div className={`w-10 h-10 rounded-2xl flex items-center justify-center mb-1.5 shadow-inner ${
+                      device.type === 'switch'
+                        ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
+                        : device.type === 'router'
+                        ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
+                        : device.type === 'server'
+                        ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                        : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                    }`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
 
-                  {primaryIface?.ipAddress && (
-                    <span className="text-[10px] font-mono text-emerald-400/90 truncate w-full mt-0.5">
-                      {primaryIface.ipAddress}
+                    <span className="text-xs font-bold text-slate-200 truncate w-full">
+                      {device.name}
                     </span>
-                  )}
+
+                    {primaryIface?.ipAddress ? (
+                      <span className="text-[10px] font-mono text-emerald-400/90 truncate w-full mt-0.5 font-semibold">
+                        {primaryIface.ipAddress}
+                      </span>
+                    ) : (
+                      <span className="text-[9px] font-mono text-slate-500 truncate w-full mt-0.5">
+                        L2 Switch Ports
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* Configuration Modal */}

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { NetworkDevice, NetworkLink } from './types/network';
 import { INITIAL_DEVICES, INITIAL_LINKS } from './data/defaultTopology';
-import { BootScreen } from './components/layout/BootScreen';
+import { LiveWallpaper } from './components/common/LiveWallpaper';
+import { CinematicIntro } from './components/layout/CinematicIntro';
 import { Header } from './components/layout/Header';
 import { WorksLauncher } from './components/layout/WorksLauncher';
+import { JourneyDock } from './components/layout/JourneyDock';
 import { Hero } from './components/modules/01_Home/Hero';
 import { AimSection } from './components/modules/02_Aim/AimSection';
 import { TheoryHub } from './components/modules/03_Theory/TheoryHub';
@@ -37,7 +39,7 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Keyboard shortcut: Press 'M' or 'Tab' to open Works Hub, 'F' for Fullscreen Lab
+  // Keyboard shortcut: Press 'M' to open Works Hub, 'F' for Fullscreen Lab
   useEffect(() => {
     const handleGlobalKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
@@ -60,21 +62,25 @@ export function App() {
   const progressPercent = Math.min(100, Math.round((completedModules.size / 9) * 100));
 
   return (
-    <div className="min-h-screen bg-[#070a12] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300">
-      {/* 1. Cinematic Boot Screen (1.5s, skippable) */}
+    <div className="min-h-screen bg-[#070a12] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-hidden">
+      {/* 1. Subtle Constellation Live Wallpaper (Background) */}
+      <LiveWallpaper />
+
+      {/* 2. Cinematic Intentional Intro Experience */}
       {!bootDone && (
-        <BootScreen onComplete={() => setBootDone(true)} />
+        <CinematicIntro onEnter={() => setBootDone(true)} />
       )}
 
-      {/* 2. Persistent Navigation Header */}
+      {/* 3. Persistent Navigation Header */}
       <Header
         activeModule={activeModule}
         setActiveModule={handleNavigateModule}
         openWorksModal={() => setIsWorksOpen(true)}
+        onOpenSandbox={() => setIsSandboxOpen(true)}
         progressPercent={progressPercent}
       />
 
-      {/* 3. Works Launcher 10-Module Hub (Keyboard/Mouse modal) */}
+      {/* 4. Works Launcher 10-Module Hub (Keyboard/Mouse modal) */}
       <WorksLauncher
         isOpen={isWorksOpen}
         onClose={() => setIsWorksOpen(false)}
@@ -83,7 +89,7 @@ export function App() {
         completedModules={completedModules}
       />
 
-      {/* 4. Full Unrestricted Lab Sandbox Overlay */}
+      {/* 5. Full Unrestricted Lab Sandbox Overlay */}
       {isSandboxOpen && (
         <FullLabSandbox
           devices={devices}
@@ -94,8 +100,8 @@ export function App() {
         />
       )}
 
-      {/* 5. Main Content Modules */}
-      <main className="flex-1">
+      {/* 6. Main Content Modules */}
+      <main className="flex-1 relative z-10">
         {/* Module 00: Home / Hero */}
         {activeModule === 'home' && (
           <>
@@ -105,22 +111,22 @@ export function App() {
               onOpenDiagnostics={() => handleNavigateModule('diagnostics')}
             />
 
-            {/* Quick module preview cards */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-              <div className="p-6 rounded-2xl bg-[#0d1322] border border-slate-800 space-y-4">
+            {/* Quick syllabus progression cards */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
+              <div className="p-6 rounded-3xl bg-[#0d1322]/90 backdrop-blur-md border border-slate-800 space-y-4 shadow-2xl">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
-                    Virtual Laboratory Syllabus Modules
+                    Virtual Laboratory Curriculum Roadmap
                   </span>
                   <span className="text-[11px] font-mono text-slate-400">
-                    Click to Begin Module
+                    Step-by-Step Educational Progression
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div
                     onClick={() => handleNavigateModule('aim')}
-                    className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group"
+                    className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">01 AIM</div>
                     <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Aim & Objectives</div>
@@ -129,7 +135,7 @@ export function App() {
 
                   <div
                     onClick={() => handleNavigateModule('theory')}
-                    className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group"
+                    className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">02 THEORY</div>
                     <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Experiments 1 to 7</div>
@@ -138,7 +144,7 @@ export function App() {
 
                   <div
                     onClick={() => handleNavigateModule('design')}
-                    className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group"
+                    className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">03 DESIGN</div>
                     <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Network Designer</div>
@@ -147,7 +153,7 @@ export function App() {
 
                   <div
                     onClick={() => handleNavigateModule('diagnostics')}
-                    className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group"
+                    className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900 transition-all cursor-pointer group shadow-sm"
                   >
                     <div className="text-[10px] font-mono text-emerald-400 font-bold mb-1">04 DIAGNOSIS</div>
                     <div className="text-sm font-bold text-slate-200 group-hover:text-emerald-300">Intelligent Troubleshooting</div>
@@ -247,8 +253,17 @@ export function App() {
         )}
       </main>
 
-      {/* Academic Institutional Footer */}
-      <footer className="border-t border-slate-800 bg-[#06090e] py-8 text-xs text-slate-500 font-mono">
+      {/* 7. Floating Journey Stepper Dock (Across Learning Modules) */}
+      {activeModule !== 'home' && (
+        <JourneyDock
+          activeModule={activeModule}
+          onNavigate={handleNavigateModule}
+          completedModules={completedModules}
+        />
+      )}
+
+      {/* 8. Academic Institutional Footer */}
+      <footer className="border-t border-slate-800/80 bg-[#06090e] py-8 text-xs text-slate-500 font-mono relative z-10 pb-20 sm:pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
@@ -260,8 +275,8 @@ export function App() {
           </div>
 
           <div className="flex items-center gap-4 text-[11px]">
-            <span>Press <kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300">M</kbd> for Modules Hub</span>
-            <span>Press <kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300">F</kbd> for Fullscreen Lab</span>
+            <span>Press <kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 border border-slate-700">M</kbd> for Modules Hub</span>
+            <span>Press <kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 border border-slate-700">F</kbd> for Fullscreen Lab</span>
           </div>
         </div>
       </footer>
