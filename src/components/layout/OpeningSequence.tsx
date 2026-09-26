@@ -28,6 +28,7 @@ const BURST_STAGE = 5;
 const WARP_COLORS = { primary: '#ff5f1f', accent: '#ffb347', highlight: '#fff1e6' };
 const TUNNEL_DURATION = 3750;
 const EXIT_DURATION = 1100;
+const AUTO_ENTER_S = 30;
 
 const OSI_LAYERS = ['Physical', 'Data link', 'Network', 'Transport', 'Session', 'Presentation', 'Application'];
 const LAYER_START = 600;
@@ -475,6 +476,23 @@ function IntroPanel({
   onEnter: (target?: string) => void;
   leaving: boolean;
 }) {
+  // Nobody touching anything? Walk in on their behalf after 30 s. Any activity resets the clock.
+  const [idleLeft, setIdleLeft] = useState(AUTO_ENTER_S);
+  useEffect(() => {
+    if (leaving) return;
+    const reset = () => setIdleLeft(AUTO_ENTER_S);
+    const events = ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'] as const;
+    events.forEach(e => window.addEventListener(e, reset, { passive: true }));
+    const id = window.setInterval(() => setIdleLeft(v => v - 1), 1000);
+    return () => {
+      events.forEach(e => window.removeEventListener(e, reset));
+      clearInterval(id);
+    };
+  }, [leaving]);
+  useEffect(() => {
+    if (idleLeft <= 0 && !leaving) onEnter('home');
+  }, [idleLeft, leaving, onEnter]);
+
   return (
     <motion.div
       className="absolute inset-0 flex flex-col overflow-y-auto"
@@ -542,11 +560,30 @@ function IntroPanel({
             type="button"
             autoFocus
             onClick={() => onEnter('home')}
-            className="group inline-flex h-12 items-center justify-center gap-3 rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-offset-4"
+            className="group relative inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-offset-4"
           >
             Enter lab
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />
+            {/* idle countdown drains along the bottom edge */}
+            <span
+              aria-hidden
+              className="absolute bottom-0 left-0 h-[3px] bg-primary-foreground/60 transition-[width] duration-1000 ease-linear"
+              style={{ width: `${(idleLeft / AUTO_ENTER_S) * 100}%` }}
+            />
           </button>
+          <AnimatePresence>
+            {idleLeft <= 10 && !leaving && (
+              <motion.span
+                initial={{ opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                className="font-mono text-xs uppercase tracking-[0.14em] text-primary"
+                role="status"
+              >
+                Entering in {Math.max(0, idleLeft)}s
+              </motion.span>
+            )}
+          </AnimatePresence>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
             <span className="font-mono text-[11px] uppercase tracking-wider">Jump to</span>
             {QUICK_JUMPS.map(j => (

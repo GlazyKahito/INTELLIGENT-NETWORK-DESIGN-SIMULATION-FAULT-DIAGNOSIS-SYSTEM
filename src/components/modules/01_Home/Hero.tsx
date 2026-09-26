@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { AnimatedBeam } from '@/components/magicui/animated-beam';
 import { motion } from 'motion/react';
 import { ScrambleText, SplitText, ShinyText, RotatingText } from '@/components/motion/TextFX';
 import { 
@@ -35,6 +36,12 @@ export const Hero: React.FC<HeroProps> = ({
 }) => {
   const [pulseHop, setPulseHop] = useState(0);
   const [selectedHeroNode, setSelectedHeroNode] = useState<string>('pc1');
+  const graphRef = useRef<HTMLDivElement>(null);
+  const pc1Ref = useRef<HTMLDivElement>(null);
+  const pc2Ref = useRef<HTMLDivElement>(null);
+  const sw1Ref = useRef<HTMLDivElement>(null);
+  const r1Ref = useRef<HTMLDivElement>(null);
+  const srvRef = useRef<HTMLDivElement>(null);
 
   // Cycle the simulated packet through the hero network topology
   useEffect(() => {
@@ -229,16 +236,22 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Topology Node Graph with Clickable Nodes */}
-              <div className="relative py-2 flex flex-col items-center gap-4">
+              <div ref={graphRef} className="relative py-2 flex flex-col items-center gap-4">
+                {/* Magic UI Animated Beams: live traffic on every link, drawn behind the nodes */}
+                <AnimatedBeam containerRef={graphRef} fromRef={pc1Ref} toRef={sw1Ref} vertical duration={2.6} pathColor="#42403c" pathOpacity={1} gradientStartColor="#ff5f1f" gradientStopColor="#ffb347" />
+                <AnimatedBeam containerRef={graphRef} fromRef={pc2Ref} toRef={sw1Ref} vertical duration={2.6} delay={0.6} pathColor="#42403c" pathOpacity={1} gradientStartColor="#ff5f1f" gradientStopColor="#ffb347" />
+                <AnimatedBeam containerRef={graphRef} fromRef={sw1Ref} toRef={r1Ref} vertical duration={2.6} delay={1.1} pathColor="#42403c" pathOpacity={1} gradientStartColor="#ff5f1f" gradientStopColor="#ffb347" />
+                <AnimatedBeam containerRef={graphRef} fromRef={r1Ref} toRef={srvRef} vertical duration={2.6} delay={1.6} pathColor="#42403c" pathOpacity={1} gradientStartColor="#ff5f1f" gradientStopColor="#ffb347" />
                 {/* Layer 1: PC1 and PC2 */}
                 <div className="grid grid-cols-2 gap-6 w-full max-w-xs">
                   {/* PC1 */}
-                  <div 
+                  <div
+                    ref={pc1Ref}
                     onClick={() => {
                       playSound('click');
                       setSelectedHeroNode('pc1');
                     }}
-                    className={`p-3 rounded-2xl border transition-all text-center cursor-pointer ${
+                    className={`relative z-10 p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                       selectedHeroNode === 'pc1'
                         ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(255,95,31,0.3)] ring-1 ring-emerald-400'
                         : pulseHop === 0
@@ -252,12 +265,13 @@ export const Hero: React.FC<HeroProps> = ({
                   </div>
 
                   {/* PC2 */}
-                  <div 
+                  <div
+                    ref={pc2Ref}
                     onClick={() => {
                       playSound('click');
                       setSelectedHeroNode('pc2');
                     }}
-                    className={`p-3 rounded-2xl border transition-all text-center cursor-pointer ${
+                    className={`relative z-10 p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                       selectedHeroNode === 'pc2'
                         ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(255,95,31,0.3)] ring-1 ring-emerald-400'
                         : 'bg-slate-900/90 border-slate-800 hover:border-slate-700'
@@ -272,8 +286,6 @@ export const Hero: React.FC<HeroProps> = ({
                 {/* Connecting Lines */}
                 <div className="w-48 h-4 relative flex justify-center">
                   <svg className="w-full h-full" viewBox="0 0 200 16">
-                    <line x1="50" y1="0" x2="100" y2="16" stroke="#41403e" strokeWidth="2" />
-                    <line x1="150" y1="0" x2="100" y2="16" stroke="#41403e" strokeWidth="2" />
                     {pulseHop === 0 && (
                       <circle cx="75" cy="8" r="3.5" fill="#ff5f1f" className="animate-pulse" />
                     )}
@@ -281,12 +293,13 @@ export const Hero: React.FC<HeroProps> = ({
                 </div>
 
                 {/* Switch SW1 */}
-                <div 
+                <div
+                  ref={sw1Ref}
                   onClick={() => {
                     playSound('click');
                     setSelectedHeroNode('sw1');
                   }}
-                  className={`w-full max-w-xs p-3 rounded-2xl border transition-all text-center cursor-pointer ${
+                  className={`relative z-10 w-full max-w-xs p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                     selectedHeroNode === 'sw1'
                       ? 'bg-cyan-500/20 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)] ring-1 ring-cyan-400'
                       : pulseHop === 1
@@ -302,19 +315,20 @@ export const Hero: React.FC<HeroProps> = ({
                 </div>
 
                 {/* Link to Router */}
-                <div className="w-1 h-5 bg-slate-800 relative">
+                <div className="w-1 h-5 relative">
                   {pulseHop === 1 && (
                     <div className="w-2 h-2 rounded-full bg-cyan-400 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" />
                   )}
                 </div>
 
                 {/* Router R1 */}
-                <div 
+                <div
+                  ref={r1Ref}
                   onClick={() => {
                     playSound('click');
                     setSelectedHeroNode('r1');
                   }}
-                  className={`w-full max-w-xs p-3 rounded-2xl border transition-all text-center cursor-pointer ${
+                  className={`relative z-10 w-full max-w-xs p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                     selectedHeroNode === 'r1'
                       ? 'bg-indigo-500/20 border-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.3)] ring-1 ring-indigo-400'
                       : pulseHop === 2
@@ -330,19 +344,20 @@ export const Hero: React.FC<HeroProps> = ({
                 </div>
 
                 {/* Link to Server */}
-                <div className="w-1 h-5 bg-slate-800 relative">
+                <div className="w-1 h-5 relative">
                   {pulseHop === 2 && (
                     <div className="w-2 h-2 rounded-full bg-indigo-400 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" />
                   )}
                 </div>
 
                 {/* Server */}
-                <div 
+                <div
+                  ref={srvRef}
                   onClick={() => {
                     playSound('click');
                     setSelectedHeroNode('server');
                   }}
-                  className={`w-full max-w-xs p-3 rounded-2xl border transition-all text-center cursor-pointer ${
+                  className={`relative z-10 w-full max-w-xs p-3 rounded-2xl border transition-all text-center cursor-pointer ${
                     selectedHeroNode === 'server'
                       ? 'bg-emerald-500/20 border-emerald-400 shadow-[0_0_15px_rgba(255,95,31,0.3)] ring-1 ring-emerald-400'
                       : pulseHop === 3
