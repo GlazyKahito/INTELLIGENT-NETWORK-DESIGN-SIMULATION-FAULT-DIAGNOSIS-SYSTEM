@@ -102,7 +102,7 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
             }}
             className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0"
           >
-            Play Mini-Game: NOC Hunt →
+            Play Mini-Game: Forwarding Plane →
           </button>
         </div>
 

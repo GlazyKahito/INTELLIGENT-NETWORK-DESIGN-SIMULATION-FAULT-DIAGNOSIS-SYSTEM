@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'simulation', label: '04 Simulate', icon: Play },
     { id: 'diagnostics', label: '05 Faults', icon: Terminal },
     { id: 'assessments', label: '06 Assessment', icon: Activity },
-    { id: 'minigame', label: '07 NOC Hunt', icon: Gamepad2 },
+    { id: 'minigame', label: '07 Game', icon: Gamepad2 },
     { id: 'conclusion', label: '08 Report', icon: Award },
   ];
 
@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({
             playSound('click');
             setActiveModule('home');
           }}
-          className="flex items-center gap-3 cursor-pointer select-none group"
+          className="flex items-center gap-3 cursor-pointer select-none group shrink-0 whitespace-nowrap"
         >
           <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 group-hover:border-emerald-400 transition-all shadow-[0_0_15px_rgba(16,185,129,0.2)]">
             <Network className="w-5 h-5" />
@@ -81,7 +81,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Desktop Quick Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-1 bg-[#0b101c]/80 p-1 rounded-xl border border-slate-800/90 shadow-inner">
+        <nav className="hidden xl:flex items-center gap-0.5 min-w-0 bg-[#0b101c]/80 p-1 rounded-xl border border-slate-800/90 shadow-inner">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = activeModule === item.id;
@@ -92,13 +92,13 @@ export const Header: React.FC<HeaderProps> = ({
                   playSound('click');
                   setActiveModule(item.id);
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap border transition-all ${
                   isActive
                     ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.2)] font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                    : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-3.5 h-3.5 hidden 2xl:block" />
                 <span>{item.label}</span>
               </button>
             );
@@ -106,15 +106,15 @@ export const Header: React.FC<HeaderProps> = ({
         </nav>
 
         {/* Right Action Tools: Progress, Audio, Sandbox, Works Hub */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 shrink-0">
           {/* Telemetry Status Ticker */}
-          <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-[11px] font-mono text-emerald-300">
+          <div className="hidden lg:flex xl:hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-[11px] font-mono text-emerald-300">
             <Radio className="w-3 h-3 text-emerald-400 animate-pulse" />
             <span>KERNEL: ONLINE</span>
           </div>
 
           {/* Progress Indicator */}
-          <div className="hidden md:flex items-center gap-2 px-2.5 py-1 bg-slate-900/80 rounded-lg border border-slate-800 text-xs font-mono">
+          <div className="hidden md:flex xl:hidden 2xl:flex items-center gap-2 px-2.5 py-1 bg-slate-900/80 rounded-lg border border-slate-800 text-xs font-mono">
             <span className="text-slate-400">Progress:</span>
             <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
               <div 
@@ -135,7 +135,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-mono transition-colors"
           >
             <Maximize2 className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="hidden md:inline">Sandbox</span>
+            <span className="hidden md:inline xl:hidden 2xl:inline">Sandbox</span>
             <kbd className="text-[9px] px-1 bg-black/40 rounded text-slate-400 border border-slate-700/60">F</kbd>
           </button>
 

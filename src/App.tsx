@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { NetworkDevice, NetworkLink } from './types/network';
 import { INITIAL_DEVICES, INITIAL_LINKS } from './data/defaultTopology';
 import { LiveWallpaper } from './components/common/LiveWallpaper';
-import { CinematicIntro } from './components/layout/CinematicIntro';
+import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { Header } from './components/layout/Header';
 import { WorksLauncher } from './components/layout/WorksLauncher';
 import { JourneyDock } from './components/layout/JourneyDock';
@@ -13,13 +13,18 @@ import { DesignerCanvas } from './components/modules/04_NetworkDesign/DesignerCa
 import { SimulationView } from './components/modules/05_Simulation/SimulationView';
 import { DiagnosisHub } from './components/modules/06_FaultDiagnosis/DiagnosisHub';
 import { AssessmentHub } from './components/modules/07_Assessments/AssessmentHub';
-import { NOCRoomGame } from './components/modules/08_MiniGame/NOCRoomGame';
+import { ForwardingPlaneGame } from './components/modules/08_MiniGame/ForwardingPlaneGame';
 import { LabReport } from './components/modules/09_Conclusion/LabReport';
 import { FullLabSandbox } from './components/modules/10_LaunchLab/FullLabSandbox';
 import { playSound } from './lib/sound';
+import { hasSeenIntro } from './lib/intro-session';
+
+// Three.js only ships with the opening sequence, so returning visitors never download it.
+const OpeningSequence = lazy(() => import('./components/layout/OpeningSequence').then(m => ({ default: m.OpeningSequence })));
 
 export function App() {
-  const [bootDone, setBootDone] = useState(false);
+  // The opening sequence plays once per tab session; reloads go straight to the lab.
+  const [bootDone, setBootDone] = useState(hasSeenIntro);
   const [activeModule, setActiveModule] = useState<string>('home');
   const [isWorksOpen, setIsWorksOpen] = useState(false);
   const [isSandboxOpen, setIsSandboxOpen] = useState(false);
@@ -42,9 +47,10 @@ export function App() {
   // Keyboard shortcut: Press 'M' to open Works Hub, 'F' for Fullscreen Lab
   useEffect(() => {
     const handleGlobalKey = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLSelectElement) {
         return;
       }
+      if (!bootDoneRef.current || e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === 'm' || e.key === 'M') {
         e.preventDefault();
         playSound('click');
@@ -59,16 +65,21 @@ export function App() {
     return () => window.removeEventListener('keydown', handleGlobalKey);
   }, []);
 
+  const bootDoneRef = React.useRef(bootDone);
+  bootDoneRef.current = bootDone;
+
   const progressPercent = Math.min(100, Math.round((completedModules.size / 9) * 100));
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-[#070a12] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-hidden">
       {/* 1. Subtle Constellation Live Wallpaper (Background) */}
       <LiveWallpaper />
 
-      {/* 2. Cinematic Intentional Intro Experience */}
+      {/* 2. Opening sequence: warp tunnel → product intro → lab */}
       {!bootDone && (
-        <CinematicIntro
+        <Suspense fallback={<div className="fixed inset-0 z-[60] bg-background" aria-hidden />}>
+        <OpeningSequence
           onEnter={(targetModule?: string) => {
             if (targetModule && targetModule !== 'home') {
               handleNavigateModule(targetModule);
@@ -76,7 +87,10 @@ export function App() {
             setBootDone(true);
           }}
         />
+        </Suspense>
       )}
+
+      <div inert={!bootDone} className="contents">
 
       {/* 3. Persistent Navigation Header */}
       <Header
@@ -109,6 +123,14 @@ export function App() {
 
       {/* 6. Main Content Modules */}
       <main className="flex-1 relative z-10">
+        <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={activeModule}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.22, ease: 'easeOut' }}
+        >
         {/* Module 00: Home / Hero */}
         {activeModule === 'home' && (
           <>
@@ -246,7 +268,7 @@ export function App() {
 
         {/* Module 07: Mini-Game */}
         {activeModule === 'minigame' && (
-          <NOCRoomGame
+          <ForwardingPlaneGame
             onProceedToConclusion={() => handleNavigateModule('conclusion')}
           />
         )}
@@ -258,6 +280,8 @@ export function App() {
             onReturnToHome={() => handleNavigateModule('home')}
           />
         )}
+        </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* 7. Floating Journey Stepper Dock (Across Learning Modules) */}
@@ -281,13 +305,25 @@ export function App() {
             <span>Intelligent Network Design, Simulation & Fault Diagnosis System</span>
           </div>
 
-          <div className="flex items-center gap-4 text-[11px]">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-[11px]">
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click');
+                setBootDone(false);
+              }}
+              className="text-slate-400 hover:text-emerald-300 underline-offset-4 hover:underline transition-colors"
+            >
+              Replay intro
+            </button>
             <span>Press <kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 border border-slate-700">M</kbd> for Modules Hub</span>
             <span>Press <kbd className="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 border border-slate-700">F</kbd> for Fullscreen Lab</span>
           </div>
         </div>
       </footer>
+      </div>
     </div>
+    </MotionConfig>
   );
 }
 

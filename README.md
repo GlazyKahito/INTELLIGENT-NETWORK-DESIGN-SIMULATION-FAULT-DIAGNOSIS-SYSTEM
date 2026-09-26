@@ -43,7 +43,7 @@ FAULT DIAGNOSIS (Symptom → Hypothesis → Test → Evidence → Root Cause →
       ↓
 ASSESSMENTS (Phase I Fundamentals & Phase II Real-World Troubleshooting Scenarios)
       ↓
-MINI-GAME ("NETWORK OPS: FAULT HUNT" - 2D Virtual NOC room with WASD / Touch navigation)
+MINI-GAME ("FORWARDING PLANE" - be the router: ACL → TTL → longest-prefix match under queue pressure)
       ↓
 CONCLUSION & REPORT (Completion certificate, competencies checklist, JSON export, printable report)
       ↓
@@ -69,19 +69,23 @@ The intelligent diagnostic engine models deterministic, realistic networking fau
 
 ---
 
-## 🎮 "Network Ops: Fault Hunt" Mini-Game
+## 🎮 "Forwarding Plane" Mini-Game
 
-- **Engine:** 2D interactive canvas simulation with 60 FPS motion loop.
-- **Controls:** `W`, `A`, `S`, `D` or Arrow keys (plus virtual on-screen joystick for mobile/touch screens).
-- **Environment:** Network Operations Center (NOC) floor featuring Workstation PC, Distribution Switch, Core Router, Enterprise Server Rack, Diagnostic Terminal Console, and Wall-mounted NOC Status Display.
-- **Gameplay:** Respond to network downtime alerts, navigate to hardware stations, inspect diagnostics with `[E]`, apply the physical or software fix, and initiate a network sweep to verify recovery.
+- **Premise:** You are router R1's forwarding engine. Packets arrive in an ingress queue; read each header and send it out `Gi0/0`, `Gi0/1`, `Se0/0/0` — or drop it — before it times out.
+- **Rules modelled:** inbound ACL (first match wins) → TTL (1 ⇒ drop, ICMP Time Exceeded) → longest-prefix match (no match and no default ⇒ drop; Null0 ⇒ blackhole).
+- **Four shifts:** Connected networks → Longest prefix wins → Filters & hop limits → Peak hour (a /18 with a /24 carve-out, a Null0 route, an SNMP filter).
+- **Controls:** `1`–`4` (or `D`) choose a port, `H` opens the Binary Lens hint (−50), `Space` pauses. Port buttons work on touch.
+- **Feedback:** every decision explains *why* (matched route, competing prefixes, ACL line) with a 32-bit binary comparison; each shift ends with accuracy, average decision time, best streak, stars and a mistake review.
 
 ---
 
 ## 💻 Technical Architecture & Stack
 
 - **Framework:** React 19 + TypeScript + Vite
-- **Styling:** Tailwind CSS with custom academic dark theme (`#070a12`, emerald accents, cyan router paths, amber alerts)
+- **Styling:** Tailwind CSS + shadcn/ui theme tokens (`components.json`, `@/` alias, HSL CSS variables in `src/index.css`)
+- **Typography:** IBM Plex Sans (UI), IBM Plex Sans Condensed (display), IBM Plex Mono (data/CLI)
+- **Opening sequence:** Three.js + @react-three/fiber Warp Tunnel (`src/components/ui/warp-tunnel.tsx`), lazy-loaded so returning visitors never download it; plays once per tab session
+- **Motion:** `motion` (Framer Motion) for intro choreography, page transitions and game feedback; honours `prefers-reduced-motion`
 - **Icons:** Lucide React
 - **Sound:** Web Audio API procedural synthesizer (zero external audio file dependencies; mute toggle supported)
 - **Effects:** Canvas-Confetti on assessment completion & network verification

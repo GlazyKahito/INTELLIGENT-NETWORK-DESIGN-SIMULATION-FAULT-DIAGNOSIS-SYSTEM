@@ -93,8 +93,8 @@ export const WorksLauncher: React.FC<WorksLauncherProps> = ({
     {
       id: 'minigame',
       num: '07',
-      title: 'MINI-GAME: NETWORK OPS HUNT',
-      desc: 'WASD 2D virtual NOC room simulation. Inspect stations, uncover alerts, and restore uptime.',
+      title: 'MINI-GAME: FORWARDING PLANE',
+      desc: 'Be the router: apply ACLs, TTL and longest-prefix match to a live ingress queue across four timed shifts.',
       icon: Gamepad2,
       tag: 'Gamified Practice',
     },

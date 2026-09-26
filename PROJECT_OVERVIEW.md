@@ -13,8 +13,8 @@
 3. [The 10-Module Virtual Lab Suite](#3-the-10-module-virtual-lab-suite)
 4. [DCN Experiments 01 to 08 Implementation Detail](#4-dcn-experiments-01-to-08-implementation-detail)
 5. [Deterministic Kernel & Mathematical Engines](#5-deterministic-kernel--mathematical-engines)
-6. [Interactive NOC Room 2.0 Mini-Game](#6-interactive-noc-room-20-mini-game)
-7. [Cinematic Intro & Interactive Live Background](#7-cinematic-intro--interactive-live-background)
+6. [Forwarding Plane Mini-Game](#6-forwarding-plane-mini-game)
+7. [Opening Sequence: Warp Tunnel & Product Intro](#7-opening-sequence-warp-tunnel--product-intro)
 8. [UI/UX & Audio Synthesis System](#8-uiux--audio-synthesis-system)
 9. [Deployment & Verification](#9-deployment--verification)
 10. [Repository File Map](#10-repository-file-map)
@@ -45,8 +45,8 @@ The lab guides students through the complete scientific engineering lifecycle:
                                                                                │
                                                                                ▼
 ┌──────────────┐     ┌──────────────┐     ┌───────────────────┐     ┌─────────────────────┐
-│ 8. REPORT    │ <── │ 7. NOC HUNT  │ <── │ 6. VERIFY         │ <── │ 5. DIAGNOSE & FIX   │
-│ PDF / Cert   │     │ 2D Mini-Game │     │ Ping Sweep Audit  │     │ Hypothesis & CLI    │
+│ 8. REPORT    │ <── │ 7. ROUTER    │ <── │ 6. VERIFY         │ <── │ 5. DIAGNOSE & FIX   │
+│ PDF / Cert   │     │ GAME (LPM)   │     │ Ping Sweep Audit  │     │ Hypothesis & CLI    │
 └──────────────┘     └──────────────┘     └───────────────────┘     └─────────────────────┘
 ```
 
@@ -63,7 +63,7 @@ The lab guides students through the complete scientific engineering lifecycle:
 | **05_Simulation** | **Discrete Event Packet Simulator** | Multi-hop packet animation with speed control (0.5x–2x), pause/step execution, and L2–L4 packet inspector. |
 | **06_FaultDiagnosis** | **Empirical Fault Reasoner & CLI** | 10 realistic network fault scenarios, interactive diagnostic terminal, structured hypothesis-evidence reasoning framework, and fix verification. |
 | **07_Assessments** | **Formative & Summative Quiz Suite** | 12 rigorous assessment questions covering theoretical protocols and clinical troubleshooting with immediate Bloom-mapped explanations. |
-| **08_MiniGame** | **Network Ops: Fault Hunt (NOC Room 2.0)** | Top-down 2D NOC room with 5 mission scenarios, interactive physical equipment stations (re-crimp, IOS prompt, systemctl), handheld scanner HUD, and star ratings. |
+| **08_MiniGame** | **Forwarding Plane** | Be router R1's forwarding engine: apply ACL → TTL → longest-prefix match to a live ingress queue across four timed shifts, with binary-lens hints, per-decision explanations and star ratings. |
 | **09_Conclusion** | **Automated Academic Lab Report** | Printable collegiate laboratory certificate with student name, roll number, diagnostic proof log, quiz scorecard, and JSON export. |
 | **10_LaunchLab** | **Fullscreen Unrestricted Sandbox** | Distraction-free full-viewport CAD workbench accessible via keyboard shortcut `[F]`. |
 
@@ -155,57 +155,39 @@ The system is powered by deterministic TypeScript engines located in `src/lib/`:
 
 ---
 
-## 6. Interactive NOC Room 2.0 Mini-Game
+## 6. Forwarding Plane Mini-Game
 
-Located in `src/components/modules/08_MiniGame/NOCRoomGame.tsx`:
-- **5 Selectable Real-World Mission Scenarios**:
-  - *Mission 1*: Core Gateway Unreachable
-  - *Mission 2*: Cat6 Physical Layer Fault
-  - *Mission 3*: DNS Server Outage
-  - *Mission 4*: MTU Black Hole Drop
-  - *Mission 5*: DHCP Subnet Exhaustion
-- **Interactive Hardware Stations**:
-  - **Patch Panel PP-01**: Interactive Cat6 re-crimper with 8-pin continuity tester.
-  - **Switch SW-01**: Cisco IOS terminal (`configure terminal`, `interface Gi0/1`, `mtu 1500`).
-  - **Server Rack Alpha**: Systemd service manager (`systemctl restart named.service`).
-  - **Router R1**: Static routing table injector (`ip route ...`).
-  - **Central NOC Monitor**: Real-time packet sniffer and global NOC verification sweep.
-- **Handheld Cyber-Scanner HUD**:
-  - Protocol counters (`ARP`, `ICMP`, `TCP`, `DNS`).
-  - Wi-Fi signal gauge (`-42 dBm` RSSI).
-  - 8-pin Cat6 continuity tester.
-  - Integrated ping sweep tool.
-- **Performance Evaluation**:
-  - Elapsed mission timer and **1 to 3 Star Performance Rating** based on troubleshooting efficiency.
+Located in `src/components/modules/08_MiniGame/ForwardingPlaneGame.tsx`, driven by the pure engine in `src/lib/network/forwarding.ts`:
+- **Premise**: the student *is* router R1's forwarding engine. Packets queue at ingress; each must leave by `Gi0/0`, `Gi0/1`, `Se0/0/0`, or be dropped — before its head-of-queue timer expires.
+- **Decision model (`decide()`)**: inbound ACL (first matching line) → TTL (≤1 ⇒ drop, ICMP Time Exceeded) → longest-prefix match (no match & no default ⇒ drop; Null0 ⇒ blackhole). Every verdict carries a human-readable reason.
+- **Four shifts**:
+  - *Connected networks* — two /24 LANs + default route.
+  - *Longest prefix wins* — overlapping /8, /16, /24 and a /12; no default route.
+  - *Filters & hop limits* — ACL 110 (telnet, spoofed 10.66/16) and TTL-1 packets.
+  - *Peak hour* — /16 with a /18 and a /24 carve-out, Null0 route, SNMP filter, faster arrivals.
+- **Pressure & scoring**: arrival rate, head timeout and queue capacity per shift; tail-drop on overflow; link health drains on wrong ports, timeouts and overflow. Points reward speed and streaks (up to ×2).
+- **Teaching aids**: Binary Lens hint (`H`, −50) shows the destination and matched prefix bit-by-bit; the routing-table row / ACL line that decided each packet is highlighted; each shift ends with accuracy, average decision time, best streak, 1–3 stars and a mistake review.
+- **Controls**: `1`–`4` / `D`, `H`, `Space`; full touch support via port buttons. Best run stored per browser (`localStorage`).
 
 ---
 
-## 7. Cinematic Intro & Interactive Live Background
+## 7. Opening Sequence: Warp Tunnel & Product Intro
 
-Located in `src/components/layout/CinematicIntro.tsx` and `IntroLiveBackground.tsx`:
-- **Interactive Live Topology Mesh Background**:
-  - 12 labeled WAN/LAN topology nodes (`CORE-RTR-01`, `EDGE-FIREWALL`, `DIST-SW-A`, `DNS-ROOT-SRV`, `CLIENT-WS01`, etc.) drifting across the screen with authentic IPv4 telemetry.
-  - Conduits with bandwidth ratings (`10 Gbps`, `1 Gbps`, `100 Mbps`).
-  - Real-time animated packets (`TCP`, `UDP`, `ICMP`, `ARP`) with glowing trails.
-  - **Dynamic Mouse Diagnostic Probe**: Mouse cursor acts as network probe `PROBE-IF0`, drawing snapping fiber lines from nearest nodes and receiving live packet bursts.
-  - **Click-to-Ping Broadcast Wave**: Clicking anywhere on the canvas fires an expanding radar ping wave across all nodes, lighting up affected devices with synthesized audio chirps.
-  - **Node Hover Tooltip**: Hovering over any drifting node renders live telemetry (IP, type, nominal state, `<1ms` RTT).
-  - **Hexadecimal Stream Waterfall**: Scrolling hex frames in the background for Wireshark-like ambience.
-- **Glassmorphic Launch Console**:
-  - Somaiya Virtual Labs branding & accreditation badge.
-  - Live digital clock (`UTC`) and deterministic kernel indicator.
-  - Audio mute/unmute toggle (`Volume2` / `VolumeX`) with keyboard shortcut `[M]`.
-  - **Direct Mode Launchpad**: 1-click jump into:
-    - `[Enter]` Guided Curriculum (Full 9-Stage Flow)
-    - `[1]` CAD Network Designer
-    - `[2]` Empirical Fault Diagnosis Lab
-    - `[3]` NOC Room 2.0 Mini-Game
+Located in `src/components/layout/OpeningSequence.tsx` and `src/components/ui/warp-tunnel.tsx`:
+- **Phase 1 — Warp Tunnel (~3.5 s)**: an instanced Three.js / R3F streak field (≈420 streaks on desktop, 150 on mobile) accelerates through a data conduit while the wordmark resolves and an OSI readout descends L1 → L7. The timeline starts on the tunnel's first rendered frame, so slow GPUs never miss the entrance.
+- **Skippable**: "Skip intro →" button, `Esc` or `Enter`.
+- **Phase 2 — Product intro**: title, the five-verb workflow (Design → Inject → Trace → Diagnose → Verify), `Enter lab` CTA, quick jumps (`1` designer, `2` fault diagnosis, `3` game) and the 8-step journey rail; the tunnel keeps cruising, dimmed, behind a readability vignette.
+- **Once per session**: `sessionStorage` (`src/lib/intro-session.ts`) — reloads and module navigation go straight to the lab; "Replay intro" lives in the footer.
+- **Performance & accessibility**: lazy-loaded chunk (three.js never ships to returning visitors), device-aware DPR and streak count, render loop paused while the tab is hidden, R3F disposes the scene and WebGL context on unmount, WebGL-less fallback, reduced motion ⇒ static tunnel and straight to the intro, app behind the overlay is `inert`.
+- **Theme**: `useShadcnTheme()` reads the shadcn CSS variables (`--primary`, `--accent`, `--background`) and re-reads them on theme change; the light theme renders with normal blending.
 
 ---
 
 ## 8. UI/UX & Audio Synthesis System
 
-- **Live Wallpaper System (`LiveWallpaper.tsx`)**: High-performance mouse-reactive constellation network mesh operating across all internal lab modules.
+- **Typography**: IBM Plex Sans / Plex Sans Condensed / Plex Mono — an engineering typeface family replacing Inter / Space Grotesk / Fira Code.
+- **Live Wallpaper (`LiveWallpaper.tsx`)**: a light "tunnel echo" of the opening — ~70 faint streaks drifting from a vanishing point over a masked grid; 2D canvas capped at 30 fps, paused when hidden, static under reduced motion.
+- **Page transitions**: modules cross-fade via `motion` `AnimatePresence`.
 - **Floating Journey Dock (`JourneyDock.tsx`)**: Bottom floating dock with completed percentage gauge, current stage label, and smooth 1-click step advancement.
 - **Works Launcher 10-Module Hub (`WorksLauncher.tsx`)**: Keyboard-driven (`[M]` key) navigation modal displaying all 10 modules, learning objectives, and completion checkmarks.
 - **Web Audio API Synthesizer (`src/lib/sound.ts`)**:
@@ -222,11 +204,10 @@ Located in `src/components/layout/CinematicIntro.tsx` and `IntroLiveBackground.t
 ## 9. Deployment & Verification
 
 - **Production Build Status**:
-  - Toolchain: Vite 8.3.1 + TypeScript (strict) + Tailwind CSS 3.4.
+  - Toolchain: Vite 8.3.1 + TypeScript + Tailwind CSS 3.4 + shadcn/ui config; three 0.186, @react-three/fiber 9, motion 13.
   - Build command: `npm run build` (`tsc -b && vite build`).
-  - Build time: **2.93 seconds**.
   - Errors: **0**.
-  - Warnings: **0**.
+  - Bundles: main ≈686 kB (≈199 kB gzip); opening-sequence chunk incl. three.js ≈929 kB (≈247 kB gzip), loaded only when the intro plays.
 - **Vercel Configuration (`vercel.json`)**:
   - SPA routing rewrite rule routing all paths to `/index.html`.
   - Long-term caching headers for immutable static assets (`/assets/*`).
@@ -247,12 +228,17 @@ c:/Users/KRUTIK/Downloads/dcn proj/
 │   │   ├── network.ts              # NetworkDevice, Link, Packet, Interface definitions
 │   │   ├── diagnostics.ts          # FaultScenario, Hypothesis, CommandResult definitions
 │   │   └── assessment.ts           # QuizQuestion, AssessmentCategory definitions
+│   ├── hooks/
+│   │   └── use-prefers-reduced-motion.ts # Live reduced-motion media query
 │   ├── lib/
+│   │   ├── utils.ts                # shadcn cn() helper
+│   │   ├── intro-session.ts        # Once-per-session intro flag
 │   │   ├── sound.ts                # Web Audio API sound generator & mute control
 │   │   ├── network/
 │   │   │   ├── addressing.ts       # CIDR, IPv4 class, broadcast, subnet mask math
 │   │   │   ├── hamming.ts          # (7,4) Hamming code generation & syndrome correction
 │   │   │   ├── routing.ts          # BFS hop routing, TTL decrement, path validation
+│   │   │   ├── forwarding.ts       # ACL → TTL → LPM decision engine & game shifts
 │   │   │   └── validation.ts       # Duplicate IP, subnet mismatch, gateway checkers
 │   │   └── diagnostics/
 │   │       ├── terminal.ts         # Realistic multi-command terminal simulator
@@ -263,11 +249,13 @@ c:/Users/KRUTIK/Downloads/dcn proj/
 │   │   ├── faults.ts               # Complete specifications for 10 empirical faults
 │   │   └── questions.ts            # 12 formative & summative assessment questions
 │   ├── components/
+│   │   ├── ui/
+│   │   │   ├── warp-tunnel.tsx     # R3F instanced warp tunnel (shadcn-themed)
+│   │   │   └── warp-tunnel-utils/  # scene-container.tsx, use-shadcn-theme.ts
 │   │   ├── common/
-│   │   │   └── LiveWallpaper.tsx   # Constellation background mesh
+│   │   │   └── LiveWallpaper.tsx   # Lightweight tunnel-echo background
 │   │   ├── layout/
-│   │   │   ├── IntroLiveBackground.tsx # Interactive live packet & mesh canvas
-│   │   │   ├── CinematicIntro.tsx  # Launch console with clock, HUD & mode selectors
+│   │   │   ├── OpeningSequence.tsx # Warp tunnel → product intro → lab
 │   │   │   ├── Header.tsx          # Persistent navigation header with progress bar
 │   │   │   ├── JourneyDock.tsx     # Floating step-by-step progress dock
 │   │   │   ├── WorksLauncher.tsx   # 10-module keyboard/mouse launcher modal
@@ -280,13 +268,14 @@ c:/Users/KRUTIK/Downloads/dcn proj/
 │   │       ├── 05_Simulation/      # Packet transit simulator & Inspector modal
 │   │       ├── 06_FaultDiagnosis/  # Scenario selector, Diagnostic terminal & Engine
 │   │       ├── 07_Assessments/     # 12-question quiz engine with Bloom feedback
-│   │       ├── 08_MiniGame/NOCRoomGame.tsx # NOC Room 2.0 with 5 missions & scanner
+│   │       ├── 08_MiniGame/ForwardingPlaneGame.tsx # Router forwarding-plane game
 │   │       ├── 09_Conclusion/LabReport.tsx # Collegiate lab report & printable cert
 │   │       └── 10_LaunchLab/FullLabSandbox.tsx # Fullscreen unrestricted workbench
 │   ├── App.tsx                     # Main application controller & state store
 │   ├── index.css                   # Custom CAD grid, CRT scanline, and glow styles
 │   └── main.tsx                    # React DOM entry point
 ├── dist/                           # Production-ready compiled assets
+├── components.json                 # shadcn/ui configuration
 ├── vercel.json                     # Vercel SPA rewrite & cache configuration
 ├── package.json                    # Project dependencies & build scripts
 ├── README.md                       # High-level overview & setup instructions

@@ -3,6 +3,52 @@
 @tailwind utilities;
 
 @layer base {
+  /* shadcn/ui theme tokens (HSL triplets). The lab ships dark-first; :root is the light fallback. */
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 224 40% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 40% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 40% 8%;
+    --primary: 161 94% 30%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 16% 92%;
+    --secondary-foreground: 224 40% 12%;
+    --muted: 220 16% 93%;
+    --muted-foreground: 220 10% 40%;
+    --accent: 192 91% 36%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 350 89% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 14% 86%;
+    --input: 220 14% 86%;
+    --ring: 161 94% 30%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 44% 5%;
+    --foreground: 214 32% 91%;
+    --card: 222 45% 9%;
+    --card-foreground: 214 32% 91%;
+    --popover: 222 45% 9%;
+    --popover-foreground: 214 32% 91%;
+    --primary: 160 84% 39%;
+    --primary-foreground: 224 44% 5%;
+    --secondary: 221 39% 13%;
+    --secondary-foreground: 214 32% 91%;
+    --muted: 221 39% 13%;
+    --muted-foreground: 215 16% 62%;
+    --accent: 189 94% 43%;
+    --accent-foreground: 224 44% 5%;
+    --destructive: 350 89% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 219 33% 18%;
+    --input: 219 33% 18%;
+    --ring: 160 84% 39%;
+  }
+
   * {
     box-sizing: border-box;
   }
@@ -15,7 +61,8 @@
   body {
     background-color: #070a12;
     color: #e2e8f0;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
   }
 
   /* Custom Scrollbar */
@@ -30,6 +77,11 @@
     background: #1e293b;
     border-radius: 3px;
   }
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
   ::-webkit-scrollbar-thumb:hover {
     background: #10b981;
   }
@@ -116,6 +168,19 @@
 
 .animate-ping-glow {
   animation: ping-glow 2s ease-in-out infinite;
+}
+
+/* Packet travelling along a hairline (intro workflow rail) */
+@keyframes packet-run {
+  0% { left: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+.packet-run {
+  animation: packet-run 3.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  box-shadow: 0 0 8px hsl(var(--primary) / 0.8);
 }
 
 /* Accessibility: respect prefers-reduced-motion */
