@@ -99,7 +99,6 @@ export function App() {
     <div className="min-h-screen bg-[#0c0b09] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-clip">
       {/* 1. Subtle Constellation Live Wallpaper (Background) */}
       <LiveWallpaper />
-      {bootDone && <SchematicChrome activeModule={activeModule} />}
 
       <NetStatusHost />
 
@@ -152,21 +151,6 @@ export function App() {
 
       {/* 6. Main Content Modules */}
       <main className="flex-1 relative z-10">
-        {/* Sheet stamp: the section's drawing-sheet number, huge and outlined, behind the content */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`stamp-${activeModule}`}
-            aria-hidden
-            className="sheet-stamp pointer-events-none absolute right-2 top-2 -z-10 hidden select-none md:block"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className="block text-right font-mono text-[11px] uppercase tracking-[0.3em] text-emerald-500/70">Sheet</span>
-            {SHEET_NO[activeModule] ?? '01'}
-          </motion.div>
-        </AnimatePresence>
         {/* Grouped sections get a switcher between their pages */}
         {groupOf(activeModule).modules.length > 1 && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
