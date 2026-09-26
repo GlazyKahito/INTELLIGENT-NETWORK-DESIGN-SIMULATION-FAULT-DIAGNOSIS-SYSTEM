@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { ScrambleText, SplitText, CountUp } from '@/components/motion/TextFX';
 import { 
   Monitor, 
   Laptop, 
@@ -209,10 +210,10 @@ export const DesignerCanvas: React.FC<DesignerCanvasProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest mb-1.5">
-              <span>Network design // System core</span>
+              <ScrambleText text={"Network design // System core"} />
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
-              Network Topology Designer
+              <SplitText text={"Network Topology Designer"} />
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
               Place, connect, and configure network nodes. Drag devices to position them; click inspect to set IPv4 parameters.

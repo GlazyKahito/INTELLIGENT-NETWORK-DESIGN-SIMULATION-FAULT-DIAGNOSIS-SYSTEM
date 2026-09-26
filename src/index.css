@@ -322,3 +322,17 @@ div[class*='rounded-2xl'][class*='border'][class*='cursor-pointer']:hover,
   -webkit-text-stroke: 2px rgb(255 95 31 / 0.6);
   text-shadow: 0 0 40px rgb(255 95 31 / 0.12);
 }
+
+/* Shimmer sweep for highlighted headline text */
+.shiny-text {
+  background: linear-gradient(100deg, #ff5f1f 0%, #ff7a38 38%, #fff1e6 50%, #ff7a38 62%, #ff5f1f 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shiny-sweep 4.5s ease-in-out infinite;
+}
+@keyframes shiny-sweep {
+  0% { background-position: 120% 0; }
+  60%, 100% { background-position: -20% 0; }
+}

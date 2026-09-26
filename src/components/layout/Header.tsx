@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ScrambleText } from '@/components/motion/TextFX';
 import { motion } from 'motion/react';
 import { PacketTicker } from '../common/PacketTicker';
 import { NAV_GROUPS } from '../../lib/nav';
@@ -114,7 +115,7 @@ export const Header: React.FC<HeaderProps> = ({
                   isActive ? 'text-slate-50' : 'text-slate-400 hover:text-slate-100'
                 }`}
               >
-                {item.label}
+                <ScrambleText text={item.label} duration={420} />
                 {isActive && (
                   // One indicator that slides between sections: a link along the header edge with a node on it.
                   <motion.span
