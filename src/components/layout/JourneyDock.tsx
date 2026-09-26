@@ -62,7 +62,7 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-full max-w-4xl px-4 pointer-events-none select-none">
-      <div className="bg-[#0b101c]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl shadow-2xl p-2 sm:p-2.5 pointer-events-auto transition-all duration-300">
+      <div className="bg-[#12110f]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl shadow-2xl p-2 sm:p-2.5 pointer-events-auto transition-all duration-300">
         {/* Header Strip inside Dock */}
         <div className="flex items-center justify-between pb-1.5 px-2 border-b border-slate-800/80 text-[11px] font-mono">
           <div className="flex items-center gap-2">
@@ -121,7 +121,7 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
               {hop && (
                 <motion.span
                   key={hop.id}
-                  className="absolute top-[8px] h-[7px] w-[7px] -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(147,197,253,0.9)]"
+                  className="absolute top-[8px] h-[7px] w-[7px] -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(255,163,112,0.9)]"
                   initial={{ left: `${pct(hop.from)}%`, opacity: 1 }}
                   animate={{ left: `${pct(hop.to)}%`, opacity: [1, 1, 0] }}
                   transition={{ duration: Math.min(0.9, 0.3 + Math.abs(hop.to - hop.from) * 0.1), ease: [0.65, 0, 0.35, 1], opacity: { times: [0, 0.85, 1] } }}
@@ -156,7 +156,7 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
                             />
                           )}
                           <span
-                            className={`flex h-3.5 w-3.5 items-center justify-center rounded-full border-[1.5px] bg-[#0b101c] transition-colors duration-300 ${
+                            className={`flex h-3.5 w-3.5 items-center justify-center rounded-full border-[1.5px] bg-[#12110f] transition-colors duration-300 ${
                               isActive ? 'border-emerald-300' : isDone ? 'border-emerald-500' : 'border-slate-600 group-hover:border-slate-400'
                             }`}
                           >

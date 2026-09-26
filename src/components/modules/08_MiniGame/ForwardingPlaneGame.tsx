@@ -230,7 +230,7 @@ const writeBest = (v: number) => {
 // ---------------------------------------------------------------------------
 // Small UI pieces
 
-const panel = 'rounded-lg border border-slate-800 bg-[#0a0f1a]/90';
+const panel = 'rounded-lg border border-slate-800 bg-[#11100e]/90';
 const label = 'font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500';
 const KEYS: Record<Egress, string> = { gi0: '1', gi1: '2', se0: '3', drop: '4' };
 
@@ -417,7 +417,7 @@ function PortPanel({
                     aria-hidden
                     className={cn(
                       'h-1.5 w-1.5 rounded-full',
-                      isDrop ? 'bg-rose-500/70' : 'bg-emerald-400 shadow-[0_0_6px_rgba(96,165,250,0.9)]',
+                      isDrop ? 'bg-rose-500/70' : 'bg-emerald-400 shadow-[0_0_6px_rgba(255,122,56,0.9)]',
                     )}
                   />
                   <span className="font-mono text-sm font-medium text-slate-100">{isDrop ? 'Drop' : EGRESS_NAME[e]}</span>
@@ -601,7 +601,7 @@ function Feedback({ last, level }: { last: Decision | null; level: Level }) {
 function Overlay({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      className="absolute inset-0 z-20 flex items-start justify-center overflow-y-auto bg-[#070a12]/90 p-4 backdrop-blur-sm sm:items-center sm:p-8"
+      className="absolute inset-0 z-20 flex items-start justify-center overflow-y-auto bg-[#0c0b09]/90 p-4 backdrop-blur-sm sm:items-center sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -787,7 +787,7 @@ export const ForwardingPlaneGame: React.FC<{ onProceedToConclusion: () => void; 
       )}
 
       {/* Game frame */}
-      <div className="relative mt-8 min-h-[640px] overflow-hidden rounded-xl border border-slate-800 bg-[#070b14]">
+      <div className="relative mt-8 min-h-[640px] overflow-hidden rounded-xl border border-slate-800 bg-[#0d0c0a]">
         {/* HUD */}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-slate-800 px-4 py-3 sm:px-5">
           <div className="min-w-0">

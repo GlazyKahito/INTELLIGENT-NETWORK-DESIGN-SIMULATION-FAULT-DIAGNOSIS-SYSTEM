@@ -75,10 +75,10 @@ export const LabReport: React.FC<LabReportProps> = ({
   };
 
   return (
-    <section className="py-12 bg-[#070a12]">
+    <section className="py-12 bg-[#0c0b09]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-10">
         {/* The journey closes: one last packet crosses the whole network */}
-        <div className="rounded-2xl border border-slate-800 bg-[#0b101d] p-6 sm:p-8">
+        <div className="rounded-2xl border border-slate-800 bg-[#12110f] p-6 sm:p-8">
           <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-emerald-400">Final verification</div>
           <PacketPath nodes={['PC', 'SWITCH', 'ROUTER', 'SERVER']} okLabel="Network stable · Lab complete" className="mt-4 max-w-2xl" />
           <motion.ul
@@ -101,7 +101,7 @@ export const LabReport: React.FC<LabReportProps> = ({
         </div>
 
         {/* Student Customization Bar */}
-        <div className="p-5 rounded-2xl bg-[#0d1322] border border-slate-800 shadow-xl flex flex-wrap items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl bg-[#151412] border border-slate-800 shadow-xl flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <User className="w-5 h-5 text-emerald-400" />
             <span className="text-xs font-mono font-bold text-slate-300 uppercase">
@@ -133,7 +133,7 @@ export const LabReport: React.FC<LabReportProps> = ({
         </div>
 
         {/* Certificate Card Container */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-[#0d1322] border-2 border-emerald-500/40 shadow-[0_0_50px_rgba(59,130,246,0.15)] relative overflow-hidden">
+        <div className="p-8 sm:p-12 rounded-3xl bg-[#151412] border-2 border-emerald-500/40 shadow-[0_0_50px_rgba(255,95,31,0.15)] relative overflow-hidden">
           {/* Subtle watermark background badge */}
           <div className="absolute -top-16 -right-16 w-56 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -228,7 +228,7 @@ export const LabReport: React.FC<LabReportProps> = ({
           </div>
 
           {/* Mastered Competencies */}
-          <div className="p-5 rounded-2xl bg-[#090d16] border border-slate-800 space-y-3 font-sans">
+          <div className="p-5 rounded-2xl bg-[#0f0e0c] border border-slate-800 space-y-3 font-sans">
             <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
               Core Technical Competencies Mastered:
             </h4>
@@ -244,7 +244,7 @@ export const LabReport: React.FC<LabReportProps> = ({
         </div>
 
         {/* Launch Full Lab CTA */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-[#0e1626] to-[#0a101d] border border-slate-800 text-center space-y-5 shadow-2xl">
+        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-[#171614] to-[#12110f] border border-slate-800 text-center space-y-5 shadow-2xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
             <span>UNRESTRICTED INTERACTIVE LABORATORY</span>
           </div>
@@ -261,7 +261,7 @@ export const LabReport: React.FC<LabReportProps> = ({
                 playSound('success');
                 onLaunchFullLab();
               }}
-              className="flex items-center gap-2 px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono rounded-xl text-sm transition-all shadow-[0_0_25px_rgba(59,130,246,0.4)] active:scale-95 cursor-pointer"
+              className="flex items-center gap-2 px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono rounded-xl text-sm transition-all shadow-[0_0_25px_rgba(255,95,31,0.4)] active:scale-95 cursor-pointer"
             >
               <Maximize2 className="w-4 h-4" />
               <span>LAUNCH FULL UNRESTRICTED LAB</span>

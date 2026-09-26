@@ -58,7 +58,7 @@ export const SubnetCalculator: React.FC = () => {
 
       {/* Input Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+        <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
           <label className="block text-xs font-mono text-slate-400 mb-1.5 uppercase">
             IPv4 Address:
           </label>
@@ -71,7 +71,7 @@ export const SubnetCalculator: React.FC = () => {
           />
         </div>
 
-        <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+        <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
           <label className="block text-xs font-mono text-slate-400 mb-1.5 uppercase">
             Subnet Mask:
           </label>
@@ -86,7 +86,7 @@ export const SubnetCalculator: React.FC = () => {
       </div>
 
       {/* Binary Bitwise ANDing Visualizer */}
-      <div className="p-5 rounded-xl bg-[#0b101d] border border-slate-800 font-mono text-xs overflow-x-auto space-y-2">
+      <div className="p-5 rounded-xl bg-[#12110f] border border-slate-800 font-mono text-xs overflow-x-auto space-y-2">
         <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-2 font-semibold">
           Bitwise Logic Breakdown (IP Address & Subnet Mask = Network Address)
         </div>
@@ -107,41 +107,41 @@ export const SubnetCalculator: React.FC = () => {
       {/* Calculated Results Matrix */}
       {subnetInfo ? (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+          <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
             <div className="text-[10px] font-mono text-slate-400 uppercase">Address Class</div>
             <div className="text-sm sm:text-base font-bold text-emerald-400 mt-1">{subnetInfo.ipClass}</div>
             <div className="text-[10px] text-slate-500 mt-1">{subnetInfo.isPrivate ? 'RFC 1918 Private' : 'Public IPv4'}</div>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+          <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
             <div className="text-[10px] font-mono text-slate-400 uppercase">CIDR Notation</div>
             <div className="text-sm sm:text-base font-bold text-cyan-400 mt-1">{subnetInfo.prefix}</div>
             <div className="text-[10px] text-slate-500 mt-1">Network Bits Prefix</div>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+          <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
             <div className="text-[10px] font-mono text-slate-400 uppercase">Network Address</div>
             <div className="text-sm sm:text-base font-mono font-bold text-slate-100 mt-1">{subnetInfo.networkAddress}</div>
             <div className="text-[10px] text-slate-500 mt-1">Subnet Wire ID</div>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+          <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
             <div className="text-[10px] font-mono text-slate-400 uppercase">Broadcast Address</div>
             <div className="text-sm sm:text-base font-mono font-bold text-slate-100 mt-1">{subnetInfo.broadcastAddress}</div>
             <div className="text-[10px] text-slate-500 mt-1">Directed Subnet Broadcast</div>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+          <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
             <div className="text-[10px] font-mono text-slate-400 uppercase">First Usable Host</div>
             <div className="text-sm sm:text-base font-mono font-bold text-slate-200 mt-1">{subnetInfo.firstUsableHost}</div>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+          <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
             <div className="text-[10px] font-mono text-slate-400 uppercase">Last Usable Host</div>
             <div className="text-sm sm:text-base font-mono font-bold text-slate-200 mt-1">{subnetInfo.lastUsableHost}</div>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800 col-span-2">
+          <div className="p-4 rounded-xl bg-[#151412] border border-slate-800 col-span-2">
             <div className="text-[10px] font-mono text-slate-400 uppercase">Usable Host Capacity</div>
             <div className="text-sm sm:text-base font-mono font-bold text-emerald-400 mt-1">
               {subnetInfo.usableHosts.toLocaleString()} Usable IP Addresses

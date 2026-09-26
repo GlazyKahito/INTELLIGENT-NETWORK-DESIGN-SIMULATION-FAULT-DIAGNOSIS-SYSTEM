@@ -44,7 +44,7 @@ export function NetStatusHost() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.3, ease: EASE_NET }}
-            className="pointer-events-auto w-full max-w-sm rounded-lg border border-slate-700/80 bg-[#0a0f1a]/95 px-4 py-3 shadow-2xl backdrop-blur"
+            className="pointer-events-auto w-full max-w-sm rounded-lg border border-slate-700/80 bg-[#11100e]/95 px-4 py-3 shadow-2xl backdrop-blur"
           >
             <PacketPath nodes={['SRC', 'LINK', 'DST']} broken={item.ok ? null : 1} compact runKey={item.id} />
             <div className={`mt-1 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] ${item.ok ? 'text-emerald-300' : 'text-rose-300'}`}>

@@ -5,48 +5,48 @@
 @layer base {
   /* shadcn/ui theme tokens (HSL triplets). The lab ships dark-first; :root is the light fallback. */
   :root {
-    --background: 220 20% 97%;
-    --foreground: 224 40% 8%;
+    --background: 40 20% 96%;
+    --foreground: 30 8% 8%;
     --card: 0 0% 100%;
-    --card-foreground: 224 40% 8%;
+    --card-foreground: 30 8% 8%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 40% 8%;
-    --primary: 221 83% 53%;
+    --popover-foreground: 30 8% 8%;
+    --primary: 17 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 16% 92%;
-    --secondary-foreground: 224 40% 12%;
-    --muted: 220 16% 93%;
-    --muted-foreground: 220 10% 40%;
-    --accent: 200 98% 39%;
+    --secondary: 36 14% 90%;
+    --secondary-foreground: 30 8% 12%;
+    --muted: 36 14% 91%;
+    --muted-foreground: 30 5% 38%;
+    --accent: 30 12% 30%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 350 89% 50%;
+    --destructive: 354 80% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 14% 86%;
-    --input: 220 14% 86%;
-    --ring: 221 83% 53%;
-    --radius: 0.5rem;
+    --border: 36 10% 84%;
+    --input: 36 10% 84%;
+    --ring: 17 100% 50%;
+    --radius: 0rem;
   }
 
   .dark {
-    --background: 225 46% 6%;
-    --foreground: 214 32% 91%;
-    --card: 222 45% 9%;
-    --card-foreground: 214 32% 91%;
-    --popover: 222 45% 9%;
-    --popover-foreground: 214 32% 91%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 224 44% 5%;
-    --secondary: 221 39% 13%;
-    --secondary-foreground: 214 32% 91%;
-    --muted: 221 39% 13%;
-    --muted-foreground: 215 16% 62%;
-    --accent: 199 89% 60%;
-    --accent-foreground: 224 44% 5%;
-    --destructive: 350 89% 60%;
+    --background: 30 6% 5%;
+    --foreground: 38 22% 90%;
+    --card: 30 5% 8%;
+    --card-foreground: 38 22% 90%;
+    --popover: 30 5% 8%;
+    --popover-foreground: 38 22% 90%;
+    --primary: 17 100% 56%;
+    --primary-foreground: 30 8% 5%;
+    --secondary: 30 4% 12%;
+    --secondary-foreground: 38 22% 90%;
+    --muted: 30 4% 12%;
+    --muted-foreground: 35 7% 60%;
+    --accent: 36 30% 86%;
+    --accent-foreground: 30 8% 5%;
+    --destructive: 354 85% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 219 33% 18%;
-    --input: 219 33% 18%;
-    --ring: 217 91% 60%;
+    --border: 30 4% 17%;
+    --input: 30 4% 17%;
+    --ring: 17 100% 56%;
   }
 
   * {
@@ -59,8 +59,8 @@
   }
 
   body {
-    background-color: #070a12;
-    color: #e2e8f0;
+    background-color: #0c0b09;
+    color: #e9e8e6;
     font-kerning: normal;
     text-rendering: optimizeLegibility;
   }
@@ -71,10 +71,10 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #090d16;
+    background: #0f0e0c;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e293b;
+    background: #2a2927;
     border-radius: 3px;
   }
   :focus-visible {
@@ -83,7 +83,7 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #3b82f6;
+    background: #ff5f1f;
   }
 }
 
@@ -97,14 +97,14 @@
 
 .tech-dot-bg {
   background-size: 24px 24px;
-  background-image: radial-gradient(circle, rgba(59, 130, 246, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255, 95, 31, 0.12) 1px, transparent 1px);
 }
 
 /* Glassmorphism card styles */
 .lab-card {
-  background: rgba(13, 19, 34, 0.75);
+  background: rgba(21, 20, 18, 0.75);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(31, 41, 61, 0.8);
+  border: 1px solid rgba(42, 41, 39, 0.8);
 }
 
 /* Column-aligned CLI output (show ip route, arp tables…) must stay monospaced */
@@ -128,8 +128,8 @@ samp {
   transition: border-color var(--dur-card) var(--ease-net), box-shadow var(--dur-card) var(--ease-net);
 }
 .lab-card-hover:hover {
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: inset 0 1px 0 rgba(96, 165, 250, 0.45), 0 10px 30px -18px rgba(59, 130, 246, 0.45);
+  border-color: rgba(255, 95, 31, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 122, 56, 0.45), 0 10px 30px -18px rgba(255, 95, 31, 0.45);
 }
 
 /* Node card: a status node on the top edge activates (○ → ●) and a link draws from it */
@@ -144,8 +144,8 @@ samp {
   width: 8px;
   height: 8px;
   border-radius: 9999px;
-  border: 1.5px solid rgb(71 85 105);
-  background: #070a12;
+  border: 1.5px solid rgb(85 84 82);
+  background: #0c0b09;
   transition: border-color var(--dur-card) var(--ease-net), background-color var(--dur-card) var(--ease-net), box-shadow var(--dur-card) var(--ease-net);
 }
 .node-card::after {
@@ -155,16 +155,16 @@ samp {
   right: 16px;
   top: -1px;
   height: 1px;
-  background: linear-gradient(90deg, rgb(96 165 250 / 0.8), rgb(96 165 250 / 0));
+  background: linear-gradient(90deg, rgb(255 122 56 / 0.8), rgb(255 122 56 / 0));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 380ms var(--ease-net);
 }
 .node-card:hover::before,
 .node-card:focus-visible::before {
-  border-color: rgb(96 165 250);
-  background: rgb(96 165 250);
-  box-shadow: 0 0 10px rgb(96 165 250 / 0.6);
+  border-color: rgb(255 122 56);
+  background: rgb(255 122 56);
+  box-shadow: 0 0 10px rgb(255 122 56 / 0.6);
 }
 .node-card:hover::after,
 .node-card:focus-visible::after {
@@ -182,7 +182,7 @@ samp {
 
 /* Glowing text & borders */
 .glow-emerald {
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 15px rgba(255, 95, 31, 0.25);
 }
 
 .glow-cyan {
@@ -255,4 +255,70 @@ samp {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+
+/* Drawing sheet ----------------------------------------------------------------
+   Every panel is a block on a schematic: square edges, hairline frame, and orange
+   registration marks on its corners. */
+div[class*='rounded-2xl'][class*='border'],
+div[class*='rounded-3xl'][class*='border'],
+section[class*='rounded-2xl'][class*='border'],
+.sheet-marks {
+  --mark: rgb(255 95 31 / 0.9);
+  --mark-len: 16px;
+  --mark-w: 2px;
+  background-image: linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
+    linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
+    linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
+    linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark));
+  background-size: var(--mark-len) var(--mark-w), var(--mark-w) var(--mark-len), var(--mark-len) var(--mark-w),
+    var(--mark-w) var(--mark-len), var(--mark-len) var(--mark-w), var(--mark-w) var(--mark-len),
+    var(--mark-len) var(--mark-w), var(--mark-w) var(--mark-len);
+  background-position: 0 0, 0 0, 100% 0, 100% 0, 0 100%, 0 100%, 100% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+}
+
+/* Hover: the marks grow toward each other — the block is being selected. */
+div[class*='rounded-2xl'][class*='border'][class*='cursor-pointer']:hover,
+.node-card:hover {
+  --mark-len: 34px;
+  transition: all 0.25s var(--ease-net);
+}
+
+/* Datasheet ruler down the left edge of the viewport */
+.sheet-ruler {
+  background-image: repeating-linear-gradient(to bottom, rgb(255 95 31 / 0.55) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(to bottom, rgb(194 190 181 / 0.22) 0 1px, transparent 1px 16px);
+  background-size: 14px 100%, 7px 100%;
+  background-repeat: no-repeat;
+}
+
+::selection {
+  background: rgb(255 95 31 / 0.35);
+  color: #fff4ed;
+}
+
+/* Live capture ticker */
+@keyframes packet-ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.packet-ticker {
+  padding-left: 9rem;
+  animation: packet-ticker 70s linear infinite;
+}
+
+/* Giant outlined sheet number */
+.sheet-stamp {
+  font-family: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(9rem, 20vw, 19rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 2px rgb(255 95 31 / 0.6);
+  text-shadow: 0 0 40px rgb(255 95 31 / 0.12);
 }

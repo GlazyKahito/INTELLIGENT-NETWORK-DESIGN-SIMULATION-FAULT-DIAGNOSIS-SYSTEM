@@ -24,6 +24,8 @@ const TUNNEL_STAGES = [
   { at: 3000, speed: 9, intensity: 1.2, collapse: 1 },
 ];
 const BURST_STAGE = 5;
+// Signal orange → amber streaks with white-hot packets.
+const WARP_COLORS = { primary: '#ff5f1f', accent: '#ffb347', highlight: '#fff1e6' };
 const TUNNEL_DURATION = 3750;
 const EXIT_DURATION = 1100;
 
@@ -168,7 +170,12 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
         animate={{ opacity: phase === 'tunnel' && stage === 0 ? 0 : 1, scale: phase === 'exit' ? 1.06 : 1 }}
         transition={{ duration: phase === 'exit' ? EXIT_DURATION / 1000 : 0.9, ease: EASE_OUT }}
       >
-        <WarpTunnel speed={tunnel.speed} intensity={tunnel.intensity} collapse={tunnel.collapse} onReady={markReady} aria-label="Travelling through a network data tunnel" />
+        <WarpTunnel
+          speed={tunnel.speed}
+          intensity={tunnel.intensity}
+          collapse={tunnel.collapse}
+          colors={WARP_COLORS}
+          onReady={markReady} aria-label="Travelling through a network data tunnel" />
       </motion.div>
 
       {/* Vanishing-point bloom + readability vignette */}

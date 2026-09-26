@@ -122,7 +122,7 @@ export const TcpHeaderViewer: React.FC = () => {
       {activeTab === 'tcp' && (
         <div className="space-y-6">
           {/* Interactive 32-bit Width TCP Header Grid */}
-          <div className="p-5 rounded-xl bg-[#0b101d] border border-slate-800 font-mono text-xs overflow-x-auto">
+          <div className="p-5 rounded-xl bg-[#12110f] border border-slate-800 font-mono text-xs overflow-x-auto">
             <div className="text-[11px] text-slate-400 uppercase tracking-wider mb-3 flex items-center justify-between font-semibold">
               <span>Standard 20-Byte RFC 793 TCP Header (32 Bits Wide)</span>
               <span className="text-emerald-400">Click any field to dissect</span>
@@ -292,7 +292,7 @@ export const TcpHeaderViewer: React.FC = () => {
           </div>
 
           {/* Interactive Flags Bitfield Control */}
-          <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800">
+          <div className="p-4 rounded-xl bg-[#151412] border border-slate-800">
             <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-2 font-semibold">
               Interactive Flag Bitfield (Click to Toggle):
             </div>
@@ -303,7 +303,7 @@ export const TcpHeaderViewer: React.FC = () => {
                   onClick={() => toggleFlag(f)}
                   className={`p-2 rounded-lg border font-mono text-xs uppercase font-bold flex items-center justify-between transition-all ${
                     flags[f]
-                      ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300 shadow-[0_0_8px_rgba(59,130,246,0.2)]'
+                      ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300 shadow-[0_0_8px_rgba(255,95,31,0.2)]'
                       : 'bg-slate-900 border-slate-800 text-slate-500'
                   }`}
                 >
@@ -334,7 +334,7 @@ export const TcpHeaderViewer: React.FC = () => {
 
           {/* Detailed Selected Field Card */}
           {fieldDescriptions[selectedField] && (
-            <div className="p-5 rounded-xl bg-[#0e1626] border-l-4 border-emerald-500 shadow-xl">
+            <div className="p-5 rounded-xl bg-[#171614] border-l-4 border-emerald-500 shadow-xl">
               <div className="flex items-center justify-between mb-2">
                 <h4 className="text-sm font-bold text-slate-100">
                   {fieldDescriptions[selectedField].title}
@@ -352,14 +352,14 @@ export const TcpHeaderViewer: React.FC = () => {
       )}
 
       {activeTab === 'handshake' && (
-        <div className="p-6 rounded-xl bg-[#0b101d] border border-slate-800 space-y-6">
+        <div className="p-6 rounded-xl bg-[#12110f] border border-slate-800 space-y-6">
           <div className="text-sm font-bold text-slate-100">
             TCP 3-Way Handshake Connection Establishment
           </div>
 
           <div className="relative py-4 space-y-8 font-mono text-xs">
             {/* Step 1 */}
-            <div className="p-4 rounded-xl bg-[#0d1322] border border-slate-800 flex items-center justify-between">
+            <div className="p-4 rounded-xl bg-[#151412] border border-slate-800 flex items-center justify-between">
               <div>
                 <span className="text-emerald-400 font-bold">STEP 01: Client ➔ Server</span>
                 <div className="text-slate-300 mt-1">[SYN] Seq = 100, Win = 64240, MSS = 1460</div>
@@ -368,7 +368,7 @@ export const TcpHeaderViewer: React.FC = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="p-4 rounded-xl bg-[#0d1322] border border-cyan-500/40 flex items-center justify-between">
+            <div className="p-4 rounded-xl bg-[#151412] border border-cyan-500/40 flex items-center justify-between">
               <div>
                 <span className="text-cyan-400 font-bold">STEP 02: Server ➔ Client</span>
                 <div className="text-slate-300 mt-1">[SYN, ACK] Seq = 300, Ack = 101 (Seq + 1), Win = 65535</div>
@@ -377,7 +377,7 @@ export const TcpHeaderViewer: React.FC = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="p-4 rounded-xl bg-[#0d1322] border border-emerald-500/40 flex items-center justify-between">
+            <div className="p-4 rounded-xl bg-[#151412] border border-emerald-500/40 flex items-center justify-between">
               <div>
                 <span className="text-emerald-400 font-bold">STEP 03: Client ➔ Server</span>
                 <div className="text-slate-300 mt-1">[ACK] Seq = 101, Ack = 301 (Seq + 1)</div>
@@ -389,7 +389,7 @@ export const TcpHeaderViewer: React.FC = () => {
       )}
 
       {activeTab === 'udp' && (
-        <div className="p-6 rounded-xl bg-[#0b101d] border border-slate-800 space-y-6">
+        <div className="p-6 rounded-xl bg-[#12110f] border border-slate-800 space-y-6">
           <div className="text-sm font-bold text-slate-100">
             Transport Layer Comparative Matrix: TCP vs UDP
           </div>

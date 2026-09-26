@@ -23,7 +23,7 @@ export const ValidationPanel: React.FC<ValidationPanelProps> = ({
   const infos = issues.filter(i => i.severity === 'info');
 
   return (
-    <div className="p-5 rounded-2xl bg-[#0d1322] border border-slate-800 shadow-2xl space-y-4 font-sans animate-in fade-in duration-200">
+    <div className="p-5 rounded-2xl bg-[#151412] border border-slate-800 shadow-2xl space-y-4 font-sans animate-in fade-in duration-200">
       <div className="flex items-center justify-between pb-3 border-b border-slate-800">
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">

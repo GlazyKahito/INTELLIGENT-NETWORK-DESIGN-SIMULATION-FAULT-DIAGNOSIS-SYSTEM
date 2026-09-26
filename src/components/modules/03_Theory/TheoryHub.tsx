@@ -125,7 +125,7 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
   const currentPkt = wiresharkCaptures[selectedCaptureIdx] || wiresharkCaptures[0];
 
   return (
-    <section className="py-12 bg-[#070a12]">
+    <section className="py-12 bg-[#0c0b09]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -147,7 +147,7 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
               playSound('success');
               onProceedToDesign();
             }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0 active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,95,31,0.3)] shrink-0 active:scale-95 cursor-pointer"
           >
             <span>Proceed to Network Design</span>
             <ArrowRight className="w-4 h-4" />
@@ -168,7 +168,7 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
                 }}
                 className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(59,130,246,0.2)] font-semibold'
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(255,95,31,0.2)] font-semibold'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent'
                 }`}
               >
@@ -186,7 +186,7 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
         <div className="transition-all animate-in fade-in duration-200">
           {activeTab === 'fundamentals' && (
             <div className="space-y-6">
-              <div className="p-6 sm:p-8 rounded-3xl bg-[#0d1322] border border-slate-800 space-y-5 shadow-2xl">
+              <div className="p-6 sm:p-8 rounded-3xl bg-[#151412] border border-slate-800 space-y-5 shadow-2xl">
                 <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
                   <Layers className="w-5 h-5 text-emerald-400" />
                   <span>Network Architecture Fundamentals (LAN, WAN & Topologies)</span>
@@ -220,14 +220,14 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
               </div>
 
               {/* How a packet crosses the network — built hop by hop as you scroll */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-[#0b101d] border border-slate-800 shadow-xl">
+              <div className="p-6 sm:p-8 rounded-3xl bg-[#12110f] border border-slate-800 shadow-xl">
                 <div className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">One packet, four devices</div>
                 <p className="mt-1 mb-4 text-sm text-slate-400 max-w-2xl">Scroll through the path. Each device only reads the layer it is responsible for.</p>
                 <TopologyWalkthrough />
               </div>
 
               {/* Protocol Stack Visual */}
-              <div className="p-6 rounded-3xl bg-[#0b101d] border border-slate-800 font-mono text-xs shadow-xl">
+              <div className="p-6 rounded-3xl bg-[#12110f] border border-slate-800 font-mono text-xs shadow-xl">
                 <div className="text-slate-400 uppercase tracking-wider mb-4 font-semibold">
                   OSI 7-Layer vs TCP/IP 4-Layer Architecture Mapping
                 </div>
@@ -266,7 +266,7 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
           )}
 
           {activeTab === 'wireshark' && (
-            <div className="p-6 rounded-3xl bg-[#0d1322] border border-slate-800 space-y-6 shadow-2xl font-mono text-xs">
+            <div className="p-6 rounded-3xl bg-[#151412] border border-slate-800 space-y-6 shadow-2xl font-mono text-xs">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-slate-800 gap-2">
                 <div>
                   <h3 className="text-base font-bold text-slate-100 flex items-center gap-2 font-sans">

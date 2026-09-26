@@ -123,9 +123,9 @@ export const DiagnosticTerminal: React.FC<DiagnosticTerminalProps> = ({
   };
 
   return (
-    <div className="rounded-2xl bg-[#080c16] border border-slate-800 shadow-2xl overflow-hidden font-code flex flex-col h-[460px]">
+    <div className="rounded-2xl bg-[#0e0d0b] border border-slate-800 shadow-2xl overflow-hidden font-code flex flex-col h-[460px]">
       {/* Terminal Titlebar */}
-      <div className="px-4 py-2.5 bg-[#0d1322] border-b border-slate-800 flex items-center justify-between">
+      <div className="px-4 py-2.5 bg-[#151412] border-b border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <TerminalIcon className="w-4 h-4 text-emerald-400" />
           <span className="text-xs font-bold text-slate-200">
@@ -186,7 +186,7 @@ export const DiagnosticTerminal: React.FC<DiagnosticTerminalProps> = ({
       </div>
 
       {/* Input Prompt */}
-      <div className="p-3 bg-[#0a0f1c] border-t border-slate-800 flex items-center gap-2">
+      <div className="p-3 bg-[#11100e] border-t border-slate-800 flex items-center gap-2">
         <span className="text-emerald-400 font-bold text-xs select-none">
           C:\Users\Student&gt;
         </span>

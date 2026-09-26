@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { NetworkDevice, NetworkLink } from './types/network';
 import { INITIAL_DEVICES, INITIAL_LINKS } from './data/defaultTopology';
 import { LiveWallpaper } from './components/common/LiveWallpaper';
+import { SchematicChrome } from './components/common/SchematicChrome';
 import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { Header } from './components/layout/Header';
 import { WorksLauncher } from './components/layout/WorksLauncher';
@@ -23,6 +24,11 @@ import { hasSeenIntro } from './lib/intro-session';
 
 // Three.js only ships with the opening sequence, so returning visitors never download it.
 const OpeningSequence = lazy(() => import('./components/layout/OpeningSequence').then(m => ({ default: m.OpeningSequence })));
+
+const SHEET_NO: Record<string, string> = {
+  home: '01', aim: '02', theory: '03', design: '04', simulation: '05',
+  diagnostics: '06', assessments: '07', minigame: '08', conclusion: '09',
+};
 
 export function App() {
   // The opening sequence plays once per tab session; reloads go straight to the lab.
@@ -87,9 +93,10 @@ export function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen bg-[#070a12] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-clip">
+    <div className="min-h-screen bg-[#0c0b09] text-slate-100 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-clip">
       {/* 1. Subtle Constellation Live Wallpaper (Background) */}
       <LiveWallpaper />
+      {bootDone && <SchematicChrome activeModule={activeModule} />}
 
       <NetStatusHost />
 
@@ -142,6 +149,21 @@ export function App() {
 
       {/* 6. Main Content Modules */}
       <main className="flex-1 relative z-10">
+        {/* Sheet stamp: the section's drawing-sheet number, huge and outlined, behind the content */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`stamp-${activeModule}`}
+            aria-hidden
+            className="sheet-stamp pointer-events-none absolute right-2 top-2 -z-10 hidden select-none md:block"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="block text-right font-mono text-[11px] uppercase tracking-[0.3em] text-emerald-500/70">Sheet</span>
+            {SHEET_NO[activeModule] ?? '01'}
+          </motion.div>
+        </AnimatePresence>
         <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={activeModule}
@@ -161,7 +183,7 @@ export function App() {
 
             {/* Quick syllabus progression cards */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-36">
-              <div className="p-6 rounded-3xl bg-[#0d1322]/90 backdrop-blur-md border border-slate-800 space-y-4 shadow-2xl">
+              <div className="p-6 rounded-3xl bg-[#151412]/90 backdrop-blur-md border border-slate-800 space-y-4 shadow-2xl">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
                     Virtual Laboratory Curriculum Roadmap
@@ -311,7 +333,7 @@ export function App() {
       />
 
       {/* 8. Academic Institutional Footer */}
-      <footer className="border-t border-slate-800/80 bg-[#06090e] py-8 text-xs text-slate-500 font-mono relative z-10 pb-20 sm:pb-8">
+      <footer className="border-t border-slate-800/80 bg-[#0b0a08] py-8 text-xs text-slate-500 font-mono relative z-10 pb-20 sm:pb-8 xl:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />

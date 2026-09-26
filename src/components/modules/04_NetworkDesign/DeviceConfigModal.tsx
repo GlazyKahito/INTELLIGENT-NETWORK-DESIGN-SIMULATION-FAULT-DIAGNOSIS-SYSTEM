@@ -54,10 +54,10 @@ export const DeviceConfigModal: React.FC<DeviceConfigModalProps> = ({
   const subnetInfo = ip && mask && isValidIPv4(ip) && isValidIPv4(mask) ? getSubnetDetails(ip, mask) : null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#05070d]/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-150">
-      <div className="max-w-lg w-full bg-[#0d1322] border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col font-sans">
+    <div className="fixed inset-0 z-50 bg-[#090806]/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-150">
+      <div className="max-w-lg w-full bg-[#151412] border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col font-sans">
         {/* Header */}
-        <div className="p-5 border-b border-slate-800 flex items-center justify-between bg-[#0a0f1c]">
+        <div className="p-5 border-b border-slate-800 flex items-center justify-between bg-[#11100e]">
           <div>
             <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest font-bold">
               Device Configuration & Port Parameters
@@ -212,7 +212,7 @@ export const DeviceConfigModal: React.FC<DeviceConfigModalProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 bg-[#0a0f1c] border-t border-slate-800 flex items-center justify-between">
+        <div className="p-4 bg-[#11100e] border-t border-slate-800 flex items-center justify-between">
           <button
             onClick={() => {
               playSound('alert');
@@ -237,7 +237,7 @@ export const DeviceConfigModal: React.FC<DeviceConfigModalProps> = ({
             </button>
             <button
               onClick={handleSave}
-              className="flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-lg text-xs font-bold transition-all shadow-[0_0_12px_rgba(59,130,246,0.3)]"
+              className="flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-lg text-xs font-bold transition-all shadow-[0_0_12px_rgba(255,95,31,0.3)]"
             >
               <Save className="w-3.5 h-3.5" />
               <span>Apply Configuration</span>
