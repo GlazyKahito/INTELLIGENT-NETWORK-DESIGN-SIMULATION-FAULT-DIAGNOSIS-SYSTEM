@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScrambleText, SplitText, CountUp } from '@/components/motion/TextFX';
 import { 
   Terminal as TerminalIcon, 
   AlertTriangle, 
@@ -103,10 +104,10 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-400 uppercase tracking-widest mb-1.5">
-              <span>Intelligent Fault Diagnostic Engine</span>
+              <ScrambleText text={"Intelligent Fault Diagnostic Engine"} />
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
-              Network Troubleshooting & Deductive Analysis
+              <SplitText text={"Network Troubleshooting & Deductive Analysis"} />
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
               Inspect anomalies, formulate hypotheses, gather empirical CLI evidence, isolate root cause, apply corrective actions, and verify network recovery.
@@ -176,7 +177,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
 
             <div className="flex items-center gap-2 shrink-0 font-mono text-xs">
               <span className="text-slate-400">Packet Loss: </span>
-              <span className="text-rose-400 font-bold text-sm">100%</span>
+              <CountUp value={100} suffix="%" className="text-rose-400 font-bold text-sm" />
               <span className="mx-2 text-slate-600">|</span>
               <span className="text-slate-400">Diagnosis: </span>
               <span className="text-amber-400 font-bold">REQUIRED</span>

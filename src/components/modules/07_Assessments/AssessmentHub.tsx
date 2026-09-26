@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScrambleText, SplitText, CountUp } from '@/components/motion/TextFX';
 import { 
   Activity, 
   CheckCircle2, 
@@ -85,10 +86,10 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest mb-1.5">
-              <span>Assessment Engine // Academic Evaluation</span>
+              <ScrambleText text={"Assessment Engine // Academic Evaluation"} />
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
-              Laboratory Knowledge & Diagnostic Examination
+              <SplitText text={"Laboratory Knowledge & Diagnostic Examination"} />
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
               Phase 1 evaluates DCN theoretical foundations. Phase 2 tests scenario-based network troubleshooting acumen.

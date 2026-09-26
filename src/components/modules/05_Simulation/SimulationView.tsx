@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { ScrambleText, SplitText, CountUp } from '@/components/motion/TextFX';
 import { 
   Play, 
   RotateCcw, 
@@ -179,10 +180,10 @@ export const SimulationView: React.FC<SimulationViewProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest mb-1.5">
-              <span>Simulation Engine // Real-Time Packet Stream</span>
+              <ScrambleText text={"Simulation Engine // Real-Time Packet Stream"} />
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
-              Network Packet Simulation & Traffic Analyzer
+              <SplitText text={"Network Packet Simulation & Traffic Analyzer"} />
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
               Simulate ICMP Echo Requests, TCP handshakes, or UDP datagrams. Inspect headers at each hop.

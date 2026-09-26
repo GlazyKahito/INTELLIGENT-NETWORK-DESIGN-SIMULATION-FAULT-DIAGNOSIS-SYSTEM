@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrambleText, SplitText, CountUp } from '@/components/motion/TextFX';
 import { 
   Target, 
   CheckCircle2, 
@@ -45,10 +46,10 @@ export const AimSection: React.FC<AimSectionProps> = ({
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest mb-1.5">
               <Target className="w-4 h-4" />
-              <span>Academic Curriculum Specification // Step 01</span>
+              <ScrambleText text={"Academic Curriculum Specification // Step 01"} />
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
-              Laboratory Aim & Learning Objectives
+              <SplitText text={"Laboratory Aim & Learning Objectives"} />
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-3xl">
               Somaiya Vidyavihar University — Department of Computer Engineering — Data Communication and Networking Laboratory (DCN-404).

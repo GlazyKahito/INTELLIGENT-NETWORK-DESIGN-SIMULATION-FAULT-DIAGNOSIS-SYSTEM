@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScrambleText, SplitText, CountUp } from '@/components/motion/TextFX';
 import { 
   Award, 
   CheckCircle2, 
@@ -148,7 +149,7 @@ export const LabReport: React.FC<LabReportProps> = ({
                   Academic Certificate of Laboratory Completion
                 </span>
                 <h2 className="text-xl sm:text-2xl font-extrabold text-slate-100 font-display">
-                  Somaiya Virtual Labs — DCN Laboratory
+                  <SplitText text={"Somaiya Virtual Labs — DCN Laboratory"} />
                 </h2>
                 <div className="text-xs text-slate-400 font-mono mt-0.5">
                   Course: Data Communication and Networking (DCN-LAB-404)
@@ -249,7 +250,7 @@ export const LabReport: React.FC<LabReportProps> = ({
             <span>UNRESTRICTED INTERACTIVE LABORATORY</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
-            Ready to Build Your Own Network?
+            <SplitText text={"Ready to Build Your Own Network?"} />
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
             Launch the unrestricted full-screen virtual laboratory environment to design custom multi-subnet topologies, inject custom faults, and inspect deep packet flows.

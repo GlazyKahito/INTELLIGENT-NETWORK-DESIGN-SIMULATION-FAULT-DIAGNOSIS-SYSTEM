@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScrambleText, SplitText, CountUp } from '@/components/motion/TextFX';
 import { 
   BookOpen, 
   Terminal, 
@@ -133,10 +134,10 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest mb-1.5">
               <BookOpen className="w-4 h-4" />
-              <span>Networking foundations behind the system</span>
+              <ScrambleText text={"Networking foundations behind the system"} />
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 font-display">
-              Interactive Theory & Protocol Dissection
+              <SplitText text={"Interactive Theory & Protocol Dissection"} />
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
               Explore interactive mathematical calculators, cabling pinouts, Wireshark packet inspectors, and protocol structures.

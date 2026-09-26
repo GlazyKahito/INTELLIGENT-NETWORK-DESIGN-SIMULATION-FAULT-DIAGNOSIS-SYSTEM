@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
+import { ScrambleText, SplitText, ShinyText, RotatingText } from '@/components/motion/TextFX';
 import { 
   Network, 
   Play, 
@@ -113,14 +115,26 @@ export const Hero: React.FC<HeroProps> = ({
           <div className="lg:col-span-7 space-y-6">
             <div className="space-y-3">
               <div className="text-xs sm:text-sm font-mono tracking-widest text-emerald-400 uppercase font-semibold">
-                Autonomous Computer Engineering Curriculum
+                <ScrambleText text="Autonomous Computer Engineering Curriculum" duration={900} />
               </div>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-100 font-display leading-[1.12]">
-                INTELLIGENT NETWORK DESIGN, <br className="hidden sm:block" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-                  SIMULATION & FAULT DIAGNOSIS
-                </span> SYSTEM
+                <SplitText text="INTELLIGENT NETWORK DESIGN," /> <br className="hidden sm:block" />
+                <motion.span
+                  initial={{ opacity: 0, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, filter: 'blur(0px)' }}
+                  transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <ShinyText>SIMULATION & FAULT DIAGNOSIS</ShinyText>
+                </motion.span>{' '}
+                <SplitText text="SYSTEM" delay={0.9} />
               </h1>
+              <p className="flex flex-wrap items-baseline gap-x-2 text-base sm:text-lg text-slate-400">
+                <span>Built to</span>
+                <RotatingText
+                  className="font-semibold text-emerald-400"
+                  words={['design networks', 'simulate packet flow', 'inject faults', 'trace the rogue packet', 'diagnose failures', 'verify recovery']}
+                />
+              </p>
             </div>
 
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl border-l-2 border-emerald-500/40 pl-4 py-1">
