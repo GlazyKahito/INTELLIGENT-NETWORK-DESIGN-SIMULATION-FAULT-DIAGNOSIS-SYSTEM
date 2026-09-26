@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { PacketTicker } from '../common/PacketTicker';
+import { NAV_GROUPS } from '../../lib/nav';
 import { 
   Network, 
   Volume2, 
@@ -99,17 +100,17 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Desktop Quick Navigation Links */}
         <nav className="hidden xl:flex self-stretch items-stretch min-w-0" aria-label="Sections">
-          {navItems.map(item => {
-            const isActive = activeModule === item.id;
+          {NAV_GROUPS.map(item => {
+            const isActive = item.modules.includes(activeModule);
             return (
               <button
                 key={item.id}
                 onClick={() => {
                   playSound('click');
-                  setActiveModule(item.id);
+                  if (!isActive) setActiveModule(item.modules[0]);
                 }}
                 aria-current={isActive ? 'page' : undefined}
-                className={`relative flex items-center px-3 text-[13px] font-medium whitespace-nowrap transition-colors duration-200 ${
+                className={`relative flex items-center px-4 text-[13px] font-medium whitespace-nowrap transition-colors duration-200 ${
                   isActive ? 'text-slate-50' : 'text-slate-400 hover:text-slate-100'
                 }`}
               >
