@@ -481,6 +481,7 @@ export function NetworkPanel({
                   compact
                   okLabel="Destination reached"
                   failLabel="No further hops"
+                  className="mx-auto max-w-[150px]"
                 />
               </div>
               <Pre>

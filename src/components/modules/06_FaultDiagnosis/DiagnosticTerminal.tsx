@@ -123,7 +123,7 @@ export const DiagnosticTerminal: React.FC<DiagnosticTerminalProps> = ({
   };
 
   return (
-    <div className="rounded-2xl bg-[#080c16] border border-slate-800 shadow-2xl overflow-hidden font-mono flex flex-col h-[460px]">
+    <div className="rounded-2xl bg-[#080c16] border border-slate-800 shadow-2xl overflow-hidden font-code flex flex-col h-[460px]">
       {/* Terminal Titlebar */}
       <div className="px-4 py-2.5 bg-[#0d1322] border-b border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -197,7 +197,7 @@ export const DiagnosticTerminal: React.FC<DiagnosticTerminalProps> = ({
           onChange={e => setInputVal(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Enter command (e.g. ping 192.168.2.10)..."
-          className="flex-1 bg-transparent text-slate-100 font-mono text-xs focus:outline-none placeholder:text-slate-600"
+          className="flex-1 bg-transparent text-slate-100 font-code text-xs focus:outline-none placeholder:text-slate-600"
           autoFocus
         />
         <button

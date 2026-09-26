@@ -228,28 +228,24 @@ export function OpeningSequence({ onEnter }: OpeningSequenceProps) {
   );
 }
 
-const GLYPHS = '01ABCDEF#<>/:';
-
-/** Characters resolve left-to-right out of hex noise — a link decoding, not a fade. */
-function DecodeText({ text, start, duration = 1300 }: { text: string; start: boolean; duration?: number }) {
-  const [out, setOut] = useState(() => text.replace(/\S/g, ' '));
-  useEffect(() => {
-    if (!start) return;
-    const t0 = performance.now();
-    const id = window.setInterval(() => {
-      const p = Math.min(1, (performance.now() - t0) / duration);
-      const shown = Math.floor(p * text.length);
-      setOut(
-        text
-          .split('')
-          .map((ch, i) => (ch === ' ' ? ' ' : i < shown ? ch : i < shown + 6 ? GLYPHS[Math.floor(Math.random() * GLYPHS.length)] : ' '))
-          .join(''),
-      );
-      if (p >= 1) clearInterval(id);
-    }, 45);
-    return () => clearInterval(id);
-  }, [start, text, duration]);
-  return <span aria-label={text}>{out}</span>;
+/** Letters resolve one by one out of blur — the link coming into focus. */
+function ResolveText({ text, start }: { text: string; start: boolean }) {
+  return (
+    <span aria-label={text} className="inline-block">
+      {text.split('').map((ch, i) => (
+        <motion.span
+          key={i}
+          aria-hidden
+          className="inline-block"
+          initial={{ opacity: 0, y: '0.3em', filter: 'blur(8px)' }}
+          animate={start ? { opacity: 1, y: 0, filter: 'blur(0px)' } : undefined}
+          transition={{ delay: 0.35 + i * 0.035, duration: 0.55, ease: EASE_OUT }}
+        >
+          {ch === ' ' ? '\u00a0' : ch}
+        </motion.span>
+      ))}
+    </span>
+  );
 }
 
 const HANDSHAKE = ['SYN', 'SYN-ACK', 'ACK'];
@@ -284,8 +280,8 @@ function TunnelOverlay({ started, stage, layer, onSkip }: { started: boolean; st
           <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[11px]">
             Opening link → <span className="text-foreground">dcn-lab.somaiya</span> · gw 192.168.1.1
           </div>
-          <div className="mt-4 font-mono text-[1.3rem] font-semibold uppercase tracking-[0.16em] text-foreground sm:text-4xl md:text-5xl">
-            <DecodeText text="Intelligent Network Lab" start={started} />
+          <div className="mt-4 font-display text-[2rem] font-semibold uppercase leading-none tracking-[0.06em] text-foreground sm:text-5xl md:text-6xl">
+            <ResolveText text="Intelligent Network Lab" start={started} />
           </div>
           <div className="mt-5 flex items-center justify-center gap-2 font-mono text-[11px] sm:gap-3" aria-hidden>
             {HANDSHAKE.map((h, i) => (

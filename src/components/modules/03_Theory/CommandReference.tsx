@@ -86,7 +86,7 @@ export const CommandReference: React.FC<{ onTestInTerminal: (cmd: string) => voi
             <div>
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">
+                  <span className="text-sm font-code font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">
                     {cmd.name}
                   </span>
                   <span className="text-[11px] font-mono text-slate-400">CLI Tool</span>
@@ -100,7 +100,7 @@ export const CommandReference: React.FC<{ onTestInTerminal: (cmd: string) => voi
                 </button>
               </div>
 
-              <div className="font-mono text-xs text-slate-300 bg-black/40 p-2 rounded border border-slate-800/80 mb-2">
+              <div className="font-code text-xs text-slate-300 bg-black/40 p-2 rounded border border-slate-800/80 mb-2">
                 {cmd.syntax}
               </div>
 
@@ -108,7 +108,7 @@ export const CommandReference: React.FC<{ onTestInTerminal: (cmd: string) => voi
                 {cmd.purpose}
               </p>
 
-              <div className="space-y-1 text-[11px] font-mono text-slate-500">
+              <div className="space-y-1 text-[11px] font-code text-slate-500">
                 {cmd.keyFlags.map((flag, idx) => (
                   <div key={idx} className="flex items-center gap-1.5">
                     <span className="text-emerald-500/70">•</span>
