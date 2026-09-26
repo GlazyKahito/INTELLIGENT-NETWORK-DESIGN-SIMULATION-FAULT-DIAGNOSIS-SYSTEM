@@ -54,7 +54,7 @@
   }
   
   html {
-    scroll-behavior: smooth;
+    /* smooth scrolling is handled by Lenis (src/lib/smooth-scroll.ts) */
     color-scheme: dark;
   }
 
