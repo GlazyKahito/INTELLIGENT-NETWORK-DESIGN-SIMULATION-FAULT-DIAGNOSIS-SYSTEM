@@ -22,6 +22,7 @@ import { FullLabSandbox } from './components/modules/10_LaunchLab/FullLabSandbox
 import { playSound } from './lib/sound';
 import { hasSeenIntro } from './lib/intro-session';
 import { initSmoothScroll, scrollToTop } from './lib/smooth-scroll';
+import { initScrollReveal } from './lib/scroll-reveal';
 import { MODULE_LABEL, groupOf } from './lib/nav';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { ShimmerButton } from '@/components/magicui/shimmer-button';
@@ -71,6 +72,10 @@ export function App() {
 
   // Smooth scrolling across the whole site
   useEffect(() => initSmoothScroll(), []);
+
+  // Blocks rise into place as they scroll into view
+  const mainRef = React.useRef<HTMLElement>(null);
+  useEffect(() => (mainRef.current ? initScrollReveal(mainRef.current) : undefined), []);
 
   // Keyboard shortcut: Press 'M' to open Works Hub, 'F' for Fullscreen Lab
   useEffect(() => {
@@ -154,7 +159,7 @@ export function App() {
       <AnimatePresence>{routeHop && bootDone && <RouteTransition key={routeHop.id} from={routeHop.from} to={routeHop.to} />}</AnimatePresence>
 
       {/* 6. Main Content Modules */}
-      <main className="flex-1 relative z-10">
+      <main ref={mainRef} className="flex-1 relative z-10">
         {/* Grouped sections get a switcher between their pages */}
         {groupOf(activeModule).modules.length > 1 && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">

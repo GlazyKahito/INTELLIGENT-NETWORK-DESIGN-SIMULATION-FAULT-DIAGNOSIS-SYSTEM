@@ -347,3 +347,16 @@ div[class*='rounded-2xl'][class*='border'][class*='cursor-pointer']:hover,
 }
 .animate-shimmer-slide { animation: shimmer-slide var(--speed) ease-in-out infinite alternate; }
 .animate-spin-around { animation: spin-around calc(var(--speed) * 2) infinite linear; }
+
+/* Scroll reveal (src/lib/scroll-reveal.ts): no fades — blocks wipe open top-to-bottom
+   and settle into place, like a schematic being plotted. */
+.reveal {
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(18px);
+}
+.reveal.is-revealed {
+  clip-path: inset(0 0 0 0);
+  transform: none;
+  transition: clip-path 0.75s var(--ease-net), transform 0.75s var(--ease-net);
+  transition-delay: var(--reveal-delay, 0ms);
+}
