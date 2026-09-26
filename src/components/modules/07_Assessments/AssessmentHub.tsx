@@ -10,7 +10,7 @@ import {
   ArrowRight,
   AlertCircle
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { notifyNet } from '@/components/motion/NetStatus';
 import { ASSESSMENT_QUESTIONS } from '../../../data/questions';
 import { AssessmentQuestion } from '../../../types/assessment';
 import { playSound } from '../../../lib/sound';
@@ -56,13 +56,11 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
     const score = calculateScore();
     const percent = Math.round((score / filteredQuestions.length) * 100);
 
-    if (percent >= 70) {
-      confetti({
-        particleCount: 70,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-    }
+    notifyNet(
+      percent >= 70
+        ? { ok: true, title: 'Assessment passed', detail: `Scored ${percent}% — route to the mini game is open.` }
+        : { ok: false, title: 'Below threshold', detail: `Scored ${percent}% — review the flagged topics and retry.` },
+    );
   };
 
   const handleReset = () => {
@@ -102,7 +100,7 @@ export const AssessmentHub: React.FC<AssessmentHubProps> = ({
             }}
             className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0"
           >
-            Play Mini-Game: Forwarding Plane →
+            Play Mini-Game: Rogue Packet →
           </button>
         </div>
 

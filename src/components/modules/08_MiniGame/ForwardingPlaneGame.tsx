@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { AnimatePresence, animate, motion, useReducedMotion, type Variants } from 'motion/react';
-import confetti from 'canvas-confetti';
+import { notifyNet } from '@/components/motion/NetStatus';
 import { ArrowRight, Check, Lightbulb, Pause, Play, RotateCcw, Star, X } from 'lucide-react';
 import { playSound } from '@/lib/sound';
 import { cn } from '@/lib/utils';
@@ -659,7 +659,7 @@ const CONTROLS = (
 // ---------------------------------------------------------------------------
 // Main component
 
-export const ForwardingPlaneGame: React.FC<{ onProceedToConclusion: () => void }> = ({ onProceedToConclusion }) => {
+export const ForwardingPlaneGame: React.FC<{ onProceedToConclusion: () => void; embedded?: boolean }> = ({ onProceedToConclusion, embedded = false }) => {
   const [s, dispatch] = useReducer(reducer, initialState);
   const [best, setBest] = useState(readBest);
   const reduceMotion = useReducedMotion();
@@ -707,7 +707,7 @@ export const ForwardingPlaneGame: React.FC<{ onProceedToConclusion: () => void }
         setBest(totalScore);
         writeBest(totalScore);
       }
-      if (!reduceMotion) confetti({ particleCount: 80, spread: 70, origin: { y: 0.7 }, colors: ['#10b981', '#06b6d4', '#e2e8f0'] });
+      notifyNet({ ok: true, title: 'All shifts complete', detail: `Forwarding plane stable · ${totalScore.toLocaleString()} points` });
     }
   }, [s.status]);
 
@@ -746,8 +746,9 @@ export const ForwardingPlaneGame: React.FC<{ onProceedToConclusion: () => void }
   const lastResult = s.results[s.levelIdx];
 
   return (
-    <section className="mx-auto max-w-7xl px-4 pb-40 pt-8 sm:px-6 sm:pt-10">
+    <section className={embedded ? "p-4 sm:p-5" : "mx-auto max-w-7xl px-4 pb-40 pt-8 sm:px-6 sm:pt-10"}>
       {/* Module header */}
+      {!embedded && (
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-emerald-400">
@@ -782,6 +783,8 @@ export const ForwardingPlaneGame: React.FC<{ onProceedToConclusion: () => void }
           </div>
         </div>
       </div>
+
+      )}
 
       {/* Game frame */}
       <div className="relative mt-8 min-h-[640px] overflow-hidden rounded-xl border border-slate-800 bg-[#070b14]">

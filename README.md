@@ -43,7 +43,7 @@ FAULT DIAGNOSIS (Symptom → Hypothesis → Test → Evidence → Root Cause →
       ↓
 ASSESSMENTS (Phase I Fundamentals & Phase II Real-World Troubleshooting Scenarios)
       ↓
-MINI-GAME ("FORWARDING PLANE" - be the router: ACL → TTL → longest-prefix match under queue pressure)
+MINI-GAME ("ROGUE PACKET" - explore a network operations centre, trace the rogue packet, diagnose the faulty device)
       ↓
 CONCLUSION & REPORT (Completion certificate, competencies checklist, JSON export, printable report)
       ↓
@@ -69,13 +69,15 @@ The intelligent diagnostic engine models deterministic, realistic networking fau
 
 ---
 
-## 🎮 "Forwarding Plane" Mini-Game
+## 🎮 "Rogue Packet" Mini-Game
 
-- **Premise:** You are router R1's forwarding engine. Packets arrive in an ingress queue; read each header and send it out `Gi0/0`, `Gi0/1`, `Se0/0/0` — or drop it — before it times out.
-- **Rules modelled:** inbound ACL (first match wins) → TTL (1 ⇒ drop, ICMP Time Exceeded) → longest-prefix match (no match and no default ⇒ drop; Null0 ⇒ blackhole).
-- **Four shifts:** Connected networks → Longest prefix wins → Filters & hop limits → Peak hour (a /18 with a /24 carve-out, a Null0 route, an SNMP filter).
-- **Controls:** `1`–`4` (or `D`) choose a port, `H` opens the Binary Lens hint (−50), `Space` pauses. Port buttons work on touch.
-- **Feedback:** every decision explains *why* (matched route, competing prefixes, ACL line) with a 32-bit binary comparison; each shift ends with accuracy, average decision time, best streak, stars and a mistake review.
+- **Premise:** a 2D top-down network operations centre. Walk seven rooms (Computer Lab, Switch Room, Router Room, Server Room, Packet Analysis Lab, Monitoring Room, Network Control Room), inspect real devices and find the component breaking the network.
+- **Real simulation:** every clue comes from a network model with ARP per segment, default gateways, longest-prefix routing, TTL, link/port state and loss (`rogue-packet/network.ts`).
+- **11 randomized faults:** disconnected cable, shut-down switch port, wrong IP, wrong mask, server on the wrong subnet, duplicate IP, router interface down, bad static route, routing loop, duplex-mismatch loss, server offline. Several share symptoms on purpose (cable vs. disabled port; server offline vs. wrong subnet).
+- **Tools:** walk up and press `E` to inspect PCs, switches (`show interfaces status`, MAC table), the router (`show ip route`, `show arp`), the server, cables, MONITOR-01 and the packet analyzer. `P` opens ping / traceroute from any host; the analyzer unlocks **Packet Trace**, which follows the rogue packet hop by hop with the camera.
+- **Live packets** travel the floor cables; the rogue packet loops, vanishes or goes to the wrong host depending on the fault. Random events (packet storm, blackout, switch reload, link flap…) add noise.
+- **Five levels:** Cable Chaos → IP Crisis → Switch Failure → Routing Nightmare → Network Blackout (two faults). Wrong diagnoses explain why and let you keep investigating; each level ends with accuracy, packets investigated, time, stability and a short "you learned".
+- **Controls:** WASD/arrows, E, P, Tab (topology map), G (diagnose), Esc; on-screen joystick + interact button on touch devices. Forwarding Plane remains available in the hub as a quick drill.
 
 ---
 
@@ -85,7 +87,8 @@ The intelligent diagnostic engine models deterministic, realistic networking fau
 - **Styling:** Tailwind CSS + shadcn/ui theme tokens (`components.json`, `@/` alias, HSL CSS variables in `src/index.css`)
 - **Typography:** IBM Plex Sans (UI), IBM Plex Sans Condensed (display), IBM Plex Mono (data/CLI)
 - **Opening sequence:** Three.js + @react-three/fiber Warp Tunnel (`src/components/ui/warp-tunnel.tsx`), lazy-loaded so returning visitors never download it; plays once per tab session
-- **Motion:** `motion` (Framer Motion) for intro choreography, page transitions and game feedback; honours `prefers-reduced-motion`
+- **Motion system:** one packet/node language across the site — warp streaks converge into a network node, "Enter lab" links a PC→Switch→Router→Server path, section changes send a packet along a route pill, the journey dock is a network path (● visited · ◉ current · ○ not yet), diagrams build hop by hop on scroll, and success/failure show a packet arriving or dropping (no confetti). Built on `motion`; honours `prefers-reduced-motion`.
+- **Background:** a topographic contour "signal field" (WebGL2 shader) with a sparse live network over it — 30 fps cap, half-resolution, paused when hidden, lighter on mobile.
 - **Icons:** Lucide React
 - **Sound:** Web Audio API procedural synthesizer (zero external audio file dependencies; mute toggle supported)
 - **Effects:** Canvas-Confetti on assessment completion & network verification

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -37,11 +38,24 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
     { id: 'simulation', num: '04', title: 'Packet Simulator', short: 'Simulate', icon: Play },
     { id: 'diagnostics', num: '05', title: 'Fault Diagnosis', short: 'Diagnose', icon: Terminal },
     { id: 'assessments', num: '06', title: 'Assessments', short: 'Assess', icon: Activity },
-    { id: 'minigame', num: '07', title: 'Forwarding Plane', short: 'Game', icon: Gamepad2 },
+    { id: 'minigame', num: '07', title: 'Rogue Packet', short: 'Game', icon: Gamepad2 },
     { id: 'conclusion', num: '08', title: 'Completion Report', short: 'Report', icon: Award },
   ];
 
   const currentIndex = steps.findIndex(s => s.id === activeModule);
+
+  // Remember where we came from so a packet can travel the path to the new node.
+  const reduce = useReducedMotion();
+  const prevIndex = useRef(currentIndex);
+  const [hop, setHop] = useState<{ from: number; to: number; id: number } | null>(null);
+  useEffect(() => {
+    if (prevIndex.current !== currentIndex && prevIndex.current !== -1 && currentIndex !== -1 && !reduce) {
+      setHop({ from: prevIndex.current, to: currentIndex, id: Date.now() });
+    }
+    prevIndex.current = currentIndex;
+  }, [currentIndex, reduce]);
+  const pct = (i: number) => ((i + 0.5) / steps.length) * 100;
+  const reached = Math.max(currentIndex, ...steps.map((s, i) => (completedModules.has(s.id) ? i : -1)));
 
   const prevStep = currentIndex > 0 ? steps[currentIndex - 1] : null;
   const nextStep = currentIndex < steps.length - 1 ? steps[currentIndex + 1] : null;
@@ -94,36 +108,78 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
               <span className="hidden md:inline">Prev</span>
             </button>
 
-            {/* Stepper Pills */}
-            <div className="flex-1 flex items-center justify-between gap-1 overflow-x-auto scrollbar-none px-1">
-              {steps.map((st, idx) => {
-                const isActive = activeModule === st.id;
-                const isCompleted = completedModules.has(st.id);
-
-                return (
-                  <button
-                    key={st.id}
-                    onClick={() => {
-                      playSound('click');
-                      onNavigate(st.id);
-                    }}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-mono transition-all whitespace-nowrap ${
-                      isActive
-                        ? 'bg-emerald-500 text-slate-950 font-bold shadow-[0_0_12px_rgba(16,185,129,0.3)]'
-                        : isCompleted
-                        ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 hover:bg-emerald-500/20'
-                        : 'bg-slate-900/60 text-slate-400 border border-slate-800 hover:text-slate-200 hover:bg-slate-800'
-                    }`}
-                  >
-                    {isCompleted && !isActive ? (
-                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                    ) : (
-                      <span className="text-[10px] opacity-75">{st.num}</span>
-                    )}
-                    <span className="hidden sm:inline">{st.short}</span>
-                  </button>
-                );
-              })}
+            {/* Network path: ● visited · ◉ current · ○ not yet */}
+            <div className="relative flex-1 px-1">
+              <div className="absolute top-[11px] h-px bg-slate-700/70" style={{ left: `${pct(0)}%`, right: `${100 - pct(steps.length - 1)}%` }} aria-hidden />
+              <motion.div
+                className="absolute top-[11px] h-px bg-emerald-400/80"
+                style={{ left: `${pct(0)}%` }}
+                animate={{ width: `${Math.max(0, pct(Math.max(0, reached)) - pct(0))}%` }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden
+              />
+              {hop && (
+                <motion.span
+                  key={hop.id}
+                  className="absolute top-[8px] h-[7px] w-[7px] -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(110,231,183,0.9)]"
+                  initial={{ left: `${pct(hop.from)}%`, opacity: 1 }}
+                  animate={{ left: `${pct(hop.to)}%`, opacity: [1, 1, 0] }}
+                  transition={{ duration: Math.min(0.9, 0.3 + Math.abs(hop.to - hop.from) * 0.1), ease: [0.65, 0, 0.35, 1], opacity: { times: [0, 0.85, 1] } }}
+                  aria-hidden
+                />
+              )}
+              <ol className="relative flex">
+                {steps.map((st, idx) => {
+                  const isActive = activeModule === st.id;
+                  const isDone = completedModules.has(st.id);
+                  return (
+                    <li key={st.id} className="flex flex-1 justify-center">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          playSound('click');
+                          onNavigate(st.id);
+                        }}
+                        className="group flex flex-col items-center gap-1 rounded-md px-1 pb-0.5 outline-offset-2"
+                        aria-current={isActive ? 'step' : undefined}
+                        aria-label={`${st.num} ${st.title}${isDone ? ' (visited)' : ''}`}
+                        title={st.title}
+                      >
+                        <span className="relative flex h-[22px] w-[22px] items-center justify-center">
+                          {isActive && !reduce && (
+                            <motion.span
+                              key={`ping-${st.id}`}
+                              className="absolute inset-0 rounded-full border border-emerald-400"
+                              initial={{ scale: 0.6, opacity: 0.9 }}
+                              animate={{ scale: 1.6, opacity: 0 }}
+                              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeOut' }}
+                            />
+                          )}
+                          <span
+                            className={`flex h-3.5 w-3.5 items-center justify-center rounded-full border-[1.5px] bg-[#0b101c] transition-colors duration-300 ${
+                              isActive ? 'border-emerald-300' : isDone ? 'border-emerald-500' : 'border-slate-600 group-hover:border-slate-400'
+                            }`}
+                          >
+                            <motion.span
+                              className="h-1.5 w-1.5 rounded-full bg-emerald-400"
+                              initial={false}
+                              animate={{ scale: isActive || isDone ? 1 : 0 }}
+                              transition={{ duration: 0.25, delay: isActive && hop ? 0.35 : 0 }}
+                            />
+                          </span>
+                        </span>
+                        <span
+                          className={`hidden font-mono text-[10px] transition-colors sm:block ${
+                            isActive ? 'font-semibold text-emerald-300' : isDone ? 'text-slate-300' : 'text-slate-500 group-hover:text-slate-300'
+                          }`}
+                        >
+                          {st.short}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
 
             {/* Next Button */}

@@ -19,6 +19,7 @@ import { TcpHeaderViewer } from './TcpHeaderViewer';
 import { HammingSimulator } from './HammingSimulator';
 import { CommandReference } from './CommandReference';
 import { playSound } from '../../../lib/sound';
+import { TopologyWalkthrough } from '@/components/motion/TopologyWalkthrough';
 
 interface TheoryHubProps {
   initialTab?: string;
@@ -216,6 +217,13 @@ export const TheoryHub: React.FC<TheoryHubProps> = ({
                     </p>
                   </div>
                 </div>
+              </div>
+
+              {/* How a packet crosses the network — built hop by hop as you scroll */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-[#0b101d] border border-slate-800 shadow-xl">
+                <div className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">One packet, four devices</div>
+                <p className="mt-1 mb-4 text-sm text-slate-400 max-w-2xl">Scroll through the path. Each device only reads the layer it is responsible for.</p>
+                <TopologyWalkthrough />
               </div>
 
               {/* Protocol Stack Visual */}

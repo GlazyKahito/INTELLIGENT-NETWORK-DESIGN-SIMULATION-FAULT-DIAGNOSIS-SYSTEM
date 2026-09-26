@@ -132,6 +132,7 @@ export const Header: React.FC<HeaderProps> = ({
               onOpenSandbox();
             }}
             title="Launch Fullscreen Lab Sandbox (Shortcut: F)"
+            aria-label="Open fullscreen lab sandbox (F)"
             className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-mono transition-colors"
           >
             <Maximize2 className="w-3.5 h-3.5 text-cyan-400" />
@@ -155,6 +156,7 @@ export const Header: React.FC<HeaderProps> = ({
               playSound('click');
               openWorksModal();
             }}
+            aria-label="Open modules hub (M)"
             className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 cursor-pointer font-mono"
           >
             <Layers className="w-3.5 h-3.5" />
