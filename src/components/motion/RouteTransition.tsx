@@ -9,7 +9,7 @@ const LABEL: Record<string, string> = {
   simulation: 'Simulate',
   diagnostics: 'Diagnose',
   assessments: 'Assess',
-  minigame: 'Rogue Packet',
+  minigame: 'Mini Game',
   conclusion: 'Report',
 };
 
