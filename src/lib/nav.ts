@@ -4,6 +4,8 @@ export interface NavGroup {
   id: string;
   label: string;
   modules: string[];
+  /** Rendered as a highlighted call-to-action instead of a plain nav link. */
+  feature?: boolean;
 }
 
 export const NAV_GROUPS: NavGroup[] = [
@@ -11,7 +13,8 @@ export const NAV_GROUPS: NavGroup[] = [
   { id: 'theory', label: 'Theory', modules: ['theory'] },
   { id: 'build', label: 'Build', modules: ['design', 'simulation'] },
   { id: 'diagnose', label: 'Diagnose', modules: ['diagnostics'] },
-  { id: 'practice', label: 'Practice', modules: ['assessments', 'minigame'] },
+  { id: 'assessment', label: 'Assessment', modules: ['assessments'] },
+  { id: 'minigame', label: 'Mini Game', modules: ['minigame'], feature: true },
   { id: 'report', label: 'Report', modules: ['conclusion'] },
 ];
 

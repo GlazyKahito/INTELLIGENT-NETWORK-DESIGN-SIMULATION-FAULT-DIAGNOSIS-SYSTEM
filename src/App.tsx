@@ -22,6 +22,8 @@ import { FullLabSandbox } from './components/modules/10_LaunchLab/FullLabSandbox
 import { playSound } from './lib/sound';
 import { hasSeenIntro } from './lib/intro-session';
 import { MODULE_LABEL, groupOf } from './lib/nav';
+import { BorderBeam } from '@/components/magicui/border-beam';
+import { ShimmerButton } from '@/components/magicui/shimmer-button';
 
 // Three.js only ships with the opening sequence, so returning visitors never download it.
 const OpeningSequence = lazy(() => import('./components/layout/OpeningSequence').then(m => ({ default: m.OpeningSequence })));
@@ -203,6 +205,39 @@ export function App() {
               onLaunchSimulator={() => handleNavigateModule('simulation')}
               onOpenDiagnostics={() => handleNavigateModule('diagnostics')}
             />
+
+            {/* Mini game feature banner */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
+              <div className="relative grid items-center gap-6 overflow-hidden rounded-2xl border border-emerald-500/40 bg-[#1a120c] p-6 sm:p-8 md:grid-cols-[1fr_auto]">
+                <div aria-hidden className="pointer-events-none absolute -right-10 -top-16 select-none font-display text-[12rem] font-bold leading-none text-transparent [-webkit-text-stroke:1.5px_rgb(255_95_31_/_0.25)]">
+                  RP
+                </div>
+                <div className="relative">
+                  <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-400">
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" /> Mini game · now playable
+                  </div>
+                  <h3 className="mt-2 font-display text-3xl font-semibold uppercase tracking-tight text-slate-50 sm:text-4xl">
+                    Rogue <span className="text-violet-200">Packet</span>
+                  </h3>
+                  <p className="mt-2 max-w-2xl text-sm text-slate-300 sm:text-base">
+                    Something is wrong with the network. Walk a live operations centre, inspect real devices, trace the rogue packet — and name the device that&rsquo;s breaking it. 5 levels · 11 randomized faults.
+                  </p>
+                </div>
+                <ShimmerButton
+                  onClick={() => handleNavigateModule('minigame')}
+                  background="#ff5f1f"
+                  shimmerColor="#fff1e6"
+                  borderRadius="0px"
+                  className="h-14 px-8 text-base font-bold text-slate-950"
+                >
+                  <span className="relative z-10 flex items-center gap-3">
+                    Play Rogue Packet <span className="transition-transform group-hover:translate-x-1">→</span>
+                  </span>
+                </ShimmerButton>
+                <BorderBeam size={120} duration={7} colorFrom="#ff5f1f" colorTo="#ffb347" borderWidth={2} />
+                <BorderBeam size={120} duration={7} delay={3.5} colorFrom="#c4b5fd" colorTo="#ff5f1f" borderWidth={2} />
+              </div>
+            </div>
 
             {/* Quick syllabus progression cards */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-36">

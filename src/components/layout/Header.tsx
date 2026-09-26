@@ -3,6 +3,7 @@ import { ScrambleText } from '@/components/motion/TextFX';
 import { motion } from 'motion/react';
 import { PacketTicker } from '../common/PacketTicker';
 import { NAV_GROUPS } from '../../lib/nav';
+import { ShimmerButton } from '@/components/magicui/shimmer-button';
 import { 
   Network, 
   Volume2, 
@@ -72,7 +73,7 @@ export const Header: React.FC<HeaderProps> = ({
           : 'bg-[#0c0b09]/90 border-slate-800/80'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
         {/* Brand / Logo */}
         <div 
           onClick={() => {
@@ -100,8 +101,9 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Desktop Quick Navigation Links */}
-        <nav className="hidden xl:flex self-stretch items-stretch min-w-0" aria-label="Sections">
-          {NAV_GROUPS.map(item => {
+        <div className="hidden xl:flex self-stretch items-stretch gap-3 justify-self-center">
+        <nav className="flex self-stretch items-stretch min-w-0" aria-label="Sections">
+          {NAV_GROUPS.filter(g => !g.feature).map(item => {
             const isActive = item.modules.includes(activeModule);
             return (
               <button
@@ -131,8 +133,48 @@ export const Header: React.FC<HeaderProps> = ({
           })}
         </nav>
 
+        {/* Featured actions, centred with the nav */}
+        <div className="flex items-center gap-2 border-l border-slate-800 pl-4">
+          <button
+            onClick={() => {
+              playSound('click');
+              setActiveModule('minigame');
+            }}
+            aria-current={activeModule === 'minigame' ? 'page' : undefined}
+            className={`group relative flex h-9 items-center gap-2 border px-3.5 text-[13px] font-semibold transition-colors ${
+              activeModule === 'minigame' ? 'border-emerald-400 bg-emerald-500/15 text-emerald-200' : 'border-emerald-500/60 text-emerald-300 hover:bg-emerald-500/10'
+            }`}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            <Gamepad2 className="h-4 w-4" />
+            Mini Game
+          </button>
+          <ShimmerButton
+            onClick={() => {
+              playSound('click');
+              onOpenSandbox();
+            }}
+            title="Launch the fullscreen lab (F)"
+            background="#ff5f1f"
+            shimmerColor="#fff1e6"
+            borderRadius="0px"
+            shimmerDuration="2.5s"
+            className="h-9 px-4 py-0 text-[13px] font-bold text-slate-950"
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              <Maximize2 className="h-4 w-4" />
+              Launch Lab
+              <kbd className="border border-slate-950/30 px-1 text-[10px] font-mono">F</kbd>
+            </span>
+          </ShimmerButton>
+        </div>
+        </div>
+
         {/* Right Action Tools: Progress, Audio, Sandbox, Works Hub */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div className="flex items-center gap-2.5 shrink-0 justify-self-end">
           {/* Telemetry Status Ticker */}
           <div className="hidden lg:flex xl:hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-[11px] font-mono text-emerald-300">
             <Radio className="w-3 h-3 text-emerald-400 animate-pulse" />
@@ -150,21 +192,6 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <span className="text-emerald-400 font-semibold">{progressPercent}%</span>
           </div>
-
-          {/* Fullscreen Sandbox Trigger Button */}
-          <button
-            onClick={() => {
-              playSound('click');
-              onOpenSandbox();
-            }}
-            title="Launch Fullscreen Lab Sandbox (Shortcut: F)"
-            aria-label="Open fullscreen lab sandbox (F)"
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-mono transition-colors"
-          >
-            <Maximize2 className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="hidden md:inline xl:hidden 2xl:inline">Sandbox</span>
-            <kbd className="text-[9px] px-1 bg-black/40 rounded text-slate-400 border border-slate-700/60">F</kbd>
-          </button>
 
           {/* Sound Synthesizer Audio Toggle */}
           <button
