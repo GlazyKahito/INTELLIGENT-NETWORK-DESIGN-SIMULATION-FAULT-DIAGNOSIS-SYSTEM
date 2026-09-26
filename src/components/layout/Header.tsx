@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Network, 
   Volume2, 
@@ -33,6 +33,15 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isMuted, setIsMuted] = useState(getAudioMuteState());
 
+  // Once the page scrolls, the bar lifts off the content and floats.
+  const [floating, setFloating] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setFloating(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const handleMuteToggle = () => {
     const next = toggleAudioMute();
     setIsMuted(next);
@@ -52,7 +61,13 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#070a12]/90 backdrop-blur-xl border-b border-slate-800/80 transition-all">
+    <header
+      className={`sticky top-0 z-40 w-full backdrop-blur-xl border-b transition-[background-color,border-color,box-shadow] duration-300 ${
+        floating
+          ? 'bg-[#070a12]/80 border-slate-700/70 shadow-[0_10px_30px_-14px_rgba(0,0,0,0.9)]'
+          : 'bg-[#070a12]/90 border-slate-800/80'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         {/* Brand / Logo */}
         <div 
@@ -62,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
           }}
           className="flex items-center gap-3 cursor-pointer select-none group shrink-0 whitespace-nowrap"
         >
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 group-hover:border-emerald-400 transition-all shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 group-hover:border-emerald-400 transition-all shadow-[0_0_15px_rgba(59,130,246,0.2)]">
             <Network className="w-5 h-5" />
           </div>
           <div>
@@ -94,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
                 }}
                 className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap border transition-all ${
                   isActive
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.2)] font-semibold'
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(59,130,246,0.2)] font-semibold'
                     : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                 }`}
               >
@@ -157,7 +172,7 @@ export const Header: React.FC<HeaderProps> = ({
               openWorksModal();
             }}
             aria-label="Open modules hub (M)"
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 cursor-pointer font-mono"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] active:scale-95 cursor-pointer font-mono"
           >
             <Layers className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Hub</span>

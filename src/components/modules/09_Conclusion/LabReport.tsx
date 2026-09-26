@@ -133,7 +133,7 @@ export const LabReport: React.FC<LabReportProps> = ({
         </div>
 
         {/* Certificate Card Container */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-[#0d1322] border-2 border-emerald-500/40 shadow-[0_0_50px_rgba(16,185,129,0.15)] relative overflow-hidden">
+        <div className="p-8 sm:p-12 rounded-3xl bg-[#0d1322] border-2 border-emerald-500/40 shadow-[0_0_50px_rgba(59,130,246,0.15)] relative overflow-hidden">
           {/* Subtle watermark background badge */}
           <div className="absolute -top-16 -right-16 w-56 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -186,7 +186,7 @@ export const LabReport: React.FC<LabReportProps> = ({
               Student ID / Roll No: <span className="text-slate-200 font-bold">{rollNumber}</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed pt-2">
-              has successfully synthesized, designed, simulated, and diagnosed multi-hop computer networks adhering to IEEE 802.3 and RFC 793 specifications in Experiment 08 (Capstone).
+              has successfully synthesized, designed, simulated, and diagnosed multi-hop computer networks adhering to IEEE 802.3 and RFC 793 using the Intelligent Network Design, Simulation & Fault Diagnosis System.
             </p>
           </div>
 
@@ -196,10 +196,10 @@ export const LabReport: React.FC<LabReportProps> = ({
               <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
               <div>
                 <div className="text-sm font-bold text-emerald-300">
-                  LABORATORY EXPERIMENT COMPLETE // STATUS: VERIFIED
+                  SYSTEM WALKTHROUGH COMPLETE // STATUS: VERIFIED
                 </div>
                 <div className="text-[11px] text-slate-400">
-                  All 7 experimental execution phases successfully synthesized and evaluated.
+                  Design, simulation, fault diagnosis and verification completed and evaluated.
                 </div>
               </div>
             </div>
@@ -211,7 +211,7 @@ export const LabReport: React.FC<LabReportProps> = ({
           {/* Checklist of Executed Modules */}
           <div className="space-y-4 mb-8">
             <h3 className="text-sm font-mono font-bold text-slate-300 uppercase tracking-wider">
-              Experimental Execution Checklist:
+              Competency checklist:
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -261,7 +261,7 @@ export const LabReport: React.FC<LabReportProps> = ({
                 playSound('success');
                 onLaunchFullLab();
               }}
-              className="flex items-center gap-2 px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono rounded-xl text-sm transition-all shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95 cursor-pointer"
+              className="flex items-center gap-2 px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono rounded-xl text-sm transition-all shadow-[0_0_25px_rgba(59,130,246,0.4)] active:scale-95 cursor-pointer"
             >
               <Maximize2 className="w-4 h-4" />
               <span>LAUNCH FULL UNRESTRICTED LAB</span>

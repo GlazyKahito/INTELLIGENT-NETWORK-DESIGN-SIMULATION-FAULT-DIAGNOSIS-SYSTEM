@@ -26,8 +26,8 @@ const TOKENS: Record<keyof ShadcnThemeColors, string> = {
 const FALLBACK: ShadcnThemeColors = {
   background: '#070a12',
   foreground: '#e2e8f0',
-  primary: '#10b981',
-  accent: '#06b6d4',
+  primary: '#3b82f6',
+  accent: '#38bdf8',
   muted: '#94a3b8',
   border: '#1f293d',
 };

@@ -77,7 +77,7 @@ const PLAYER_R = 12;
 const SPEED = 200;
 const INTERACT_R = 58;
 const FLOWS: DeviceId[] = ['PC-01', 'PC-02', 'PC-03', 'PC-04'];
-const MONO = '"IBM Plex Mono", ui-monospace, monospace';
+const MONO = '"IBM Plex Sans", system-ui, sans-serif';
 
 function orient(link: LinkId, from: DeviceId): Pt[] {
   const pts = CABLES[link];
@@ -495,7 +495,7 @@ export class GameEngine {
       for (let y = r.y + 32; y < r.y + r.h; y += 32) (g.moveTo(r.x, y), g.lineTo(r.x + r.w, y));
       g.stroke();
       const grad = g.createRadialGradient(r.x + r.w / 2, r.y + r.h / 2, 10, r.x + r.w / 2, r.y + r.h / 2, Math.max(r.w, r.h) * 0.7);
-      grad.addColorStop(0, 'rgba(16,185,129,0.025)');
+      grad.addColorStop(0, 'rgba(59,130,246,0.025)');
       grad.addColorStop(1, 'rgba(0,0,0,0.18)');
       g.fillStyle = grad;
       g.fillRect(r.x, r.y, r.w, r.h);
@@ -511,7 +511,7 @@ export class GameEngine {
       g.strokeStyle = '#060910';
       g.lineWidth = 8;
       g.stroke();
-      g.strokeStyle = l.id === 'L-SRV' ? '#5c4f2a' : l.id === 'L-TRUNK' ? '#34445f' : l.id === 'L-UPLINK' ? '#255565' : '#1d5245';
+      g.strokeStyle = l.id === 'L-SRV' ? '#5c4f2a' : l.id === 'L-TRUNK' ? '#34445f' : l.id === 'L-UPLINK' ? '#255565' : '#1e3a5f';
       g.lineWidth = 2.2;
       g.stroke();
     }
@@ -709,7 +709,7 @@ export class GameEngine {
         g.fillRect(d.x - 4, d.y, 8, half);
         g.fillRect(d.x - 4, d.y + 64 - half, 8, half);
       }
-      g.fillStyle = open > 0.5 ? 'rgba(52,211,153,0.7)' : 'rgba(100,116,139,0.6)';
+      g.fillStyle = open > 0.5 ? 'rgba(96,165,250,0.7)' : 'rgba(100,116,139,0.6)';
       const lx = d.horizontal ? d.x - 6 : d.x - 1.5;
       const ly = d.horizontal ? d.y - 1.5 : d.y - 6;
       g.fillRect(lx, ly, 3, 3);
@@ -736,7 +736,7 @@ export class GameEngine {
       const recent = this.time - (this.activity[link] ?? -10) < 0.25;
       return recent ? (Math.sin(t * 40 + seed) > 0 ? 1 : 0.35) : 0.7;
     };
-    const G = 'rgba(52,211,153,A)';
+    const G = 'rgba(52,211,153,A)'; // physical port LEDs stay green
     const AMB = 'rgba(251,191,36,A)';
 
     for (const p of PROPS) {
@@ -744,7 +744,7 @@ export class GameEngine {
         const link = LINKS.find(l => l.a === p.device)!;
         const up = linkUp(st, link.id);
         const flicker = 0.85 + Math.sin(t * 3 + p.x) * 0.05;
-        g.fillStyle = up ? `rgba(45,212,191,${0.35 * flicker})` : 'rgba(148,163,184,0.22)';
+        g.fillStyle = up ? `rgba(56,189,248,${0.35 * flicker})` : 'rgba(148,163,184,0.22)';
         g.fillRect(p.x + p.w / 2 - 32, p.y + 10, 64, 6);
         if (!up) {
           // tray icon: tiny warning glyph, not a highlight
@@ -783,7 +783,7 @@ export class GameEngine {
         const bars = Math.floor(p.w / 12);
         for (let i = 0; i < bars; i++) {
           const h = (0.3 + 0.7 * Math.abs(Math.sin(t * 0.8 + i * 0.7))) * (p.h - 8);
-          g.fillStyle = `rgba(45,212,191,${0.25 + 0.2 * hash(i)})`;
+          g.fillStyle = `rgba(56,189,248,${0.25 + 0.2 * hash(i)})`;
           g.fillRect(p.x + 6 + i * 12, p.y + p.h - 4 - h, 6, h);
         }
       }
@@ -792,7 +792,7 @@ export class GameEngine {
         for (let i = 0; i < n; i++) {
           const sx = p.x + 14 + i * ((p.w - 28) / n);
           const w = (p.w - 28) / n - 10;
-          g.fillStyle = `rgba(45,212,191,${0.12 + 0.06 * Math.sin(t * 2 + i)})`;
+          g.fillStyle = `rgba(56,189,248,${0.12 + 0.06 * Math.sin(t * 2 + i)})`;
           g.fillRect(sx, p.y + 12, w, 6);
           g.fillStyle = 'rgba(148,163,184,0.15)';
           g.fillRect(sx, p.y + 22, w * (0.4 + 0.5 * hash(i + p.x)), 2);
@@ -827,7 +827,7 @@ export class GameEngine {
         }
         continue;
       }
-      const color = s.kind === 'reply' ? '103,232,249' : s.kind === 'loop' ? '251,191,36' : '52,211,153';
+      const color = s.kind === 'reply' ? '103,232,249' : s.kind === 'loop' ? '251,191,36' : '96,165,250';
       g.fillStyle = `rgba(${color},0.18)`;
       g.beginPath();
       g.arc(x, y, 5, 0, Math.PI * 2);
@@ -839,7 +839,7 @@ export class GameEngine {
     }
     for (const f of this.puffs) {
       const a = 1 - f.t / 0.8;
-      g.strokeStyle = f.ok ? `rgba(52,211,153,${a * 0.5})` : `rgba(226,232,240,${a * 0.7})`;
+      g.strokeStyle = f.ok ? `rgba(96,165,250,${a * 0.5})` : `rgba(226,232,240,${a * 0.7})`;
       g.lineWidth = 1.2;
       g.beginPath();
       g.arc(f.x, f.y, 3 + f.t * 16, 0, Math.PI * 2);
@@ -860,7 +860,7 @@ export class GameEngine {
     if (!this.near) return;
     const { x, y } = this.near;
     g.save();
-    g.strokeStyle = 'rgba(52,211,153,0.55)';
+    g.strokeStyle = 'rgba(96,165,250,0.55)';
     g.lineWidth = 1.5;
     g.setLineDash([4, 5]);
     g.lineDashOffset = -this.time * 12;
@@ -890,7 +890,7 @@ export class GameEngine {
     g.ellipse(5, -walk * 6, 3.5, 6, 0, 0, Math.PI * 2);
     g.fill();
     // tool pack (behind)
-    g.fillStyle = '#0f766e';
+    g.fillStyle = '#1d4ed8';
     g.beginPath();
     g.roundRect(-7, 5, 14, 8, 2);
     g.fill();
@@ -903,7 +903,7 @@ export class GameEngine {
     g.lineWidth = 1;
     g.stroke();
     // shoulder stripe
-    g.strokeStyle = '#34d399';
+    g.strokeStyle = '#60a5fa';
     g.lineWidth = 1.6;
     g.beginPath();
     g.arc(0, 0, 9.5, Math.PI * 1.15, Math.PI * 1.85);
@@ -929,7 +929,7 @@ export class GameEngine {
     g.arc(0, -1, 7.4, Math.PI * 0.05, Math.PI * 0.95);
     g.stroke();
     const ledOn = Math.sin(this.time * 3) > 0.6;
-    g.fillStyle = ledOn ? '#34d399' : '#14532d';
+    g.fillStyle = ledOn ? '#60a5fa' : '#1e3a8a';
     g.fillRect(6, -3, 2.4, 2.4);
     g.restore();
   }
@@ -965,7 +965,7 @@ export class GameEngine {
       const seen = this.visited.has(r.id);
       m.fillStyle = seen ? 'rgba(30,41,59,0.95)' : 'rgba(20,27,40,0.8)';
       m.fillRect(r.x, r.y, r.w, r.h);
-      m.strokeStyle = r.id === this.room?.id ? 'rgba(52,211,153,0.9)' : seen ? 'rgba(100,116,139,0.6)' : 'rgba(51,65,85,0.5)';
+      m.strokeStyle = r.id === this.room?.id ? 'rgba(96,165,250,0.9)' : seen ? 'rgba(100,116,139,0.6)' : 'rgba(51,65,85,0.5)';
       m.lineWidth = 12;
       m.strokeRect(r.x, r.y, r.w, r.h);
     }
@@ -983,7 +983,7 @@ export class GameEngine {
       m.arc(x, y, 22, 0, Math.PI * 2);
       m.fill();
     }
-    m.fillStyle = '#34d399';
+    m.fillStyle = '#60a5fa';
     m.beginPath();
     m.arc(this.player.x, this.player.y, 26, 0, Math.PI * 2);
     m.fill();

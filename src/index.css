@@ -11,42 +11,42 @@
     --card-foreground: 224 40% 8%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 40% 8%;
-    --primary: 161 94% 30%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
     --secondary: 220 16% 92%;
     --secondary-foreground: 224 40% 12%;
     --muted: 220 16% 93%;
     --muted-foreground: 220 10% 40%;
-    --accent: 192 91% 36%;
+    --accent: 200 98% 39%;
     --accent-foreground: 0 0% 100%;
     --destructive: 350 89% 50%;
     --destructive-foreground: 0 0% 100%;
     --border: 220 14% 86%;
     --input: 220 14% 86%;
-    --ring: 161 94% 30%;
+    --ring: 221 83% 53%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 224 44% 5%;
+    --background: 225 46% 6%;
     --foreground: 214 32% 91%;
     --card: 222 45% 9%;
     --card-foreground: 214 32% 91%;
     --popover: 222 45% 9%;
     --popover-foreground: 214 32% 91%;
-    --primary: 160 84% 39%;
+    --primary: 217 91% 60%;
     --primary-foreground: 224 44% 5%;
     --secondary: 221 39% 13%;
     --secondary-foreground: 214 32% 91%;
     --muted: 221 39% 13%;
     --muted-foreground: 215 16% 62%;
-    --accent: 189 94% 43%;
+    --accent: 199 89% 60%;
     --accent-foreground: 224 44% 5%;
     --destructive: 350 89% 60%;
     --destructive-foreground: 0 0% 100%;
     --border: 219 33% 18%;
     --input: 219 33% 18%;
-    --ring: 160 84% 39%;
+    --ring: 217 91% 60%;
   }
 
   * {
@@ -83,7 +83,7 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #10b981;
+    background: #3b82f6;
   }
 }
 
@@ -97,7 +97,7 @@
 
 .tech-dot-bg {
   background-size: 24px 24px;
-  background-image: radial-gradient(circle, rgba(16, 185, 129, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(59, 130, 246, 0.12) 1px, transparent 1px);
 }
 
 /* Glassmorphism card styles */
@@ -128,8 +128,8 @@ samp {
   transition: border-color var(--dur-card) var(--ease-net), box-shadow var(--dur-card) var(--ease-net);
 }
 .lab-card-hover:hover {
-  border-color: rgba(16, 185, 129, 0.4);
-  box-shadow: inset 0 1px 0 rgba(52, 211, 153, 0.45), 0 10px 30px -18px rgba(16, 185, 129, 0.45);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: inset 0 1px 0 rgba(96, 165, 250, 0.45), 0 10px 30px -18px rgba(59, 130, 246, 0.45);
 }
 
 /* Node card: a status node on the top edge activates (○ → ●) and a link draws from it */
@@ -155,16 +155,16 @@ samp {
   right: 16px;
   top: -1px;
   height: 1px;
-  background: linear-gradient(90deg, rgb(52 211 153 / 0.8), rgb(52 211 153 / 0));
+  background: linear-gradient(90deg, rgb(96 165 250 / 0.8), rgb(96 165 250 / 0));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 380ms var(--ease-net);
 }
 .node-card:hover::before,
 .node-card:focus-visible::before {
-  border-color: rgb(52 211 153);
-  background: rgb(52 211 153);
-  box-shadow: 0 0 10px rgb(52 211 153 / 0.6);
+  border-color: rgb(96 165 250);
+  background: rgb(96 165 250);
+  box-shadow: 0 0 10px rgb(96 165 250 / 0.6);
 }
 .node-card:hover::after,
 .node-card:focus-visible::after {
@@ -182,7 +182,7 @@ samp {
 
 /* Glowing text & borders */
 .glow-emerald {
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
 }
 
 .glow-cyan {

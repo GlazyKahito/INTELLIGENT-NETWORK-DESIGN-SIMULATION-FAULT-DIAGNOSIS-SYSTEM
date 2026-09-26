@@ -34,7 +34,7 @@ export const SubnetCalculator: React.FC = () => {
             <span>IPv4 Address Classes & CIDR Subnet Calculator</span>
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
-            Experiment 05: Class A/B/C Identification, Network/Host Bit Boundaries, and Bitwise ANDing.
+            Class A/B/C Identification, Network/Host Bit Boundaries, and Bitwise ANDing.
           </p>
         </div>
 

@@ -118,7 +118,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
               playSound('success');
               onProceedToAssessments();
             }}
-            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0"
+            className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] shrink-0"
           >
             Take Assessments (Quiz) →
           </button>
@@ -285,7 +285,7 @@ export const DiagnosisHub: React.FC<DiagnosisHubProps> = ({
                 {activeFault && !isFixed && (
                   <button
                     onClick={handleApplyFix}
-                    className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl font-mono text-xs transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl font-mono text-xs transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] active:scale-95 flex items-center justify-center gap-2"
                   >
                     <Wrench className="w-4 h-4" />
                     <span>EXECUTE CORRECTIVE ACTION (APPLY FIX)</span>

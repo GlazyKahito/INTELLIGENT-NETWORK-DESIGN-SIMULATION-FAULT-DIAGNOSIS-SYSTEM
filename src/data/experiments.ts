@@ -15,7 +15,7 @@ export interface ExperimentMeta {
 export const DCN_EXPERIMENTS: ExperimentMeta[] = [
   {
     id: 1,
-    code: 'EXP-01',
+    code: 'TOPIC 1',
     title: 'Networking Commands & Connectivity Diagnosis',
     category: 'Layer 3 & 4 Diagnostic Tools',
     duration: '2 Hours',
@@ -32,7 +32,7 @@ export const DCN_EXPERIMENTS: ExperimentMeta[] = [
   },
   {
     id: 2,
-    code: 'EXP-02',
+    code: 'TOPIC 2',
     title: 'LAN Cable Fabrication & Pinout Standards',
     category: 'Layer 1 Physical Media',
     duration: '2 Hours',
@@ -48,7 +48,7 @@ export const DCN_EXPERIMENTS: ExperimentMeta[] = [
   },
   {
     id: 3,
-    code: 'EXP-03',
+    code: 'TOPIC 3',
     title: 'Wireshark Protocol Analysis & Packet Decapsulation',
     category: 'Packet Capture & Inspection',
     duration: '3 Hours',
@@ -64,7 +64,7 @@ export const DCN_EXPERIMENTS: ExperimentMeta[] = [
   },
   {
     id: 4,
-    code: 'EXP-04',
+    code: 'TOPIC 4',
     title: 'TCP Header Architecture & 3-Way Handshake',
     category: 'Layer 4 Transport Layer',
     duration: '2.5 Hours',
@@ -80,7 +80,7 @@ export const DCN_EXPERIMENTS: ExperimentMeta[] = [
   },
   {
     id: 5,
-    code: 'EXP-05',
+    code: 'TOPIC 5',
     title: 'IPv4 Address Classes, Subnetting & CIDR',
     category: 'Layer 3 Logical Addressing',
     duration: '3 Hours',
@@ -96,7 +96,7 @@ export const DCN_EXPERIMENTS: ExperimentMeta[] = [
   },
   {
     id: 6,
-    code: 'EXP-06',
+    code: 'TOPIC 6',
     title: 'Hamming Code Error Detection & Correction',
     category: 'Layer 2 Error Control',
     duration: '2.5 Hours',
@@ -112,7 +112,7 @@ export const DCN_EXPERIMENTS: ExperimentMeta[] = [
   },
   {
     id: 7,
-    code: 'EXP-07',
+    code: 'TOPIC 7',
     title: 'UDP Protocol & Connectionless Communication',
     category: 'Layer 4 Transport Layer',
     duration: '2 Hours',
@@ -129,10 +129,10 @@ export const DCN_EXPERIMENTS: ExperimentMeta[] = [
   {
     id: 8,
     code: 'EXP-08',
-    title: 'Network Design, Simulation & Fault Diagnosis (Capstone)',
+    title: 'Network Design, Simulation & Fault Diagnosis',
     category: 'End-to-End System Integration',
     duration: '4 Hours',
-    summary: 'The central laboratory experiment synthesizing Experiments 1 through 7 into a complete interactive network design, packet simulation, fault injection, and automated diagnosis environment.',
+    summary: 'The core system: interactive network design, packet simulation, fault injection and automated diagnosis, built on the foundation topics.',
     keyTools: ['Visual Topology Canvas', 'Simulation Engine', 'Intelligent Diagnostic Engine', 'Interactive CLI'],
     competencies: [
       'Design hierarchical LAN architectures with end-devices, access switches, and routers',

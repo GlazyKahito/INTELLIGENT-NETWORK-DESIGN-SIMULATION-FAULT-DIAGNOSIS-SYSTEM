@@ -573,7 +573,7 @@ export function TopologyMap({
           const w = linkStats ? 1 + (counters.link[l.id] / max) * 3 : 1.2;
           return (
             <g key={l.id}>
-              <motion.line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgb(52 211 153 / 0.45)" strokeWidth={w} initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.5, ease: EASE_NET }} />
+              <motion.line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgb(96 165 250 / 0.45)" strokeWidth={w} initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.5, ease: EASE_NET }} />
               {linkStats && (
                 <text x={(x1 + x2) / 2 + 6} y={(y1 + y2) / 2} className="fill-slate-500 font-mono" style={{ fontSize: 9 }}>
                   {counters.link[l.id]}
@@ -587,8 +587,8 @@ export function TopologyMap({
           const known = discovered.has(d);
           return (
             <g key={d}>
-              <circle cx={x} cy={y} r={known ? 9 : 7} fill="#0a0f1a" stroke={known ? 'rgb(52 211 153 / 0.8)' : 'rgb(71 85 105 / 0.6)'} strokeDasharray={known ? undefined : '2 3'} strokeWidth={1.5} />
-              {known && <circle cx={x} cy={y} r={3.5} fill="rgb(52 211 153)" />}
+              <circle cx={x} cy={y} r={known ? 9 : 7} fill="#0a0f1a" stroke={known ? 'rgb(96 165 250 / 0.8)' : 'rgb(71 85 105 / 0.6)'} strokeDasharray={known ? undefined : '2 3'} strokeWidth={1.5} />
+              {known && <circle cx={x} cy={y} r={3.5} fill="rgb(96 165 250)" />}
               <text x={x} y={y + 22} textAnchor="middle" className={known ? 'fill-slate-300 font-mono' : 'fill-slate-600 font-mono'} style={{ fontSize: 10 }}>
                 {known ? d : '?'}
               </text>

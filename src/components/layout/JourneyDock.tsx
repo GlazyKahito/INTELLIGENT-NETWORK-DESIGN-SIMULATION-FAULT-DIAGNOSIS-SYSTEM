@@ -33,7 +33,7 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
   // Ordered educational sequence
   const steps = [
     { id: 'aim', num: '01', title: 'Aim & Objectives', short: 'Aim', icon: BookOpen },
-    { id: 'theory', num: '02', title: 'Theory (Exp 1-7)', short: 'Theory', icon: HelpCircle },
+    { id: 'theory', num: '02', title: 'Networking Theory', short: 'Theory', icon: HelpCircle },
     { id: 'design', num: '03', title: 'Network Design', short: 'Design', icon: Layers },
     { id: 'simulation', num: '04', title: 'Packet Simulator', short: 'Simulate', icon: Play },
     { id: 'diagnostics', num: '05', title: 'Fault Diagnosis', short: 'Diagnose', icon: Terminal },
@@ -69,7 +69,7 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-slate-400">LAB JOURNEY:</span>
             <span className="text-emerald-400 font-bold">
-              {currentIndex !== -1 ? `Step ${currentIndex + 1} of ${steps.length}: ${steps[currentIndex].title}` : 'Overview'}
+              {currentIndex !== -1 ? `Step ${currentIndex + 1} of ${steps.length}: ${steps[currentIndex].title}` : 'Home — start with Aim & Objectives'}
             </span>
           </div>
 
@@ -121,7 +121,7 @@ export const JourneyDock: React.FC<JourneyDockProps> = ({
               {hop && (
                 <motion.span
                   key={hop.id}
-                  className="absolute top-[8px] h-[7px] w-[7px] -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(110,231,183,0.9)]"
+                  className="absolute top-[8px] h-[7px] w-[7px] -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(147,197,253,0.9)]"
                   initial={{ left: `${pct(hop.from)}%`, opacity: 1 }}
                   animate={{ left: `${pct(hop.to)}%`, opacity: [1, 1, 0] }}
                   transition={{ duration: Math.min(0.9, 0.3 + Math.abs(hop.to - hop.from) * 0.1), ease: [0.65, 0, 0.35, 1], opacity: { times: [0, 0.85, 1] } }}
